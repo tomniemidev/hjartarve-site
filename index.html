@@ -1,0 +1,1511 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!--
+================================================================================
+  HJARTARVÉ — promotional site
+  Single static file. Deployable as-is to Azure Static Web Apps.
+================================================================================
+
+  TODO — replace before launch:
+  ─────────────────────────────
+  [1] Release date — placeholder reads "Vetrnætr · 14 November 2026"
+      Search the markup for:   TODO: release date
+
+  [2] Social / contact links in the footer.
+      Search the markup for:   TODO: social links
+
+  All Google Fonts are loaded from fonts.googleapis.com. If your deployment
+  is air-gapped, swap the <link> for a local @font-face block.
+================================================================================
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Hjartarvé — Nordic folk metal from the deep forests of the North. New album Heyr Oss, Skogarmóðir out now.">
+<meta name="theme-color" content="#13181a">
+<title>Hjartarvé — Nordic Folk Metal</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cormorant+Unicase:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+/* ────────── Tokens ────────── */
+:root {
+  --ink:        #08090a;
+  --bark:       #13181a;
+  --bark-soft:  #181e1f;
+  --moss:       #1f2e23;
+  --moss-deep:  #14201a;
+  --lichen:     #3a4e3a;
+  --bone:       #e6dcc4;
+  --bone-soft:  #d3c8ad;
+  --ash:        #9a9078;
+  --ash-deep:   #6b6354;
+  --ember:      #b8864a;
+  --ember-glow: #d9a566;
+
+  --f-display:  'UnifrakturMaguntia', 'Cormorant Unicase', serif;
+  --f-head:     'Cormorant Unicase', 'EB Garamond', serif;
+  --f-body:     'EB Garamond', Georgia, 'Times New Roman', serif;
+
+  --maxw:       78rem;
+  --pad-y:      clamp(4rem, 10vh, 9rem);
+  --gut:        clamp(1.25rem, 5vw, 3rem);
+
+  --border-faint: 1px solid rgba(230, 220, 196, 0.08);
+  --border-ember: 1px solid rgba(184, 134, 74, 0.35);
+}
+
+/* ────────── Reset ────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--f-body);
+  font-size: clamp(1.05rem, 0.35vw + 0.95rem, 1.2rem);
+  line-height: 1.7;
+  color: var(--bone);
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 0%,    rgba(58, 78, 58, 0.22), transparent 70%),
+    radial-gradient(ellipse 50% 50% at 90% 100%,  rgba(184, 134, 74, 0.06), transparent 60%),
+    radial-gradient(ellipse 80% 50% at 10% 70%,   rgba(31, 46, 35, 0.35), transparent 70%),
+    linear-gradient(180deg, var(--bark) 0%, var(--bark-soft) 50%, var(--bark) 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+a { color: var(--ember); text-decoration: none; }
+a:focus-visible,
+button:focus-visible {
+  outline: 1px solid var(--ember-glow);
+  outline-offset: 4px;
+}
+
+/* ────────── Global texture layers ────────── */
+/* Noise grain — fixed overlay over the whole document */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 200;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.85'/%3E%3C/svg%3E");
+}
+
+/* Heavy vignette */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 150;
+  background: radial-gradient(ellipse 100% 80% at 50% 50%, transparent 40%, rgba(8, 9, 10, 0.55) 100%);
+}
+
+/* ────────── Layout primitives ────────── */
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gut);
+  position: relative;
+  z-index: 1;
+}
+
+section {
+  position: relative;
+  padding-block: var(--pad-y);
+}
+
+/* drifting fog blobs */
+.fog {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  z-index: 0;
+  will-change: transform;
+}
+.fog--moss   { background: radial-gradient(circle, rgba(58, 78, 58, 0.55), transparent 70%); }
+.fog--ember  { background: radial-gradient(circle, rgba(184, 134, 74, 0.18), transparent 70%); }
+.fog--ash    { background: radial-gradient(circle, rgba(154, 144, 120, 0.10), transparent 70%); }
+
+@keyframes drift-a {
+  0%   { transform: translate(-4%,  2%) scale(1);    }
+  100% { transform: translate( 6%, -3%) scale(1.18); }
+}
+@keyframes drift-b {
+  0%   { transform: translate( 3%,  4%) scale(1.05); }
+  100% { transform: translate(-6%, -5%) scale(0.92); }
+}
+@keyframes drift-c {
+  0%   { transform: translate(-2%, -4%) scale(0.95); }
+  100% { transform: translate( 5%,  6%) scale(1.1);  }
+}
+.fog--a { animation: drift-a 64s ease-in-out infinite alternate; }
+.fog--b { animation: drift-b 78s ease-in-out infinite alternate; }
+.fog--c { animation: drift-c 92s ease-in-out infinite alternate; }
+
+/* ────────── Type ────────── */
+.eyebrow {
+  font-family: var(--f-head);
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--ash);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.eyebrow::before,
+.eyebrow::after {
+  content: '';
+  width: 1.6rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ash-deep), transparent);
+}
+
+h1, h2, h3 {
+  font-family: var(--f-head);
+  font-weight: 500;
+  line-height: 1.05;
+  color: var(--bone);
+}
+
+h2.section-title {
+  font-size: clamp(2rem, 4vw + 0.5rem, 3.6rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.8em;
+}
+
+.lede {
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: clamp(1.15rem, 0.5vw + 1rem, 1.4rem);
+  line-height: 1.55;
+  color: var(--bone-soft);
+  max-width: 38rem;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   HEADER
+   ════════════════════════════════════════════════════════════════════════════ */
+.topbar {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 5;
+  padding: 1.6rem var(--gut);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.topbar__mark {
+  font-family: var(--f-head);
+  font-size: 0.75rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+.topbar__nav {
+  display: flex;
+  gap: clamp(1rem, 3vw, 2.2rem);
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.topbar__nav a {
+  font-family: var(--f-head);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ash);
+  transition: color 0.6s ease;
+}
+.topbar__nav a:hover { color: var(--ember); }
+
+@media (max-width: 540px) {
+  .topbar { padding: 1.2rem var(--gut); }
+  .topbar__nav { display: none; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   HERO
+   ════════════════════════════════════════════════════════════════════════════ */
+.hero {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding-block: clamp(6rem, 14vh, 12rem) clamp(4rem, 10vh, 8rem);
+  position: relative;
+  overflow: hidden;
+}
+.hero__fog-1 { top: -10%;   left: -10%;  width: 70%; height: 70%; }
+.hero__fog-2 { bottom: -15%; right: -10%; width: 80%; height: 80%; }
+.hero__fog-3 { top: 30%;    left: 60%;   width: 40%; height: 40%; }
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.2rem;
+}
+
+.sigil {
+  width: clamp(110px, 18vw, 170px);
+  height: auto;
+  opacity: 0;
+  animation: reveal 2.2s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s forwards;
+}
+.sigil path,
+.sigil line,
+.sigil circle { stroke: var(--ember); fill: none; }
+
+.wordmark {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(3.6rem, 12vw, 9.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  color: var(--bone);
+  text-shadow:
+    0 0 30px rgba(184, 134, 74, 0.18),
+    0 2px 1px rgba(8, 9, 10, 0.8);
+  opacity: 0;
+  animation: reveal 2.4s cubic-bezier(0.2, 0.7, 0.2, 1) 0.6s forwards;
+  position: relative;
+}
+/* faint accent strikes under the wordmark */
+.wordmark::before,
+.wordmark::after {
+  content: '';
+  position: absolute;
+  bottom: -0.4em;
+  width: 35%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ember), transparent);
+  opacity: 0.55;
+}
+.wordmark::before { left: 0; }
+.wordmark::after  { right: 0; }
+
+.hero__tagline {
+  font-family: var(--f-body);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.1rem, 1.2vw + 0.7rem, 1.55rem);
+  color: var(--bone-soft);
+  letter-spacing: 0.04em;
+  max-width: 32ch;
+  opacity: 0;
+  animation: reveal 2.4s cubic-bezier(0.2, 0.7, 0.2, 1) 1.0s forwards;
+}
+
+.hero__locale {
+  font-family: var(--f-head);
+  font-size: 0.72rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--ash-deep);
+  opacity: 0;
+  animation: reveal 2.4s cubic-bezier(0.2, 0.7, 0.2, 1) 1.4s forwards;
+}
+
+@keyframes reveal {
+  0%   { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* scroll cue */
+.hero__cue {
+  position: absolute;
+  bottom: 2.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--f-head);
+  font-size: 0.65rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--ash-deep);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: reveal 2.4s ease 1.8s forwards;
+  z-index: 2;
+}
+.hero__cue::after {
+  content: '';
+  width: 1px;
+  height: 2.4rem;
+  background: linear-gradient(180deg, var(--ash-deep), transparent);
+}
+
+/* ────────── Divider ────────── */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  padding-block: clamp(2rem, 4vh, 3rem);
+  color: var(--ash-deep);
+}
+.divider__line {
+  flex: 1 1 auto;
+  max-width: 18rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ash-deep), transparent);
+}
+.divider__runes {
+  width: clamp(70px, 8vw, 100px);
+  flex: 0 0 auto;
+  color: var(--ember);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   ABOUT
+   ════════════════════════════════════════════════════════════════════════════ */
+.about { padding-block: clamp(3rem, 6vh, 5rem) var(--pad-y); }
+.about__fog { top: 10%; right: -10%; width: 50%; height: 50%; }
+
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+@media (min-width: 880px) {
+  .about__grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+}
+
+.about__head { position: sticky; top: 2rem; }
+.about__head .eyebrow { margin-bottom: 1.2rem; }
+.about__head h2 { margin-bottom: 1.4rem; }
+.about__head .lede { color: var(--bone-soft); }
+
+.about__body p {
+  margin-bottom: 1.4rem;
+  color: var(--bone-soft);
+  max-width: 36rem;
+}
+.about__body p:first-child::first-letter {
+  font-family: var(--f-display);
+  font-size: 4.5rem;
+  line-height: 0.85;
+  float: left;
+  padding: 0.18em 0.18em 0 0;
+  color: var(--ember);
+}
+.about__body em { color: var(--bone); font-style: italic; }
+
+.about__sigil {
+  width: 100%;
+  max-width: 14rem;
+  margin-top: 2rem;
+  opacity: 0.5;
+}
+.about__sigil path { stroke: var(--lichen); fill: none; }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   ALBUM SPOTLIGHT
+   ════════════════════════════════════════════════════════════════════════════ */
+.album {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(31, 46, 35, 0.55), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(20, 32, 26, 0.7), transparent 70%);
+  border-block: var(--border-faint);
+}
+.album__fog-1 { top: 5%;    left: -5%;  width: 50%; height: 50%; }
+.album__fog-2 { bottom: 0%; right: -8%; width: 60%; height: 60%; }
+
+.album__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: center;
+}
+@media (min-width: 920px) {
+  .album__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); }
+}
+
+.album__art {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  max-width: 32rem;
+  margin: 0 auto;
+  border: 1px solid rgba(184, 134, 74, 0.5);
+  padding: 0.8rem;
+  background: linear-gradient(135deg, var(--moss-deep), var(--bark));
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(184, 134, 74, 0.1) inset;
+}
+.album__art::before {
+  /* inner moss bezel */
+  content: '';
+  position: absolute;
+  inset: 0.8rem;
+  border: 1px solid rgba(184, 134, 74, 0.18);
+  pointer-events: none;
+  z-index: 2;
+}
+.album__art > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.album__content { position: relative; padding-left: clamp(1rem, 3vw, 2.5rem); }
+.album__branch {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: clamp(20px, 2vw, 32px);
+  color: var(--ember);
+  opacity: 0.55;
+}
+.album__branch path { stroke: currentColor; fill: none; }
+
+.album__eyebrow { margin-bottom: 1.4rem; }
+
+.album__title {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 5.5vw + 0.4rem, 5.2rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--bone);
+  margin-bottom: 0.8rem;
+  text-shadow: 0 0 30px rgba(184, 134, 74, 0.18);
+}
+
+.album__translation {
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: clamp(1rem, 0.4vw + 0.95rem, 1.2rem);
+  color: var(--ash);
+  letter-spacing: 0.04em;
+  margin-bottom: 2rem;
+}
+.album__translation::before { content: '— '; }
+
+.album__pitch {
+  font-family: var(--f-body);
+  font-size: clamp(1.05rem, 0.4vw + 0.95rem, 1.25rem);
+  line-height: 1.65;
+  color: var(--bone-soft);
+  max-width: 36rem;
+  margin-bottom: 2.2rem;
+}
+.album__pitch em { font-style: italic; color: var(--bone); }
+
+.album__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1rem, 3vw, 2.2rem);
+  margin-bottom: 2.6rem;
+  padding-block: 1rem;
+  border-top: var(--border-faint);
+  border-bottom: var(--border-faint);
+}
+.album__meta dt {
+  font-family: var(--f-head);
+  font-size: 0.68rem;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--ash-deep);
+  margin-bottom: 0.3rem;
+}
+.album__meta dd {
+  font-family: var(--f-body);
+  color: var(--bone);
+  font-size: 1.05rem;
+}
+.album__meta-item { flex: 0 1 auto; }
+
+/* CTA */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.05rem 2.2rem;
+  background: transparent;
+  color: var(--bone);
+  font-family: var(--f-head);
+  font-size: 0.82rem;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  border: 1px solid var(--ember);
+  position: relative;
+  cursor: pointer;
+  transition: letter-spacing 0.6s ease, color 0.4s ease;
+}
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    rgba(184, 134, 74, 0) 0%,
+    rgba(184, 134, 74, 0.08) 50%,
+    rgba(184, 134, 74, 0) 100%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+.cta::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 1px solid rgba(184, 134, 74, 0.0);
+  transition: inset 0.5s ease, border-color 0.5s ease;
+  pointer-events: none;
+}
+.cta:hover,
+.cta:focus-visible {
+  color: var(--ember-glow);
+  letter-spacing: 0.42em;
+}
+.cta:hover::before,
+.cta:focus-visible::before { opacity: 1; }
+.cta:hover::after,
+.cta:focus-visible::after {
+  inset: -10px;
+  border-color: rgba(184, 134, 74, 0.4);
+}
+.cta__arrow {
+  width: 1.4rem; height: 1px;
+  background: currentColor;
+  position: relative;
+}
+.cta__arrow::after {
+  content: '';
+  position: absolute;
+  right: 0; top: -3px;
+  width: 7px; height: 7px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   REVIEWS
+   ════════════════════════════════════════════════════════════════════════════ */
+.reviews { padding-block: var(--pad-y); }
+.reviews__fog { bottom: 0; left: -10%; width: 50%; height: 50%; }
+
+.reviews__head { text-align: center; margin-bottom: clamp(3rem, 6vw, 5rem); }
+.reviews__head .eyebrow { margin-bottom: 1.2rem; }
+.reviews__head .lede { margin: 0 auto; }
+
+.reviews__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.4rem, 2.5vw, 2.4rem);
+}
+@media (min-width: 760px) {
+  .reviews__list { grid-template-columns: repeat(3, 1fr); }
+}
+
+.review {
+  position: relative;
+  padding: clamp(1.8rem, 2.5vw, 2.6rem);
+  background:
+    linear-gradient(160deg, rgba(31, 46, 35, 0.45), rgba(20, 24, 26, 0.7));
+  border: var(--border-faint);
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+.review::before {
+  /* corner mark */
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 18px; height: 18px;
+  border-top: 1px solid var(--ember);
+  border-left: 1px solid var(--ember);
+  opacity: 0.55;
+}
+.review::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 18px; height: 18px;
+  border-bottom: 1px solid var(--ember);
+  border-right: 1px solid var(--ember);
+  opacity: 0.55;
+}
+
+.review__quote-mark {
+  font-family: var(--f-display);
+  font-size: 4rem;
+  line-height: 0.6;
+  color: var(--ember);
+  opacity: 0.4;
+}
+
+.review__quote {
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: 1.08rem;
+  line-height: 1.55;
+  color: var(--bone-soft);
+  flex: 1;
+}
+
+.review__meta {
+  border-top: var(--border-faint);
+  padding-top: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.review__outlet {
+  font-family: var(--f-head);
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+.review__byline {
+  display: block;
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--ash);
+  letter-spacing: 0.02em;
+  margin-top: 0.2rem;
+}
+.rune-rating {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+.rune-rating svg {
+  width: 14px; height: 18px;
+}
+.rune-rating .rune-on  { color: var(--ember); }
+.rune-rating .rune-off { color: var(--ash-deep); opacity: 0.6; }
+.rune-rating .sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Feature review — full magazine-style write-up that anchors the section */
+.review-feature {
+  position: relative;
+  max-width: 56rem;
+  margin: 0 auto clamp(3rem, 6vw, 4.5rem);
+  padding: clamp(2rem, 4vw, 3.4rem);
+  background: linear-gradient(160deg, rgba(31, 46, 35, 0.55), rgba(20, 24, 26, 0.78));
+  border: var(--border-faint);
+}
+.review-feature::before,
+.review-feature::after {
+  content: '';
+  position: absolute;
+  width: 26px; height: 26px;
+  border-color: var(--ember);
+  border-style: solid;
+}
+.review-feature::before { top: 0;    left: 0;  border-width: 1px 0 0 1px; }
+.review-feature::after  { bottom: 0; right: 0; border-width: 0 1px 1px 0; opacity: 0.55; }
+
+.review-feature__masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding-bottom: 1.4rem;
+  border-bottom: var(--border-ember);
+}
+.review-feature__outlet { display: flex; flex-direction: column; gap: 0.25rem; }
+.review-feature__magazine {
+  font-family: var(--f-display);
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  letter-spacing: 0.04em;
+  color: var(--bone);
+  line-height: 1;
+}
+.review-feature__strap {
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--ash);
+  max-width: 28rem;
+}
+.review-feature__locale {
+  font-family: var(--f-head);
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-top: 0.3rem;
+}
+.review-feature__byline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  text-align: right;
+}
+.review-feature__byline-label {
+  font-family: var(--f-head);
+  font-size: 0.68rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+.review-feature__author {
+  font-family: var(--f-head);
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+.review-feature__author-role {
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--ash);
+}
+
+.review-feature__album {
+  text-align: center;
+  padding: clamp(1.5rem, 3vw, 2.4rem) 0 clamp(1.4rem, 2.5vw, 2rem);
+  border-bottom: var(--border-faint);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+}
+.review-feature__band {
+  font-family: var(--f-head);
+  font-size: 0.78rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--ember);
+}
+.review-feature__title {
+  font-family: var(--f-display);
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  line-height: 1.1;
+  color: var(--bone);
+}
+.review-feature__sub {
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--ash);
+}
+.review-feature__album .rune-rating { margin-top: 0.6rem; }
+.review-feature__album .rune-rating svg { width: 18px; height: 22px; }
+
+.review-feature__body {
+  padding-top: clamp(1.4rem, 2.5vw, 2.2rem);
+  font-family: var(--f-body);
+  font-size: clamp(1rem, 0.3vw + 0.95rem, 1.1rem);
+  line-height: 1.78;
+  color: var(--bone-soft);
+}
+.review-feature__body p + p { margin-top: 1.1rem; }
+.review-feature__body em { font-style: italic; color: var(--bone); }
+.review-feature__body p:first-child::first-letter {
+  font-family: var(--f-display);
+  font-size: 3.6em;
+  float: left;
+  line-height: 0.85;
+  padding: 0.2rem 0.55rem 0 0;
+  color: var(--ember);
+}
+
+.review-feature__foot {
+  margin-top: clamp(1.6rem, 3vw, 2.4rem);
+  padding-top: 1.4rem;
+  border-top: var(--border-faint);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-family: var(--f-body);
+  font-size: 0.92rem;
+  color: var(--bone-soft);
+  line-height: 1.55;
+}
+.review-feature__chip-label {
+  font-family: var(--f-head);
+  font-size: 0.68rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-right: 0.6rem;
+}
+.review-feature__skal {
+  font-family: var(--f-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.4em;
+  text-align: center;
+  color: var(--ember);
+  margin-top: 0.4rem;
+}
+
+@media (max-width: 600px) {
+  .review-feature__masthead { flex-direction: column; }
+  .review-feature__byline   { text-align: left; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   LISTEN / LINKS
+   ════════════════════════════════════════════════════════════════════════════ */
+.listen {
+  padding-block: var(--pad-y);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.listen__fog { top: 0; right: -5%; width: 60%; height: 60%; }
+
+.listen .eyebrow  { margin-bottom: 1rem; }
+.listen h2        { margin-bottom: 1rem; }
+.listen .lede     { margin: 0 auto 3rem; }
+
+.listen__links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1rem, 2vw, 1.6rem);
+  max-width: 50rem;
+  margin: 0 auto;
+}
+@media (min-width: 640px) {
+  .listen__links { grid-template-columns: repeat(3, 1fr); }
+}
+
+.listen__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.6rem 1rem;
+  border: 1px solid rgba(184, 134, 74, 0.28);
+  font-family: var(--f-head);
+  font-size: 0.78rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--bone-soft);
+  background: rgba(8, 9, 10, 0.35);
+  transition: border-color 0.5s ease, color 0.5s ease, transform 0.5s ease, background 0.5s ease;
+  position: relative;
+}
+.listen__link:hover,
+.listen__link:focus-visible {
+  color: var(--ember-glow);
+  border-color: var(--ember);
+  background: rgba(31, 46, 35, 0.35);
+  transform: translateY(-3px);
+}
+.listen__link svg {
+  width: 22px; height: 22px;
+  color: var(--ember);
+  opacity: 0.85;
+}
+.listen__link-sub {
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--ash);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   FOOTER
+   ════════════════════════════════════════════════════════════════════════════ */
+footer {
+  padding: clamp(2.5rem, 5vw, 4rem) var(--gut) 2rem;
+  border-top: var(--border-faint);
+  background: linear-gradient(180deg, transparent, rgba(8, 9, 10, 0.5));
+  position: relative;
+  z-index: 1;
+}
+.foot {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+  align-items: center;
+  text-align: center;
+}
+@media (min-width: 720px) {
+  .foot {
+    grid-template-columns: 1fr auto 1fr;
+    text-align: left;
+  }
+  .foot__right { text-align: right; }
+}
+.foot__brand {
+  font-family: var(--f-head);
+  font-size: 0.78rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+.foot__mark {
+  width: 42px; height: auto;
+  color: var(--ember);
+  margin: 0 auto;
+  opacity: 0.7;
+}
+.foot__mark path { stroke: currentColor; fill: none; }
+
+.foot__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  justify-content: center;
+}
+@media (min-width: 720px) {
+  .foot__links { justify-content: flex-end; }
+}
+.foot__links a {
+  font-family: var(--f-head);
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ash);
+  transition: color 0.5s ease;
+}
+.foot__links a:hover { color: var(--ember); }
+.foot__links a[aria-disabled="true"] {
+  color: var(--ash-deep);
+  opacity: 0.55;
+  pointer-events: none;
+  cursor: default;
+}
+
+.foot__fineprint {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: var(--border-faint);
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--ash-deep);
+  text-align: center;
+  max-width: var(--maxw);
+  margin-inline: auto;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ════════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .sigil, .wordmark, .hero__tagline, .hero__locale, .hero__cue {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar" role="banner">
+  <span class="topbar__mark" aria-hidden="true">Hjartarvé · Est. by oath</span>
+  <nav class="topbar__nav" aria-label="Primary">
+    <a href="#about">Of the band</a>
+    <a href="#album">The new rite</a>
+    <a href="#reviews">Voices</a>
+    <a href="#listen">Hearken</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ══════════════════════════════════════ HERO ══════════════════════════════════════ -->
+  <section class="hero" aria-labelledby="wordmark">
+    <div class="fog fog--moss  fog--a hero__fog-1" aria-hidden="true"></div>
+    <div class="fog fog--ember fog--b hero__fog-2" aria-hidden="true"></div>
+    <div class="fog fog--ash   fog--c hero__fog-3" aria-hidden="true"></div>
+
+    <div class="wrap hero__inner">
+
+      <!-- Antler / bind-rune sigil -->
+      <svg class="sigil" viewBox="0 0 200 240" aria-hidden="true" focusable="false">
+        <!-- outer arc, top -->
+        <path d="M40 70 Q100 22 160 70" stroke-width="0.8" stroke-linecap="round" opacity="0.55"/>
+        <!-- antler left -->
+        <path d="M100 50 L72 12" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M86 30 L62 28"  stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M80 22 L72 4"   stroke-width="1.0" stroke-linecap="round"/>
+        <!-- antler right -->
+        <path d="M100 50 L128 12" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M114 30 L138 28" stroke-width="1.2" stroke-linecap="round"/>
+        <path d="M120 22 L128 4"  stroke-width="1.0" stroke-linecap="round"/>
+        <!-- skull/center node -->
+        <circle cx="100" cy="64" r="6" stroke-width="1" />
+        <circle cx="100" cy="64" r="2" stroke-width="0.6"/>
+        <!-- central staff -->
+        <line x1="100" y1="70" x2="100" y2="222" stroke-width="1.2" stroke-linecap="round"/>
+        <!-- crossbars (bind-rune) -->
+        <line x1="78"  y1="110" x2="122" y2="130" stroke-width="1" stroke-linecap="round"/>
+        <line x1="122" y1="110" x2="78"  y2="130" stroke-width="1" stroke-linecap="round"/>
+        <line x1="84"  y1="160" x2="116" y2="160" stroke-width="1" stroke-linecap="round"/>
+        <line x1="92"  y1="190" x2="108" y2="170" stroke-width="0.9" stroke-linecap="round"/>
+        <line x1="108" y1="190" x2="92"  y2="170" stroke-width="0.9" stroke-linecap="round"/>
+        <!-- outer arc, bottom -->
+        <path d="M40 222 Q100 244 160 222" stroke-width="0.8" stroke-linecap="round" opacity="0.55"/>
+        <!-- side hairline frame -->
+        <line x1="32" y1="80" x2="32" y2="210" stroke-width="0.5" opacity="0.35"/>
+        <line x1="168" y1="80" x2="168" y2="210" stroke-width="0.5" opacity="0.35"/>
+      </svg>
+
+      <h1 id="wordmark" class="wordmark">Hjartarvé</h1>
+      <p class="hero__tagline">Songs raised from root and stone.</p>
+      <p class="hero__locale" aria-hidden="true">Of Northern Forests · MMXXVI</p>
+
+    </div>
+
+    <div class="hero__cue" aria-hidden="true">Descend</div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════ DIVIDER ══════════════════════════════════════ -->
+  <div class="wrap divider" aria-hidden="true">
+    <span class="divider__line"></span>
+    <svg class="divider__runes" viewBox="0 0 90 24" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <!-- thorn -->
+        <path d="M10 2 L10 22"/>
+        <path d="M10 6 L18 12 L10 18"/>
+        <!-- othala -->
+        <path d="M45 4 L41 10 L45 14 L49 10 Z"/>
+        <path d="M41 10 L37 22"/>
+        <path d="M49 10 L53 22"/>
+        <!-- thorn mirror -->
+        <path d="M80 2 L80 22"/>
+        <path d="M80 6 L72 12 L80 18"/>
+      </g>
+    </svg>
+    <span class="divider__line"></span>
+  </div>
+
+
+  <!-- ══════════════════════════════════════ ABOUT ══════════════════════════════════════ -->
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="fog fog--moss fog--a about__fog" aria-hidden="true"></div>
+
+    <div class="wrap about__grid">
+
+      <div class="about__head">
+        <span class="eyebrow">Of the band</span>
+        <h2 id="about-title" class="section-title">Born of the<br>old forest</h2>
+        <p class="lede">A folk metal rite from the deep North — old gods, older trees, and a hearth that has never gone cold.</p>
+
+        <svg class="about__sigil" viewBox="0 0 200 80" aria-hidden="true" focusable="false">
+          <g stroke="currentColor" stroke-width="0.7" stroke-linecap="round" fill="none">
+            <path d="M10 40 L190 40"/>
+            <path d="M40 40 L60 20 L80 40 L100 20 L120 40 L140 20 L160 40"/>
+            <circle cx="100" cy="40" r="5"/>
+            <path d="M100 25 L100 55"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="about__body">
+        <p>
+          Hjartarvé — <em>"the heart's inheritance"</em> — was sworn into being beneath a winter
+          moon on the borderlands between forest and fjord. Three players, one
+          oath: to carry the songs of the old country forward without softening,
+          without translation, without apology. Heavy guitars give way to
+          kantele and tagelharpa; ritual drums move under a voice that knows
+          when to whisper and when to break the sky.
+        </p>
+        <p>
+          The lyrics are kept in <em>Old Norse</em> and <em>Finnish</em> — languages the band
+          treats less as ornament than as instrument. What is sung is what was
+          carried: invocations to the forest-mother, lamentations for the lost
+          kin, oaths sworn in smoke and iron. Where translation appears, it
+          appears only in the margins, as a guest in another's house.
+        </p>
+        <p>
+          They record by candlelight in a cabin north of the Arctic Circle. They
+          tour rarely and with intention. They believe that some music ought to
+          be earned — and that the listening of it is itself a small, returning rite.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════ DIVIDER ══════════════════════════════════════ -->
+  <div class="wrap divider" aria-hidden="true">
+    <span class="divider__line"></span>
+    <svg class="divider__runes" viewBox="0 0 90 24" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <path d="M10 2 L10 22"/>
+        <path d="M10 6 L18 12 L10 18"/>
+        <path d="M45 4 L41 10 L45 14 L49 10 Z"/>
+        <path d="M41 10 L37 22"/>
+        <path d="M49 10 L53 22"/>
+        <path d="M80 2 L80 22"/>
+        <path d="M80 6 L72 12 L80 18"/>
+      </g>
+    </svg>
+    <span class="divider__line"></span>
+  </div>
+
+
+  <!-- ══════════════════════════════════════ ALBUM SPOTLIGHT ══════════════════════════════════════ -->
+  <section class="album" id="album" aria-labelledby="album-title">
+    <div class="fog fog--moss  fog--a album__fog-1" aria-hidden="true"></div>
+    <div class="fog fog--ember fog--c album__fog-2" aria-hidden="true"></div>
+
+    <div class="wrap album__grid">
+
+      <figure class="album__art" aria-label="Album cover for Heyr Oss, Skogarmóðir">
+        <img src="album-1.png"
+             alt="Heyr Oss, Skogarmóðir — Hjartarvé. A moss-crowned forest-mother with antlers stands before a moonlit northern woodland, her gaze lowered, draped in lichen and roots."
+             width="600" height="600"
+             decoding="async" loading="lazy">
+      </figure>
+
+      <div class="album__content">
+        <svg class="album__branch" viewBox="0 0 24 400" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g stroke-linecap="round" stroke-width="0.9">
+            <path d="M12 4 L12 396"/>
+            <path d="M12 40 L4 28"/>
+            <path d="M12 70 L22 60"/>
+            <path d="M12 120 L2 108"/>
+            <path d="M12 160 L20 152"/>
+            <path d="M12 210 L4 198"/>
+            <path d="M12 250 L22 240"/>
+            <path d="M12 300 L2 288"/>
+            <path d="M12 340 L20 330"/>
+            <path d="M12 380 L4 368"/>
+          </g>
+        </svg>
+
+        <span class="eyebrow album__eyebrow">New incantation · I.</span>
+
+        <h2 id="album-title" class="album__title">Heyr Oss,<br>Skogarmóðir</h2>
+        <p class="album__translation">Hear us, mother of the forest</p>
+
+        <p class="album__pitch">
+          Eight movements raised in <em>candle-smoke and iron</em>. A liturgy for
+          the woods that watched our ancestors and outlived their names.
+          Recorded by hand in a cabin where the only audience was the wind, and
+          released now as an offering rather than an album.
+        </p>
+
+        <dl class="album__meta">
+          <div class="album__meta-item">
+            <dt>Release</dt>
+            <!-- TODO: release date -->
+            <dd>Vetrnætr · 14 November 2026</dd>
+          </div>
+          <div class="album__meta-item">
+            <dt>Movements</dt>
+            <dd>Eight</dd>
+          </div>
+          <div class="album__meta-item">
+            <dt>Tongue</dt>
+            <dd>Old Norse, Finnish</dd>
+          </div>
+        </dl>
+
+        <a class="cta" href="https://suno.com/playlist/c3fa0b5c-636f-4a60-970b-5753b3df91d2" target="_blank" rel="noopener" aria-label="Listen to Heyr Oss, Skogarmóðir on Suno">
+          <span>Listen on Suno</span>
+          <span class="cta__arrow" aria-hidden="true"></span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════ DIVIDER ══════════════════════════════════════ -->
+  <div class="wrap divider" aria-hidden="true">
+    <span class="divider__line"></span>
+    <svg class="divider__runes" viewBox="0 0 90 24" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <path d="M10 2 L10 22"/>
+        <path d="M10 6 L18 12 L10 18"/>
+        <path d="M45 4 L41 10 L45 14 L49 10 Z"/>
+        <path d="M41 10 L37 22"/>
+        <path d="M49 10 L53 22"/>
+        <path d="M80 2 L80 22"/>
+        <path d="M80 6 L72 12 L80 18"/>
+      </g>
+    </svg>
+    <span class="divider__line"></span>
+  </div>
+
+
+  <!-- ══════════════════════════════════════ REVIEWS ══════════════════════════════════════ -->
+  <section class="reviews" id="reviews" aria-labelledby="reviews-title">
+    <div class="fog fog--moss fog--b reviews__fog" aria-hidden="true"></div>
+
+    <div class="wrap">
+
+      <header class="reviews__head">
+        <span class="eyebrow">Voices from the hall</span>
+        <h2 id="reviews-title" class="section-title">What is being said</h2>
+        <p class="lede">Notices from the slow-press magazines that still listen by candlelight.</p>
+      </header>
+
+      <article class="review-feature" aria-labelledby="feature-title">
+        <header class="review-feature__masthead">
+          <div class="review-feature__outlet">
+            <span class="review-feature__magazine">Magazine Nordlicht</span>
+            <span class="review-feature__strap">Das Magazin für Schwermetall und Nordische Klangkunst</span>
+            <span class="review-feature__locale">Hamburg · est. 1987</span>
+          </div>
+          <div class="review-feature__byline">
+            <span class="review-feature__byline-label">Reviewed by</span>
+            <span class="review-feature__author">Torben Halvorsen-Rieke</span>
+            <span class="review-feature__author-role">Senior Editor · Nordlicht</span>
+          </div>
+        </header>
+
+        <header class="review-feature__album">
+          <span class="review-feature__band">Hjartarvé</span>
+          <h3 id="feature-title" class="review-feature__title">Heyr Oss, Skogarmóðir</h3>
+          <span class="review-feature__sub">8 tracks · independent release</span>
+          <div class="rune-rating" role="img" aria-label="Four and a half out of five runes">
+            <span class="sr-only">Rated four and a half of five.</span>
+            <svg class="rune-on"  viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <svg class="rune-on"  viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <svg class="rune-on"  viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <svg class="rune-on"  viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <svg class="rune-off" viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="2 2"/></svg>
+          </div>
+        </header>
+
+        <div class="review-feature__body">
+          <p>There are folk metal records that wear the antlers, and there are folk metal records that grew them. Hjartarvé's debut, "Heyr Oss, Skogarmóðir" — roughly, "Hear Us, Forest-Mother" — belongs unambiguously to the second category. It is an album that does not so much arrive as appear, the way a wolf appears at the treeline: you did not hear it walking, and now it is simply there, regarding you.</p>
+
+          <p>The setup is deceptively old-fashioned: eight tracks, a single concept, no skits, no guest vocalists, no apologies. A warband walks into the forest, invokes its goddess, buries its dead, marches to victory, drinks itself stupid, gets stalked by something the elder folk will not name, and watches the world freeze around it until a wandering vǫlva trades her marrow for the spring. If that summary sounds like a fantasy novel synopsis, understand that the band does not treat it as one. There is no winking, no metal-as-cosplay grin. The album is sung the way one sings a thing one believes.</p>
+
+          <p>Musically, Hjartarvé command an unusually broad folk-metal palette without ever sounding like they are showing off. Nyckelharpa and hardanger fiddle carry as much melodic weight as the guitars; jaw harp and bone flute do real structural work rather than ornamental cameo duty. The tremolo riffing of opener "Hjǫrtr í Eldi" gives way, two tracks later, to the gang-shouted humppa swagger of "Mjǫðrhǫll Eilíf," which is the most fun anyone has had on a Nordic stage since Korpiklaani last fell off one. And then — and this is where the album turns from good to remarkable — "Fimbulvetr Án Vár" arrives like a glacier. Slow, crushing, doom-paced, harsh-vocal despair trading with deep clean dirge, and a bridge in which the recurring invocation "Heyr oss, Skogarmóðir" finally, devastatingly, goes unanswered. The forest-mother who blessed the march in track 3 does not hear the village in track 6. It is the heaviest moment on a heavy record, and there is not a blast beat in it.</p>
+
+          <p>The two acoustic islands — "Vetrarkumbl," a hushed funeral rite, and closer "Várkoma," a tender pagan vernal hymn — are not breathers. They are load-bearing. The album's structural symmetry, with these two acoustic pieces flanking six metal tracks and the recurring "vér erum heim komin" ("we are come home") bookending the record, reveals itself slowly on repeated listens, the way the runes on a weathered stone reveal themselves only when the light falls right.</p>
+
+          <p>A note on the language. The lyrics are written in a mock-archaic register sprinkled with genuine Old Norse — <em>heyr oss</em>, <em>skál til Skogarmóðir</em>, <em>galdr vǫlvunnar</em>, <em>fimbulvetr án vár</em> — and the spelling honours the eth and the o-with-tail where it should. Some will find this precious. They are wrong. The phonetics do half the heavy lifting on this record, and the band have the good sense to let the consonants clatter against the snares like axes against shields.</p>
+
+          <p>If there is a complaint to be made, it is that the production is sometimes too raw for its own good — the warband choirs on "Hornblástr Drengja" want a touch more low end to truly flatten the listener — but this is the complaint of a man who wants more of a thing he already loves. "Heyr Oss, Skogarmóðir" is not a debut. It is an arrival. Light the bonfire. Pour the horn. Hjartarvé have come down from the trees, and they have brought the forest with them.</p>
+        </div>
+
+        <footer class="review-feature__foot">
+          <p><span class="review-feature__chip-label">For fans of</span>Moonsorrow, early Korpiklaani, Wardruna's heavier moments, Eluveitie circa "Slania," Týr when Týr remembers to be angry, the better half of Heilung.</p>
+          <p><span class="review-feature__chip-label">Standout tracks</span>"Fimbulvetr Án Vár," "Galdr Vǫlvunnar," "Mjǫðrhǫll Eilíf," "Várkoma."</p>
+          <p class="review-feature__skal" aria-label="Skål">Skål.</p>
+        </footer>
+      </article>
+
+      <ul class="reviews__list" role="list">
+
+        <li class="review">
+          <span class="review__quote-mark" aria-hidden="true">"</span>
+          <p class="review__quote">
+            A record that does not perform reverence — it simply <em>is</em> reverent.
+            By the third movement I had stopped taking notes; by the seventh I
+            had moved my chair closer to the speakers as one moves closer to a fire.
+          </p>
+          <div class="review__meta">
+            <div>
+              <span class="review__outlet">Jötunn Quarterly</span>
+              <span class="review__byline">— A. Holmgren</span>
+            </div>
+            <div class="rune-rating" role="img" aria-label="Five out of five runes">
+              <span class="sr-only">Rated five of five.</span>
+              <svg class="rune-on"  viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg class="rune-on"  viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg class="rune-on"  viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg class="rune-on"  viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg class="rune-on"  viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </li>
+
+        <li class="review">
+          <span class="review__quote-mark" aria-hidden="true">"</span>
+          <p class="review__quote">
+            Heyr Oss is not background music. It will not let you read your
+            email. It will, if you give it the room, do something stranger and
+            older — it will ask you what you remember and wait for the answer.
+            A devastating, patient record.
+          </p>
+          <div class="review__meta">
+            <div>
+              <span class="review__outlet">The Bonefire Review</span>
+              <span class="review__byline">— Iiris Mäkelä</span>
+            </div>
+            <div class="rune-rating" role="img" aria-label="Four and a half out of five runes">
+              <span class="sr-only">Rated four and a half of five.</span>
+              <svg class="rune-on" viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg class="rune-on" viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg class="rune-on" viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg class="rune-on" viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg class="rune-off" viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="2 2"/></svg>
+            </div>
+          </div>
+        </li>
+
+        <li class="review">
+          <span class="review__quote-mark" aria-hidden="true">"</span>
+          <p class="review__quote">
+            Where lesser bands ornament their folklore, Hjartarvé inhabit it.
+            The kantele lines are not garnish — they are the spine. A debut
+            record so unhurried it makes most of its peers sound like they are
+            arguing.
+          </p>
+          <div class="review__meta">
+            <div>
+              <span class="review__outlet">Skald &amp; Saga Magazine</span>
+              <span class="review__byline">— Magnús Eldfjall</span>
+            </div>
+            <div class="rune-rating" role="img" aria-label="Five out of five runes">
+              <span class="sr-only">Rated five of five.</span>
+              <svg class="rune-on" viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg class="rune-on" viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg class="rune-on" viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg class="rune-on" viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg class="rune-on" viewBox="0 0 14 18" aria-hidden="true"><path d="M7 1 L7 17 M7 4 L13 9 L7 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════ DIVIDER ══════════════════════════════════════ -->
+  <div class="wrap divider" aria-hidden="true">
+    <span class="divider__line"></span>
+    <svg class="divider__runes" viewBox="0 0 90 24" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <path d="M10 2 L10 22"/>
+        <path d="M10 6 L18 12 L10 18"/>
+        <path d="M45 4 L41 10 L45 14 L49 10 Z"/>
+        <path d="M41 10 L37 22"/>
+        <path d="M49 10 L53 22"/>
+        <path d="M80 2 L80 22"/>
+        <path d="M80 6 L72 12 L80 18"/>
+      </g>
+    </svg>
+    <span class="divider__line"></span>
+  </div>
+
+
+  <!-- ══════════════════════════════════════ LISTEN ══════════════════════════════════════ -->
+  <section class="listen" id="listen" aria-labelledby="listen-title">
+    <div class="fog fog--ember fog--a listen__fog" aria-hidden="true"></div>
+
+    <div class="wrap">
+      <span class="eyebrow">Where to hearken</span>
+      <h2 id="listen-title" class="section-title">Open the door</h2>
+      <p class="lede">All listening is, for the moment, kept in one hall.</p>
+
+      <div class="listen__links">
+        <a class="listen__link" href="https://suno.com/playlist/c3fa0b5c-636f-4a60-970b-5753b3df91d2" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M9 8 L9 16 M9 12 L15 8 L15 16 Z" stroke-linejoin="round"/>
+          </svg>
+          <span>Listen on Suno</span>
+          <span class="listen__link-sub">the full eight movements</span>
+        </a>
+
+        <a class="listen__link" href="https://suno.com/s/oO1Fc07fbvR3mxlc" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <path d="M4 14 L4 19 L20 19 L20 14"/>
+            <path d="M12 4 L12 15 M7 10 L12 15 L17 10" stroke-linejoin="round"/>
+          </svg>
+          <span>Single — Hjǫrtr í Eldi</span>
+          <span class="listen__link-sub">the opening movement, free</span>
+        </a>
+
+        <a class="listen__link" href="https://suno.com/playlist/c3fa0b5c-636f-4a60-970b-5753b3df91d2" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <path d="M4 6 L20 6 L20 18 L4 18 Z"/>
+            <path d="M4 6 L12 13 L20 6"/>
+          </svg>
+          <span>Join the hearth</span>
+          <span class="listen__link-sub">letters by season, never often</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+<!-- ══════════════════════════════════════ FOOTER ══════════════════════════════════════ -->
+<footer role="contentinfo">
+  <div class="foot">
+    <span class="foot__brand">Hjartarvé · The Heart's Inheritance</span>
+
+    <svg class="foot__mark" viewBox="0 0 60 60" aria-hidden="true" focusable="false">
+      <g stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round">
+        <circle cx="30" cy="30" r="20" opacity="0.6"/>
+        <path d="M30 12 L24 4"/>
+        <path d="M30 12 L36 4"/>
+        <path d="M30 12 L30 48"/>
+        <path d="M22 28 L30 22 L38 28"/>
+        <path d="M22 40 L30 34 L38 40"/>
+      </g>
+    </svg>
+
+    <nav class="foot__links foot__right" aria-label="Footer">
+      <!-- TODO: social links -->
+      <a aria-disabled="true" aria-label="Bandcamp — coming soon">Bandcamp</a>
+      <a href="https://www.instagram.com/hjartarve?igsh=Z3RzaWZhM3Yxb3lu&amp;utm_source=qr" target="_blank" rel="noopener" aria-label="Hjartarvé on Instagram">Instagram</a>
+      <a aria-disabled="true" aria-label="Hearth-mail — coming soon">Hearth-mail</a>
+    </nav>
+  </div>
+
+  <p class="foot__fineprint">
+    © MMXXVI Hjartarvé · All songs kept in trust of the forest.<br>
+    Site raised by hand · no cookies, no spirits captured.
+  </p>
+</footer>
+
+</body>
+</html>
