@@ -18,7 +18,6 @@ Deployment target: **Azure Static Web Apps**, served as-is.
 
 The `<head>` comment block lists the placeholders that must be replaced before launch. Search for these literal strings:
 
-- `TODO: release date` — placeholder "Vetrnætr · 14 November 2026".
 - `TODO: social links` — footer Bandcamp/Instagram hrefs.
 
 When making changes, keep the in-file `<head>` comment block in sync with what's still outstanding.
