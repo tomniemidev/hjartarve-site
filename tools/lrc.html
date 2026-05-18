@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Hjartarvé · Tap-to-Time (LRC editor)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cormorant+Unicase:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --ink:        #08090a;
+  --bark:       #13181a;
+  --bark-soft:  #181e1f;
+  --moss-deep:  #14201a;
+  --bone:       #e6dcc4;
+  --bone-soft:  #d3c8ad;
+  --ash:        #9a9078;
+  --ash-deep:   #6b6354;
+  --ember:      #b8864a;
+  --ember-glow: #d9a566;
+
+  --f-display:  'UnifrakturMaguntia', serif;
+  --f-head:     'Cormorant Unicase', serif;
+  --f-body:     'EB Garamond', Georgia, serif;
+
+  --border-faint: 1px solid rgba(230, 220, 196, 0.08);
+  --border-ember: 1px solid rgba(184, 134, 74, 0.35);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { background: var(--ink); }
+body {
+  font-family: var(--f-body);
+  color: var(--bone);
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(31, 46, 35, 0.35), transparent 70%),
+    linear-gradient(180deg, var(--bark) 0%, var(--bark-soft) 100%);
+  min-height: 100vh;
+  padding: clamp(1.4rem, 4vw, 3rem);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.wrap { max-width: 64rem; margin: 0 auto; }
+
+header.app {
+  margin-bottom: 2rem;
+  padding-bottom: 1.4rem;
+  border-bottom: var(--border-faint);
+}
+.app__brand {
+  font-family: var(--f-head);
+  font-size: 0.7rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--ember);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+.app__title {
+  font-family: var(--f-display);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 400;
+  color: var(--bone);
+  line-height: 1;
+  margin-bottom: 0.6rem;
+}
+.app__lede {
+  font-style: italic;
+  color: var(--bone-soft);
+  max-width: 36rem;
+}
+kbd {
+  font-family: var(--f-head);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border: var(--border-ember);
+  background: rgba(184, 134, 74, 0.07);
+  color: var(--ember-glow);
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.setup {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 1.6rem;
+  background: linear-gradient(135deg, var(--moss-deep), var(--bark));
+  border: var(--border-ember);
+  margin-bottom: 2rem;
+}
+@media (min-width: 720px) {
+  .setup { grid-template-columns: 1fr 1fr; }
+}
+.setup label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: var(--f-head);
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+.setup input[type="file"] {
+  font: inherit;
+  font-family: var(--f-body);
+  font-size: 0.9rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--bone-soft);
+  padding: 0.6rem;
+  background: rgba(8, 9, 10, 0.4);
+  border: 1px solid rgba(184, 134, 74, 0.22);
+  cursor: pointer;
+}
+.setup input[type="file"]::file-selector-button {
+  font: inherit;
+  margin-right: 0.8rem;
+  padding: 0.3rem 0.8rem;
+  background: transparent;
+  color: var(--ember);
+  border: var(--border-ember);
+  cursor: pointer;
+}
+
+.editor[hidden] { display: none; }
+
+.player {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem 1.6rem;
+  background: linear-gradient(135deg, var(--moss-deep), var(--bark));
+  border: var(--border-ember);
+  margin-bottom: 1rem;
+  position: sticky;
+  top: 0.5rem;
+  z-index: 5;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+}
+.player__play {
+  width: 3rem; height: 3rem;
+  background: transparent;
+  border: var(--border-ember);
+  color: var(--bone);
+  font: inherit;
+  font-size: 1rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  transition: color 0.3s, background 0.3s;
+}
+.player__play:hover { color: var(--ember-glow); background: rgba(184, 134, 74, 0.1); }
+.player__play svg { width: 14px; height: 14px; }
+.player__info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.player__name {
+  font-family: var(--f-head);
+  font-size: 1rem;
+  color: var(--bone);
+  letter-spacing: 0.04em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.player__progress {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.player__bar {
+  position: relative;
+  height: 2px;
+  background: rgba(154, 144, 120, 0.22);
+  cursor: pointer;
+  min-width: 6rem;
+  width: 12rem;
+}
+.player__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  background: linear-gradient(90deg, var(--ember), var(--ember-glow));
+}
+.player__time {
+  font-family: var(--f-head);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  color: var(--ash);
+  font-variant-numeric: tabular-nums;
+  min-width: 7ch;
+  text-align: right;
+}
+@media (max-width: 640px) {
+  .player { grid-template-columns: auto 1fr; }
+  .player__progress { grid-column: 1 / -1; }
+  .player__bar { width: 100%; }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0.5rem 0 1.4rem;
+}
+.actions button {
+  font: inherit;
+  font-family: var(--f-head);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--bone-soft);
+  background: rgba(8, 9, 10, 0.4);
+  border: 1px solid rgba(184, 134, 74, 0.28);
+  padding: 0.65rem 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s, background 0.3s;
+}
+.actions button:hover,
+.actions button:focus-visible {
+  color: var(--ember-glow);
+  border-color: var(--ember);
+  background: rgba(31, 46, 35, 0.4);
+  outline: none;
+}
+.actions button.is-primary {
+  color: var(--bone);
+  border-color: var(--ember);
+  background: linear-gradient(135deg, rgba(184, 134, 74, 0.18), rgba(184, 134, 74, 0.04));
+}
+
+.stats {
+  font-family: var(--f-head);
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ash);
+  padding: 0.6rem 0 1rem;
+}
+.stats em { font-style: normal; color: var(--ember); }
+
+.rows {
+  list-style: none;
+  border-top: var(--border-faint);
+}
+.row {
+  display: grid;
+  grid-template-columns: 5.2rem 1fr;
+  gap: 0.8rem;
+  padding: 0.55rem 0.8rem;
+  border-bottom: var(--border-faint);
+  font-family: var(--f-body);
+  cursor: default;
+  transition: background 0.3s, color 0.3s;
+}
+.row__time {
+  font-family: var(--f-head);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--ash-deep);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.row__text {
+  color: var(--bone-soft);
+}
+.row--blank { padding: 0.25rem 0.8rem; }
+.row--blank .row__text { color: var(--ash-deep); font-style: italic; opacity: 0.5; }
+.row--section .row__text {
+  font-family: var(--f-head);
+  font-size: 0.74rem;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--ember);
+  opacity: 0.85;
+}
+.row--lyric { cursor: pointer; }
+.row--lyric:hover { background: rgba(184, 134, 74, 0.04); }
+.row.is-stamped .row__time { color: var(--bone); }
+.row.is-stamped .row__text { color: var(--bone); }
+.row.is-next {
+  background: linear-gradient(90deg, rgba(184, 134, 74, 0.16), transparent 70%);
+  box-shadow: inset 2px 0 0 var(--ember);
+}
+.row.is-next .row__text { color: var(--bone); }
+.row.is-next .row__time::before {
+  content: '◉ ';
+  color: var(--ember);
+}
+
+footer.app {
+  margin-top: 2rem;
+  padding-top: 1.4rem;
+  border-top: var(--border-faint);
+  font-size: 0.85rem;
+  color: var(--ash);
+}
+footer.app code {
+  font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+  font-size: 0.85em;
+  color: var(--bone-soft);
+}
+
+.error {
+  margin: 1rem 0;
+  padding: 0.8rem 1rem;
+  background: rgba(160, 60, 60, 0.15);
+  border: 1px solid rgba(180, 80, 80, 0.4);
+  color: #e8c8c8;
+  font-style: italic;
+  display: none;
+}
+.error.is-visible { display: block; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <header class="app">
+    <span class="app__brand">Hjartarvé · internal tool</span>
+    <h1 class="app__title">Tap-to-Time</h1>
+    <p class="app__lede">
+      Stamp every lyric line as the band sings it. Pick an <code>mp3</code> and its matching <code>txt</code>,
+      press <kbd>Enter</kbd> to play, then tap <kbd>Space</kbd> exactly when each line begins.
+      <kbd>Backspace</kbd> undoes. Section markers like <code>[Verse 1]</code> are auto-skipped.
+      Hit <em>Export .lrc</em> when done.
+    </p>
+  </header>
+
+  <section class="setup">
+    <label>
+      Audio file (.mp3)
+      <input type="file" accept="audio/*" id="mp3-input">
+    </label>
+    <label>
+      Lyrics file (.txt)
+      <input type="file" accept=".txt,text/plain" id="txt-input">
+    </label>
+  </section>
+
+  <div class="error" id="error"></div>
+
+  <section class="editor" id="editor" hidden>
+
+    <div class="player">
+      <button class="player__play" id="play" type="button" aria-label="Play">
+        <svg id="play-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 5 L19 12 L7 19 Z" fill="currentColor"/>
+        </svg>
+      </button>
+      <div class="player__info">
+        <span class="player__name" id="track-name">—</span>
+        <div class="player__progress">
+          <div class="player__bar" id="bar"><div class="player__fill" id="fill"></div></div>
+        </div>
+      </div>
+      <span class="player__time" id="time">0:00.00</span>
+    </div>
+
+    <div class="actions">
+      <button id="stamp" class="is-primary" type="button">Stamp (Space)</button>
+      <button id="undo" type="button">Undo (⌫)</button>
+      <button id="export" type="button">Export .lrc</button>
+      <button id="reset" type="button">Reset all stamps</button>
+    </div>
+
+    <p class="stats" id="stats"></p>
+
+    <ol class="rows" id="rows"></ol>
+
+  </section>
+
+  <footer class="app">
+    Saves your progress to this browser's localStorage automatically (keyed by mp3 filename).
+    Close the tab whenever you like — your stamps survive.
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var audio = new Audio();
+  var rows = [];
+  var nextIndex = -1;
+  var trackName = '';
+
+  var $ = function (id) { return document.getElementById(id); };
+  var mp3In   = $('mp3-input');
+  var txtIn   = $('txt-input');
+  var editor  = $('editor');
+  var rowsEl  = $('rows');
+  var nameEl  = $('track-name');
+  var timeEl  = $('time');
+  var fillEl  = $('fill');
+  var barEl   = $('bar');
+  var playBtn = $('play');
+  var playIc  = $('play-icon');
+  var statsEl = $('stats');
+  var errEl   = $('error');
+
+  // ─── File loading ──────────────────────────────────────────────
+  mp3In.addEventListener('change', function (e) {
+    var f = e.target.files[0];
+    if (!f) return;
+    trackName = f.name.replace(/\.mp3$/i, '');
+    audio.src = URL.createObjectURL(f);
+    nameEl.textContent = trackName;
+    tryEnterEditor();
+  });
+
+  txtIn.addEventListener('change', function (e) {
+    var f = e.target.files[0];
+    if (!f) return;
+    var r = new FileReader();
+    r.onload = function () {
+      try { parseRows(r.result); } catch (err) { showError(err.message); }
+      tryEnterEditor();
+    };
+    r.readAsText(f, 'utf-8');
+  });
+
+  function showError(msg) {
+    errEl.textContent = msg;
+    errEl.classList.add('is-visible');
+    setTimeout(function () { errEl.classList.remove('is-visible'); }, 6000);
+  }
+
+  function tryEnterEditor() {
+    if (audio.src && rows.length) {
+      editor.hidden = false;
+      render();
+    }
+  }
+
+  // ─── Row parsing ───────────────────────────────────────────────
+  function parseRows(text) {
+    rows = [];
+    var lines = text.split(/\r?\n/);
+    // Drop trailing empty lines (from final newline in file)
+    while (lines.length && lines[lines.length - 1].trim() === '') lines.pop();
+    for (var i = 0; i < lines.length; i++) {
+      var L = lines[i];
+      var s = L.trim();
+      if (s === '') {
+        rows.push({ kind: 'blank',   text: '', time: null });
+      } else if (/^\[[^0-9].*\]$/.test(s)) {
+        // [Intro] / [Verse 1] / [Chorus] — anything in brackets not starting with a digit
+        rows.push({ kind: 'section', text: s, time: null });
+      } else {
+        rows.push({ kind: 'lyric',   text: L, time: null });
+      }
+    }
+    restore();
+    findNext();
+  }
+
+  // ─── Stamping ──────────────────────────────────────────────────
+  function findNext() {
+    nextIndex = -1;
+    for (var i = 0; i < rows.length; i++) {
+      if (rows[i].kind === 'lyric' && rows[i].time == null) {
+        nextIndex = i;
+        return;
+      }
+    }
+  }
+
+  function stamp() {
+    if (!audio.src) return;
+    if (nextIndex < 0) return;
+    rows[nextIndex].time = audio.currentTime;
+    findNext();
+    persist();
+    render();
+  }
+
+  function undo() {
+    for (var i = rows.length - 1; i >= 0; i--) {
+      if (rows[i].kind === 'lyric' && rows[i].time != null) {
+        rows[i].time = null;
+        findNext();
+        persist();
+        render();
+        return;
+      }
+    }
+  }
+
+  function resetAll() {
+    if (!confirm('Clear every stamp for "' + trackName + '"?')) return;
+    rows.forEach(function (r) { if (r.kind === 'lyric') r.time = null; });
+    findNext();
+    persist();
+    render();
+  }
+
+  $('stamp' ).addEventListener('click', stamp);
+  $('undo'  ).addEventListener('click', undo);
+  $('reset' ).addEventListener('click', resetAll);
+
+  // ─── Keyboard ──────────────────────────────────────────────────
+  document.addEventListener('keydown', function (e) {
+    if (e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+    if (e.code === 'Space')     { e.preventDefault(); stamp(); }
+    else if (e.code === 'Backspace') { e.preventDefault(); undo(); }
+    else if (e.code === 'Enter')     { e.preventDefault(); togglePlay(); }
+    else if (e.code === 'ArrowLeft'  && audio.src) { e.preventDefault(); audio.currentTime = Math.max(0, audio.currentTime - (e.shiftKey ? 10 : 3)); }
+    else if (e.code === 'ArrowRight' && audio.src) { e.preventDefault(); audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + (e.shiftKey ? 10 : 3)); }
+  });
+
+  // ─── Audio ─────────────────────────────────────────────────────
+  playBtn.addEventListener('click', togglePlay);
+  function togglePlay() {
+    if (!audio.src) return;
+    if (audio.paused) audio.play().catch(function () {});
+    else audio.pause();
+  }
+  audio.addEventListener('play',  function () { playIc.innerHTML = '<path d="M7 5 L10 5 L10 19 L7 19 Z M14 5 L17 5 L17 19 L14 19 Z" fill="currentColor"/>'; playBtn.setAttribute('aria-label', 'Pause'); });
+  audio.addEventListener('pause', function () { playIc.innerHTML = '<path d="M7 5 L19 12 L7 19 Z" fill="currentColor"/>'; playBtn.setAttribute('aria-label', 'Play'); });
+  audio.addEventListener('timeupdate', function () {
+    timeEl.textContent = fmt(audio.currentTime, 2);
+    if (isFinite(audio.duration) && audio.duration > 0) {
+      fillEl.style.width = ((audio.currentTime / audio.duration) * 100) + '%';
+    }
+  });
+
+  barEl.addEventListener('click', function (e) {
+    if (!isFinite(audio.duration) || audio.duration <= 0) return;
+    var rect = barEl.getBoundingClientRect();
+    var ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    audio.currentTime = ratio * audio.duration;
+  });
+
+  // ─── Format helpers ────────────────────────────────────────────
+  function fmt(s, decimals) {
+    if (!isFinite(s) || s < 0) s = 0;
+    var m = Math.floor(s / 60);
+    var sec = s - m * 60;
+    var secStr = sec.toFixed(decimals != null ? decimals : 2);
+    if (sec < 10) secStr = '0' + secStr;
+    return m + ':' + secStr;
+  }
+  function lrcTag(s) {
+    if (!isFinite(s) || s < 0) s = 0;
+    var m = Math.floor(s / 60);
+    var sec = s - m * 60;
+    var secStr = sec.toFixed(2);
+    if (sec < 10) secStr = '0' + secStr;
+    var mStr = m < 10 ? '0' + m : String(m);
+    return '[' + mStr + ':' + secStr + ']';
+  }
+
+  // ─── Rendering ─────────────────────────────────────────────────
+  function render() {
+    rowsEl.innerHTML = '';
+    var totalLyrics = 0, stamped = 0;
+    rows.forEach(function (r, i) {
+      if (r.kind === 'lyric') {
+        totalLyrics++;
+        if (r.time != null) stamped++;
+      }
+      var li = document.createElement('li');
+      li.className = 'row row--' + r.kind;
+      if (i === nextIndex) li.classList.add('is-next');
+      if (r.kind === 'lyric' && r.time != null) li.classList.add('is-stamped');
+
+      var t = document.createElement('span');
+      t.className = 'row__time';
+      t.textContent = (r.time != null) ? lrcTag(r.time).slice(1, -1) : '';
+      var x = document.createElement('span');
+      x.className = 'row__text';
+      x.textContent = r.text;
+
+      li.appendChild(t);
+      li.appendChild(x);
+
+      if (r.kind === 'lyric') {
+        li.addEventListener('click', function () {
+          if (r.time != null) audio.currentTime = r.time;
+        });
+      }
+      rowsEl.appendChild(li);
+    });
+
+    statsEl.innerHTML = '<em>' + stamped + '</em> / ' + totalLyrics + ' lines stamped';
+    var nextEl = rowsEl.querySelector('.is-next');
+    if (nextEl) {
+      // requestAnimationFrame to let layout settle first
+      requestAnimationFrame(function () {
+        nextEl.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      });
+    }
+  }
+
+  // ─── Export ────────────────────────────────────────────────────
+  $('export').addEventListener('click', function () {
+    if (!rows.length) return;
+    var out = rows.map(function (r) {
+      if (r.kind === 'blank')   return '';
+      if (r.kind === 'section') return r.text;
+      if (r.kind === 'lyric') {
+        return (r.time != null ? lrcTag(r.time) : '') + r.text;
+      }
+      return '';
+    }).join('\n') + '\n';
+
+    var blob = new Blob([out], { type: 'text/plain;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = trackName + '.lrc';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  });
+
+  // ─── Persistence (localStorage) ────────────────────────────────
+  function key() { return 'hjartarve.lrc:' + trackName; }
+  function persist() {
+    if (!trackName) return;
+    var times = rows.map(function (r) { return r.kind === 'lyric' ? r.time : null; });
+    try { localStorage.setItem(key(), JSON.stringify(times)); } catch (e) {}
+  }
+  function restore() {
+    if (!trackName) return;
+    var data = null;
+    try { data = JSON.parse(localStorage.getItem(key()) || 'null'); } catch (e) {}
+    if (!Array.isArray(data)) return;
+    if (data.length !== rows.length) return; // safety — txt has changed shape
+    for (var i = 0; i < rows.length; i++) {
+      if (rows[i].kind === 'lyric' && typeof data[i] === 'number') {
+        rows[i].time = data[i];
+      }
+    }
+  }
+})();
+</script>
+</body>
+</html>

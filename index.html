@@ -953,6 +953,76 @@ h2.section-title {
   .tracklist__lyrics-text { padding-left: clamp(1rem, 5vw, 1.6rem); }
 }
 
+/* ─── Synced lyrics ("candlelit") ─────────────────────────────
+   Active when a track has timed lines (data-time on .lyric-line).
+   Replaces the static <pre> with per-line spans inside a scrolling pane.
+   Falls back to <pre> when no LRC has been authored. */
+.lyric-pane {
+  max-height: clamp(18rem, 50vh, 28rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ash-deep) transparent;
+  margin: 0.2rem 0 0;
+  padding: 0.8rem clamp(1rem, 3vw, 2rem) 1.4rem clamp(3.4rem, 6vw, 4.2rem);
+  border-top: var(--border-faint);
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: clamp(1rem, 0.3vw + 0.9rem, 1.08rem);
+  line-height: 1.85;
+  color: var(--bone-soft);
+  text-align: left;
+  mask-image: linear-gradient(180deg, transparent 0, #000 1.6rem, #000 calc(100% - 1.6rem), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 1.6rem, #000 calc(100% - 1.6rem), transparent 100%);
+}
+.lyric-pane::-webkit-scrollbar { width: 4px; }
+.lyric-pane::-webkit-scrollbar-thumb { background: var(--ash-deep); border-radius: 2px; }
+
+.lyric-line {
+  display: block;
+  position: relative;
+  padding: 0.1rem 0 0.1rem 0.8rem;
+  color: var(--bone-soft);
+  transition: color 0.6s ease, opacity 0.6s ease, text-shadow 0.6s ease;
+}
+.lyric-line::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.35rem; bottom: 0.35rem;
+  width: 2px;
+  background: var(--ember);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.lyric-line.is-future  { color: var(--bone-soft); opacity: 0.78; }
+.lyric-line.is-current {
+  color: var(--bone);
+  opacity: 1;
+  text-shadow: 0 0 22px rgba(217, 165, 102, 0.22);
+}
+.lyric-line.is-current::before { opacity: 1; }
+.lyric-line.is-past    {
+  color: var(--ash-deep);
+  opacity: 0.45;
+}
+
+.lyric-line--section {
+  display: block;
+  margin: 0.9rem 0 0.4rem;
+  padding-left: 0;
+  font-family: var(--f-head);
+  font-style: normal;
+  font-size: 0.7rem;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--ash);
+  opacity: 0.85;
+}
+.lyric-line--section::before { display: none; }
+.lyric-pane > .lyric-line--section:first-child { margin-top: 0; }
+
+.lyric-line--gap { display: block; height: 0.6rem; }
+
 .tracklist__alt-label {
   margin: clamp(2rem, 4vw, 2.8rem) 0 0.4rem;
   font-family: var(--f-head);
@@ -1660,85 +1730,77 @@ footer {
                 <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
               </svg>
             </summary>
-<pre class="tracklist__lyrics-text">
-[Intro]
-Heyr oss, Skogarmóðir
-Heyr oss, Næturkonungr
-Vér gangum í eldinn
-
-[Verse 1]
-Through the birken gates we treadeth
-Where the wolfsbane crowneth stone
-Bear the antler, bear the ashen blade
-Blood of mine to feed thine own
-
-Nine the torches, nine the stridings
-Nine the names we shall not speak
-Hark, the hollow oak it openeth
-What the deep wood seeks, we seek
-
-[Pre-Chorus]
-Bind the bone, bind the breath
-Bind the moon unto the moss
-
-[Chorus]
-Rise, ye horned and hallowed kin!
-Rise from root and ravens' rest!
-Drink the flame, the elder wine
-Crown us in the witching mist
-Rise, ye old ones, rise within!
-Rise the storm beneath the pines!
-Sing the song the stones did sing
-Ere the first of suns did rise
-
-[Verse 2]
-Sister-wolves, they speaketh true
-In the tongue of frost and fern
-Mother-bear, she watcheth still
-By the cairn where torches burn
-
-Carry me unto the marrow
-Carry me past sun and sea
-What was sundered, what was buried
-Greeneth now within the tree
-
-[Pre-Chorus]
-Bind the bone, bind the breath
-Bind the moon unto the moss
-
-[Chorus]
-Rise, ye horned and hallowed kin!
-Rise from root and ravens' rest!
-Drink the flame, the elder wine
-Crown us in the witching mist
-Rise, ye old ones, rise within!
-Rise the storm beneath the pines!
-Sing the song the stones did sing
-Ere the first of suns did rise
-
-[Bridge]
-And lo, the wind doth knoweth me
-And lo, the dark doth nameth me
-I am the stag, I am the spear
-I am the wound, I am the year
-
-[Breakdown]
-Hark! Hark! Hark!
-The wood awakeneth!
-
-[Final Chorus]
-Rise, ye horned and hallowed kin!
-Rise from root and ravens' rest!
-Drink the flame, the elder wine
-Crown us in the witching mist
-Rise, ye old ones, rise within!
-Rise the storm beneath the pines!
-Sing the song the stones did sing
-Ere the first of suns did rise
-
-[Outro]
-Heyr oss, Skogarmóðir
-Vér erum heim komin</pre>
+<div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line" data-time="2.63">Heyr oss, Skogarmóðir</span>
+              <span class="lyric-line" data-time="5.82">Heyr oss, Næturkonungr</span>
+              <span class="lyric-line" data-time="9.83">Vér gangum í eldinn</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="43.94">Through the birken gates we treadeth</span>
+              <span class="lyric-line" data-time="46.37">Where the wolfsbane crowneth stone</span>
+              <span class="lyric-line" data-time="48.64">Bear the antler, bear the ashen blade</span>
+              <span class="lyric-line" data-time="51.22">Blood of mine to feed thine own</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="53.61">Nine the torches, nine the stridings</span>
+              <span class="lyric-line" data-time="55.84">Nine the names we shall not speak</span>
+              <span class="lyric-line" data-time="58.30">Hark, the hollow oak it openeth</span>
+              <span class="lyric-line" data-time="60.81">What the deep wood seeks, we seek</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="63.37">Bind the bone, bind the breath</span>
+              <span class="lyric-line" data-time="65.54">Bind the moon unto the moss</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="68.69">Rise, ye horned and hallowed kin!</span>
+              <span class="lyric-line" data-time="71.14">Rise from root and ravens' rest!</span>
+              <span class="lyric-line" data-time="73.51">Drink the flame, the elder wine</span>
+              <span class="lyric-line" data-time="76.00">Crown us in the witching mist</span>
+              <span class="lyric-line" data-time="78.48">Rise, ye old ones, rise within!</span>
+              <span class="lyric-line" data-time="80.85">Rise the storm beneath the pines!</span>
+              <span class="lyric-line" data-time="83.40">Sing the song the stones did sing</span>
+              <span class="lyric-line" data-time="85.76">Ere the first of suns did rise</span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="107.55">Sister-wolves, they speaketh true</span>
+              <span class="lyric-line" data-time="109.87">In the tongue of frost and fern</span>
+              <span class="lyric-line" data-time="112.36">Mother-bear, she watcheth still</span>
+              <span class="lyric-line" data-time="114.73">By the cairn where torches burn</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="117.20">Carry me unto the marrow</span>
+              <span class="lyric-line" data-time="119.64">Carry me past sun and sea</span>
+              <span class="lyric-line" data-time="122.17">What was sundered, what was buried</span>
+              <span class="lyric-line" data-time="124.50">Greeneth now within the tree</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="127.22">Bind the bone, bind the breath</span>
+              <span class="lyric-line" data-time="129.65">Bind the moon unto the moss</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="135.05">Rise, ye horned and hallowed kin!</span>
+              <span class="lyric-line" data-time="137.48">Rise from root and ravens' rest!</span>
+              <span class="lyric-line" data-time="139.84">Drink the flame, the elder wine</span>
+              <span class="lyric-line" data-time="142.38">Crown us in the witching mist</span>
+              <span class="lyric-line" data-time="144.81">Rise, ye old ones, rise within!</span>
+              <span class="lyric-line" data-time="147.22">Rise the storm beneath the pines!</span>
+              <span class="lyric-line" data-time="149.76">Sing the song the stones did sing</span>
+              <span class="lyric-line" data-time="152.19">Ere the first of suns did rise</span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="164.59">And lo, the wind doth knoweth me</span>
+              <span class="lyric-line" data-time="169.43">And lo, the dark doth nameth me</span>
+              <span class="lyric-line" data-time="173.78">I am the stag, I am the spear</span>
+              <span class="lyric-line" data-time="176.42">I am the wound, I am the year</span>
+              <span class="lyric-line lyric-line--section">[Breakdown]</span>
+              <span class="lyric-line" data-time="179.54">Hark! Hark! Hark!</span>
+              <span class="lyric-line" data-time="183.23">The wood awakeneth!</span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="206.74">Rise, ye horned and hallowed kin!</span>
+              <span class="lyric-line" data-time="208.85">Rise from root and ravens' rest!</span>
+              <span class="lyric-line" data-time="211.43">Drink the flame, the elder wine</span>
+              <span class="lyric-line" data-time="213.88">Crown us in the witching mist</span>
+              <span class="lyric-line" data-time="216.51">Rise, ye old ones, rise within!</span>
+              <span class="lyric-line" data-time="218.76">Rise the storm beneath the pines!</span>
+              <span class="lyric-line" data-time="221.29">Sing the song the stones did sing</span>
+              <span class="lyric-line" data-time="223.64">Ere the first of suns did rise</span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="236.24">Heyr oss, Skogarmóðir</span>
+              <span class="lyric-line" data-time="240.97">Vér erum heim komin</span>
+            </div>
           </details>
         </li>
         <li class="tracklist__item"
@@ -1764,56 +1826,51 @@ Vér erum heim komin</pre>
                 <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
               </svg>
             </summary>
-<pre class="tracklist__lyrics-text">
-[Intro]
-
-[Verse 1]
-Lay him down where the rowans bend
-Lay him down where the stones do keep
-Cover his eyes with the soft white moss
-Cover his hands with the winter's sleep
-
-Bring no fire, bring no flame
-Bring the silence the night doth bring
-Speak no name, for the name is gone
-Only the wind shall remember him
-
-[Chorus]
-Heyr oss, Skogarmóðir
-Take him gently to thy breast
-Vér leggjum hann niðr
-In the cairn of wintering rest
-
-[Verse 2]
-He was the hand upon the plough
-He was the song at the longhouse door
-He was the breath of a quiet hearth
-He shall be these things no more
-
-Sister-snow, she shroudeth him
-Brother-stone, he keepeth watch
-Mother-root, she gathereth him
-Down into the dark and soft
-
-[Chorus]
-Heyr oss, Skogarmóðir
-Take him gently to thy breast
-Vér leggjum hann niðr
-In the cairn of wintering rest
-
-[Bridge]
-And we who stand, and we who stay
-We shall walk a shorter road
-We shall carry a heavier coat
-We shall sing a quieter song
-
-[Final verse]
-Lay him down where the rowans bend
-Lay him down where the stones do keep
-Cover his eyes with the soft white moss
-Cover his hands with the winter's sleep
-
-[Outro]</pre>
+<div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="11.28">Lay him down where the rowans bend</span>
+              <span class="lyric-line" data-time="17.27">Lay him down where the stones do keep</span>
+              <span class="lyric-line" data-time="23.68">Cover his eyes with the soft white moss</span>
+              <span class="lyric-line" data-time="29.89">Cover his hands with the winter's sleep</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="37.69">Bring no fire, bring no flame</span>
+              <span class="lyric-line" data-time="40.48">Bring the silence the night doth bring</span>
+              <span class="lyric-line" data-time="43.62">Speak no name, for the name is gone</span>
+              <span class="lyric-line" data-time="46.76">Only the wind shall remember him</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="52.19">Heyr oss, Skogarmóðir</span>
+              <span class="lyric-line" data-time="58.13">Take him gently to thy breast</span>
+              <span class="lyric-line" data-time="64.20">Vér leggjum hann niðr</span>
+              <span class="lyric-line" data-time="69.82">In the cairn of wintering rest</span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="77.33">He was the hand upon the plough</span>
+              <span class="lyric-line" data-time="83.08">He was the song at the longhouse door</span>
+              <span class="lyric-line" data-time="89.29">He was the breath of a quiet hearth</span>
+              <span class="lyric-line" data-time="94.42">He shall be these things no more</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="101.08">Sister-snow, she shroudeth him</span>
+              <span class="lyric-line" data-time="104.14">Brother-stone, he keepeth watch</span>
+              <span class="lyric-line" data-time="107.13">Mother-root, she gathereth him</span>
+              <span class="lyric-line" data-time="110.22">Down into the dark and soft</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="115.77">Heyr oss, Skogarmóðir</span>
+              <span class="lyric-line" data-time="121.80">Take him gently to thy breast</span>
+              <span class="lyric-line" data-time="128.12">Vér leggjum hann niðr</span>
+              <span class="lyric-line" data-time="133.39">In the cairn of wintering rest</span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="140.34">And we who stand, and we who stay</span>
+              <span class="lyric-line" data-time="143.47">We shall walk a shorter road</span>
+              <span class="lyric-line" data-time="146.48">We shall carry a heavier coat</span>
+              <span class="lyric-line" data-time="149.57">We shall sing a quieter song</span>
+              <span class="lyric-line lyric-line--section">[Final verse]</span>
+              <span class="lyric-line" data-time="160.70">Lay him down where the rowans bend</span>
+              <span class="lyric-line" data-time="166.66">Lay him down where the stones do keep</span>
+              <span class="lyric-line" data-time="173.06">Cover his eyes with the soft white moss</span>
+              <span class="lyric-line" data-time="178.98">Cover his hands with the winter's sleep</span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+            </div>
           </details>
         </li>
         <li class="tracklist__item"
@@ -1839,82 +1896,74 @@ Cover his hands with the winter's sleep
                 <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
               </svg>
             </summary>
-<pre class="tracklist__lyrics-text">
-[Intro]
-
-[Verse 1]
-Sharpen the spear, salt the blade
-Bind the bone-helm to thy brow
-Kiss the wolf upon her teeth
-We rideth, we rideth now
-
-Black the banner, red the dawn
-Loud the lur upon the hill
-What was sleeping in the stone
-Walketh with the warband still
-
-[Pre-Chorus]
-Hammer, hoof, and hallowed horn!
-Steel, and stone, and stridings nine!
-
-[Chorus]
-March! March! Antler-crowned!
-March beneath the raven sky!
-Drink the field, devour the road
-Carry fire where the cowards lie!
-March! March! Wolf and son!
-March until the kingdoms fall!
-Sing the name the gods forgot
-Heyr oss, Skogarmóðir, call!
-
-[Verse 2]
-Cleave the gate, break the wall
-Bury kings beneath their crowns
-Their gods are gilt, their gods are gold
-Ours are bark and bone and ground
-
-We are the hand the forest sendeth
-We are the wound the woods bestow
-What thou tookest from the wild
-Wild shall taketh, blow for blow
-
-[Pre-Chorus]
-Hammer, hoof, and hallowed horn!
-Steel, and stone, and stridings nine!
-
-[Chorus]
-March! March! Antler-crowned!
-March beneath the raven sky!
-Drink the field, devour the road
-Carry fire where the cowards lie!
-March! March! Wolf and son!
-March until the kingdoms fall!
-Sing the name the gods forgot
-Heyr oss, Skogarmóðir, call!
-
-[Bridge]
-Hoo! Hah! Hoo! Hah!
-Vér komum sem eldr!
-Hoo! Hah! Hoo! Hah!
-Vér komum sem eldr!
-
-[Breakdown]
-Loose the hounds
-Loose the dead
-Loose the song the elder said
-
-[Final Chorus]
-March! March! Antler-crowned!
-March beneath the raven sky!
-Drink the field, devour the road
-Carry fire where the cowards lie!
-March! March! Wolf and son!
-March until the kingdoms fall!
-Sing the name the gods forgot
-Heyr oss, Skogarmóðir, call!
-
-[Outro]
-Heyr oss</pre>
+<div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="29.15">Sharpen the spear, salt the blade</span>
+              <span class="lyric-line" data-time="31.99">Bind the bone-helm to thy brow</span>
+              <span class="lyric-line" data-time="35.09">Kiss the wolf upon her teeth</span>
+              <span class="lyric-line" data-time="37.81">We rideth, we rideth now</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="40.87">Black the banner, red the dawn</span>
+              <span class="lyric-line" data-time="43.64">Loud the lur upon the hill</span>
+              <span class="lyric-line" data-time="46.61">What was sleeping in the stone</span>
+              <span class="lyric-line" data-time="49.31">Walketh with the warband still</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="52.46">Hammer, hoof, and hallowed horn!</span>
+              <span class="lyric-line" data-time="55.16">Steel, and stone, and stridings nine!</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="61.01">March! March! Antler-crowned!</span>
+              <span class="lyric-line" data-time="63.75">March beneath the raven sky!</span>
+              <span class="lyric-line" data-time="66.70">Drink the field, devour the road</span>
+              <span class="lyric-line" data-time="69.41">Carry fire where the cowards lie!</span>
+              <span class="lyric-line" data-time="72.51">March! March! Wolf and son!</span>
+              <span class="lyric-line" data-time="75.21">March until the kingdoms fall!</span>
+              <span class="lyric-line" data-time="78.13">Sing the name the gods forgot</span>
+              <span class="lyric-line" data-time="80.85">Heyr oss, Skogarmóðir, call!</span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="95.48">Cleave the gate, break the wall</span>
+              <span class="lyric-line" data-time="98.02">Bury kings beneath their crowns</span>
+              <span class="lyric-line" data-time="100.90">Their gods are gilt, their gods are gold</span>
+              <span class="lyric-line" data-time="103.78">Ours are bark and bone and ground</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="106.70">We are the hand the forest sendeth</span>
+              <span class="lyric-line" data-time="109.66">We are the wound the woods bestow</span>
+              <span class="lyric-line" data-time="112.82">What thou tookest from the wild</span>
+              <span class="lyric-line" data-time="115.39">Wild shall taketh, blow for blow</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="118.59">Hammer, hoof, and hallowed horn!</span>
+              <span class="lyric-line" data-time="121.38">Steel, and stone, and stridings nine!</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="127.39">March! March! Antler-crowned!</span>
+              <span class="lyric-line" data-time="130.07">March beneath the raven sky!</span>
+              <span class="lyric-line" data-time="133.05">Drink the field, devour the road</span>
+              <span class="lyric-line" data-time="135.69">Carry fire where the cowards lie!</span>
+              <span class="lyric-line" data-time="138.75">March! March! Wolf and son!</span>
+              <span class="lyric-line" data-time="141.65">March until the kingdoms fall!</span>
+              <span class="lyric-line" data-time="144.42">Sing the name the gods forgot</span>
+              <span class="lyric-line" data-time="147.03">Heyr oss, Skogarmóðir, call!</span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="151.29">Hoo! Hah! Hoo! Hah!</span>
+              <span class="lyric-line" data-time="156.43">Vér komum sem eldr!</span>
+              <span class="lyric-line" data-time="171.05">Hoo! Hah! Hoo! Hah!</span>
+              <span class="lyric-line" data-time="185.59">Vér komum sem eldr!</span>
+              <span class="lyric-line lyric-line--section">[Breakdown]</span>
+              <span class="lyric-line" data-time="200.05">Loose the hounds</span>
+              <span class="lyric-line" data-time="201.45">Loose the dead</span>
+              <span class="lyric-line" data-time="202.78">Loose the song the elder said</span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="208.87">March! March! Antler-crowned!</span>
+              <span class="lyric-line" data-time="211.58">March beneath the raven sky!</span>
+              <span class="lyric-line" data-time="214.46">Drink the field, devour the road</span>
+              <span class="lyric-line" data-time="217.22">Carry fire where the cowards lie!</span>
+              <span class="lyric-line" data-time="220.29">March! March! Wolf and son!</span>
+              <span class="lyric-line" data-time="223.07">March until the kingdoms fall!</span>
+              <span class="lyric-line" data-time="225.91">Sing the name the gods forgot</span>
+              <span class="lyric-line" data-time="228.61">Heyr oss, Skogarmóðir, call!</span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="234.57">Heyr oss</span>
+            </div>
           </details>
         </li>
         <li class="tracklist__item"
@@ -1940,89 +1989,81 @@ Heyr oss</pre>
                 <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
               </svg>
             </summary>
-<pre class="tracklist__lyrics-text">
-[Intro]
-
-[Verse 1]
-Home from the field with our boots full of blood
-Home with our axes still warm in the hand
-The crows had their fill and the gods had their song
-And the mead-hall doth stand where the mead-hall doth stand!
-
-The kings we did harry, the walls we did break
-The widows we made, well, we'll not name them here
-But the bench it is long and the horn it is deep
-And the cup of forgetting is brewed of good beer!
-
-[Pre-Chorus]
-Pour, pour, pour the horn!
-Drink, drink, drink it dry!
-
-[Chorus]
-Skål! Til Skogarmóðir!
-Skål! Til Næturkonungr!
-Skål to the brother who fell on the road
-Skål to the bastard who lived!
-Drekkum, drekkum, til dagrenningar!
-Drink till the dawn doth arise!
-The mead-hall holds no saints tonight
-And the saints would not be missed!
-
-[Verse 2]
-Old Bjarki he weepeth in ale to his beard
-For a woman who left him in seasons long gone
-Young Hrafn on the table is dancing again
-With a boot on his head and no breeches on!
-
-The priest at the door tried to speak of his god
-We bought him a horn and he speaketh no more
-He singeth the old songs, he danceth the round
-And he sleepeth quite well on the mead-hall floor!
-
-[Pre-Chorus]
-Pour, pour, pour the horn!
-Drink, drink, drink it dry!
-
-[Chorus]
-Skål! Til Skogarmóðir!
-Skål! Til Næturkonungr!
-Skål to the brother who fell on the road
-Skål to the bastard who lived!
-Drekkum, drekkum, til dagrenningar!
-Drink till the dawn doth arise!
-The mead-hall holds no saints tonight
-And the saints would not be missed!
-
-[Bridge]
-Hej!
-To the man on my left who shall vomit ere long!
-Hej!
-To the woman on my right who shall outdrink us all!
-Hej!
-To the dog 'neath the table who eateth our scraps!
-Hej!
-To the roof, to the rafters, to the bones in the wall!
-
-[Breakdown]
-Who shall pay?
-Not I!
-Who shall pay?
-Not I!
-Who shall pay?
-The dead shall pay! For the dead drink free!
-
-[Final Chorus]
-Skål! Til Skogarmóðir!
-Skål! Til Næturkonungr!
-Skål to the brother who fell on the road
-Skål to the bastard who lived!
-Drekkum, drekkum, til dagrenningar!
-Drink till the dawn doth arise!
-The mead-hall holds no saints tonight
-And the saints would not be missed!
-
-[Outro]
-Skål...</pre>
+<div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="26.55">Home from the field with our boots full of blood</span>
+              <span class="lyric-line" data-time="29.36">Home with our axes still warm in the hand</span>
+              <span class="lyric-line" data-time="32.38">The crows had their fill and the gods had their song</span>
+              <span class="lyric-line" data-time="35.13">And the mead-hall doth stand where the mead-hall doth stand!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="38.35">The kings we did harry, the walls we did break</span>
+              <span class="lyric-line" data-time="41.29">The widows we made, well, we'll not name them here</span>
+              <span class="lyric-line" data-time="44.17">But the bench it is long and the horn it is deep</span>
+              <span class="lyric-line" data-time="46.89">And the cup of forgetting is brewed of good beer!</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="50.63">Pour, pour, pour the horn!</span>
+              <span class="lyric-line" data-time="53.40">Drink, drink, drink it dry!</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="56.42">Skål! Til Skogarmóðir!</span>
+              <span class="lyric-line" data-time="59.34">Skål! Til Næturkonungr!</span>
+              <span class="lyric-line" data-time="62.31">Skål to the brother who fell on the road</span>
+              <span class="lyric-line" data-time="65.30">Skål to the bastard who lived!</span>
+              <span class="lyric-line" data-time="68.58">Drekkum, drekkum, til dagrenningar!</span>
+              <span class="lyric-line" data-time="71.26">Drink till the dawn doth arise!</span>
+              <span class="lyric-line" data-time="74.17">The mead-hall holds no saints tonight</span>
+              <span class="lyric-line" data-time="76.95">And the saints would not be missed!</span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="87.55">Old Bjarki he weepeth in ale to his beard</span>
+              <span class="lyric-line" data-time="90.59">For a woman who left him in seasons long gone</span>
+              <span class="lyric-line" data-time="93.45">Young Hrafn on the table is dancing again</span>
+              <span class="lyric-line" data-time="96.48">With a boot on his head and no breeches on!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="99.95">The priest at the door tried to speak of his god</span>
+              <span class="lyric-line" data-time="102.67">We bought him a horn and he speaketh no more</span>
+              <span class="lyric-line" data-time="105.84">He singeth the old songs, he danceth the round</span>
+              <span class="lyric-line" data-time="108.61">And he sleepeth quite well on the mead-hall floor!</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="111.92">Pour, pour, pour the horn!</span>
+              <span class="lyric-line" data-time="114.89">Drink, drink, drink it dry!</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="117.94">Skål! Til Skogarmóðir!</span>
+              <span class="lyric-line" data-time="120.71">Skål! Til Næturkonungr!</span>
+              <span class="lyric-line" data-time="123.80">Skål to the brother who fell on the road</span>
+              <span class="lyric-line" data-time="126.77">Skål to the bastard who lived!</span>
+              <span class="lyric-line" data-time="130.01">Drekkum, drekkum, til dagrenningar!</span>
+              <span class="lyric-line" data-time="132.77">Drink till the dawn doth arise!</span>
+              <span class="lyric-line" data-time="135.54">The mead-hall holds no saints tonight</span>
+              <span class="lyric-line" data-time="138.63">And the saints would not be missed!</span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="142.11">Hej!</span>
+              <span class="lyric-line" data-time="147.84">To the man on my left who shall vomit ere long!</span>
+              <span class="lyric-line" data-time="150.81">Hej!</span>
+              <span class="lyric-line" data-time="151.64">To the woman on my right who shall outdrink us all!</span>
+              <span class="lyric-line" data-time="153.83">Hej!</span>
+              <span class="lyric-line" data-time="154.39">To the dog 'neath the table who eateth our scraps!</span>
+              <span class="lyric-line" data-time="156.77">Hej!</span>
+              <span class="lyric-line" data-time="157.27">To the roof, to the rafters, to the bones in the wall!</span>
+              <span class="lyric-line lyric-line--section">[Breakdown]</span>
+              <span class="lyric-line" data-time="163.20">Who shall pay?</span>
+              <span class="lyric-line" data-time="164.33">Not I!</span>
+              <span class="lyric-line" data-time="165.82">Who shall pay?</span>
+              <span class="lyric-line" data-time="167.35">Not I!</span>
+              <span class="lyric-line" data-time="168.88">Who shall pay?</span>
+              <span class="lyric-line" data-time="171.26">The dead shall pay! For the dead drink free!</span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="198.95">Skål! Til Skogarmóðir!</span>
+              <span class="lyric-line" data-time="201.81">Skål! Til Næturkonungr!</span>
+              <span class="lyric-line" data-time="204.86">Skål to the brother who fell on the road</span>
+              <span class="lyric-line" data-time="207.80">Skål to the bastard who lived!</span>
+              <span class="lyric-line" data-time="211.13">Drekkum, drekkum, til dagrenningar!</span>
+              <span class="lyric-line" data-time="213.72">Drink till the dawn doth arise!</span>
+              <span class="lyric-line" data-time="216.89">The mead-hall holds no saints tonight</span>
+              <span class="lyric-line" data-time="219.75">And the saints would not be missed!</span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="223.60">Skål...</span>
+            </div>
           </details>
         </li>
         <li class="tracklist__item"
@@ -2048,91 +2089,83 @@ Skål...</pre>
                 <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
               </svg>
             </summary>
-<pre class="tracklist__lyrics-text">
-[Intro]
-
-[Verse 1]
-There is a path that the elder folk shun
-Where the moss groweth black on the stone
-Where the antlers are nailed to the rowan tree
-And the rowan tree standeth alone
-
-Go thou not at the falling of light
-Go thou not when the owl doth speak
-Go thou not when thy shadow doth lag behind
-For the wood there is old, and the wood there is deep
-
-[Pre-Chorus]
-Húnvefr, húnvefr í myrkviðr
-She who walketh and leaveth no track
-
-[Chorus]
-She Who Walketh Between the Pines!
-She Who Wear'th No Face at All!
-She Who Counteth the Living Twice
-And the Second Count is Small!
-She Who Singeth in Tongues of Bark!
-She Who Reapeth What None Did Sow!
-Heyr oss, Skogarmóðir, heyr oss
-For Her name we dareth not know!
-
-[Verse 2]
-Old Sveinn, he went for the hare at the dusk
-He carried his bow and his hound
-The hound came home with its tail to its belly
-But Sveinn was nowhere to be found
-
-They sought him three days and they sought him three nights
-By the cairn and the brook and the fen
-On the fourth day his boots they were set by the door
-But the boots they were empty of him
-
-[Pre-Chorus]
-Húnvefr, húnvefr í myrkviðr
-She who countheth and counteth again
-
-[Chorus]
-She Who Walketh Between the Pines!
-She Who Wear'th No Face at All!
-She Who Counteth the Living Twice
-And the Second Count is Small!
-She Who Singeth in Tongues of Bark!
-She Who Reapeth What None Did Sow!
-Heyr oss, Skogarmóðir, heyr oss
-For Her name we dareth not know!
-
-[Bridge]
-She is the hush between the heartbeats
-She is the breath that is not thine
-She is the second shadow walking
-Always one step behind
-
-Look not back
-Look not back
-Look not back
-Look not back
-
-[Breakdown]
-Sveinn looked back!
-Sveinn looked back!
-Sveinn looked back!
-And what looked back at Sveinn — had Sveinn's own face!
-
-[Final Chorus]
-She Who Walketh Between the Pines!
-She Who Wear'th No Face at All!
-She Who Counteth the Living Twice
-And the Second Count is Small!
-She Who Singeth in Tongues of Bark!
-She Who Reapeth What None Did Sow!
-Heyr oss, Skogarmóðir, heyr oss
-For Her name we dareth not know!
-
-[Outro]
-Go thou not at the falling of light
-Go thou not when the owl doth speak
-Húnvefr...
-Húnvefr...</pre>
+<div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="53.44">There is a path that the elder folk shun</span>
+              <span class="lyric-line" data-time="58.56">Where the moss groweth black on the stone</span>
+              <span class="lyric-line" data-time="64.45">Where the antlers are nailed to the rowan tree</span>
+              <span class="lyric-line" data-time="70.27">And the rowan tree standeth alone</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="76.38">Go thou not at the falling of light</span>
+              <span class="lyric-line" data-time="82.31">Go thou not when the owl doth speak</span>
+              <span class="lyric-line" data-time="88.33">Go thou not when thy shadow doth lag behind</span>
+              <span class="lyric-line" data-time="94.57">For the wood there is old, and the wood there is deep</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="101.06">Húnvefr, húnvefr í myrkviðr</span>
+              <span class="lyric-line" data-time="106.15">She who walketh and leaveth no track</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="112.23">She Who Walketh Between the Pines!</span>
+              <span class="lyric-line" data-time="115.13">She Who Wear'th No Face at All!</span>
+              <span class="lyric-line" data-time="118.35">She Who Counteth the Living Twice</span>
+              <span class="lyric-line" data-time="121.16">And the Second Count is Small!</span>
+              <span class="lyric-line" data-time="124.24">She Who Singeth in Tongues of Bark!</span>
+              <span class="lyric-line" data-time="127.12">She Who Reapeth What None Did Sow!</span>
+              <span class="lyric-line" data-time="130.75">Heyr oss, Skogarmóðir, heyr oss</span>
+              <span class="lyric-line" data-time="133.86">For Her name we dareth not know!</span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="148.71">Old Sveinn, he went for the hare at the dusk</span>
+              <span class="lyric-line" data-time="151.72">He carried his bow and his hound</span>
+              <span class="lyric-line" data-time="154.49">The hound came home with its tail to its belly</span>
+              <span class="lyric-line" data-time="157.66">But Sveinn was nowhere to be found</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="160.71">They sought him three days and they sought him three nights</span>
+              <span class="lyric-line" data-time="163.56">By the cairn and the brook and the fen</span>
+              <span class="lyric-line" data-time="166.53">On the fourth day his boots they were set by the door</span>
+              <span class="lyric-line" data-time="169.60">But the boots they were empty of him</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="173.03">Húnvefr, húnvefr í myrkviðr</span>
+              <span class="lyric-line" data-time="178.20">She who countheth and counteth again</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="184.28">She Who Walketh Between the Pines!</span>
+              <span class="lyric-line" data-time="187.20">She Who Wear'th No Face at All!</span>
+              <span class="lyric-line" data-time="190.19">She Who Counteth the Living Twice</span>
+              <span class="lyric-line" data-time="193.15">And the Second Count is Small!</span>
+              <span class="lyric-line" data-time="196.21">She Who Singeth in Tongues of Bark!</span>
+              <span class="lyric-line" data-time="199.15">She Who Reapeth What None Did Sow!</span>
+              <span class="lyric-line" data-time="202.73">Heyr oss, Skogarmóðir, heyr oss</span>
+              <span class="lyric-line" data-time="205.87">For Her name we dareth not know!</span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="213.86">She is the hush between the heartbeats</span>
+              <span class="lyric-line" data-time="219.53">She is the breath that is not thine</span>
+              <span class="lyric-line" data-time="225.79">She is the second shadow walking</span>
+              <span class="lyric-line" data-time="232.01">Always one step behind</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="235.09">Look not back</span>
+              <span class="lyric-line" data-time="237.88">Look not back</span>
+              <span class="lyric-line" data-time="240.79">Look not back</span>
+              <span class="lyric-line" data-time="243.88">Look not back</span>
+              <span class="lyric-line lyric-line--section">[Breakdown]</span>
+              <span class="lyric-line" data-time="248.19">Sveinn looked back!</span>
+              <span class="lyric-line" data-time="250.90">Sveinn looked back!</span>
+              <span class="lyric-line" data-time="253.82">Sveinn looked back!</span>
+              <span class="lyric-line" data-time="255.76">And what looked back at Sveinn — had Sveinn's own face!</span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="283.38">She Who Walketh Between the Pines!</span>
+              <span class="lyric-line" data-time="286.08">She Who Wear'th No Face at All!</span>
+              <span class="lyric-line" data-time="289.07">She Who Counteth the Living Twice</span>
+              <span class="lyric-line" data-time="292.14">And the Second Count is Small!</span>
+              <span class="lyric-line" data-time="295.15">She Who Singeth in Tongues of Bark!</span>
+              <span class="lyric-line" data-time="298.10">She Who Reapeth What None Did Sow!</span>
+              <span class="lyric-line" data-time="301.18">Heyr oss, Skogarmóðir, heyr oss</span>
+              <span class="lyric-line" data-time="304.78">For Her name we dareth not know!</span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="310.88">Go thou not at the falling of light</span>
+              <span class="lyric-line" data-time="316.73">Go thou not when the owl doth speak</span>
+              <span class="lyric-line" data-time="320.11">Húnvefr...</span>
+              <span class="lyric-line" data-time="323.07">Húnvefr...</span>
+            </div>
           </details>
         </li>
         <li class="tracklist__item"
@@ -2158,87 +2191,79 @@ Húnvefr...</pre>
                 <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
               </svg>
             </summary>
-<pre class="tracklist__lyrics-text">
-[Intro]
-
-[Verse 1]
-The first snow fell on the cairn we made
-The second on the door we shut
-The third upon the empty hearth
-And the fourth upon the fourth, and so on
-
-We counted moons until we could not
-We counted hens until we ate the last
-We counted children by their breathing
-And then we counted them by their stillness
-
-[Pre-Chorus]
-Hvar er sól? Hvar er vár?
-Where is the sun? Where is the spring?
-
-[Chorus]
-This is the winter that forgot its end!
-This is the year that did not turn!
-The gods have sheathed the summer sword!
-The fires we lit shall no more burn!
-Fimbulvetr! Án vár! Án sól!
-The wolves walk bold upon the road!
-The white doth eat the world entire
-And the world hath nothing left it owed!
-
-[Verse 2]
-The priests did pray to the gilt new god
-The vǫlur did sing to the old
-The smith did beat his iron warm
-But the iron grew cold, and cold, and cold
-
-The young ones asked what summer was
-And we could not remember well
-We told them of a yellow light
-That fell on grass — but they could not tell
-
-[Pre-Chorus]
-Hvar er sól? Hvar er vár?
-Where is the sun? Where is the spring?
-
-[Chorus]
-This is the winter that forgot its end!
-This is the year that did not turn!
-The gods have sheathed the summer sword!
-The fires we lit shall no more burn!
-Fimbulvetr! Án vár! Án sól!
-The wolves walk bold upon the road!
-The white doth eat the world entire
-And the world hath nothing left it owed!
-
-[Bridge]
-We called upon the forest-mother
-We called as we had called before
-But the wood was buried under snow
-And the wood did answer us no more
-
-Heyr oss, Skogarmóðir
-Heyr oss... heyr oss...
-She doth not heareth
-She doth not heareth us now
-
-[Breakdown]
-The hearth! Is cold!
-The horn! Is dry!
-The crow! Hath frozen! In the sky!
-
-[Final Chorus]
-This is the winter that forgot its end!
-This is the year that did not turn!
-The gods have sheathed the summer sword!
-The fires we lit shall no more burn!
-Fimbulvetr! Án vár! Án sól!
-The wolves walk bold upon the road!
-The white doth eat the world entire
-And the world hath nothing left it owed!
-
-[Outro]
-Hvar er vár...?</pre>
+<div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="70.08">The first snow fell on the cairn we made</span>
+              <span class="lyric-line" data-time="74.33">The second on the door we shut</span>
+              <span class="lyric-line" data-time="78.18">The third upon the empty hearth</span>
+              <span class="lyric-line" data-time="81.75">And the fourth upon the fourth, and so on</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="86.59">We counted moons until we could not</span>
+              <span class="lyric-line" data-time="89.72">We counted hens until we ate the last</span>
+              <span class="lyric-line" data-time="93.95">We counted children by their breathing</span>
+              <span class="lyric-line" data-time="97.37">And then we counted them by their stillness</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="102.29">Hvar er sól? Hvar er vár?</span>
+              <span class="lyric-line" data-time="105.47">Where is the sun? Where is the spring?</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="109.68">This is the winter that forgot its end!</span>
+              <span class="lyric-line" data-time="113.46">This is the year that did not turn!</span>
+              <span class="lyric-line" data-time="117.24">The gods have sheathed the summer sword!</span>
+              <span class="lyric-line" data-time="120.81">The fires we lit shall no more burn!</span>
+              <span class="lyric-line" data-time="124.91">Fimbulvetr! Án vár! Án sól!</span>
+              <span class="lyric-line" data-time="128.49">The wolves walk bold upon the road!</span>
+              <span class="lyric-line" data-time="132.31">The white doth eat the world entire</span>
+              <span class="lyric-line" data-time="135.87">And the world hath nothing left it owed!</span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="155.58">The priests did pray to the gilt new god</span>
+              <span class="lyric-line" data-time="159.47">The vǫlur did sing to the old</span>
+              <span class="lyric-line" data-time="163.27">The smith did beat his iron warm</span>
+              <span class="lyric-line" data-time="166.82">But the iron grew cold, and cold, and cold</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="171.12">The young ones asked what summer was</span>
+              <span class="lyric-line" data-time="174.77">And we could not remember well</span>
+              <span class="lyric-line" data-time="178.66">We told them of a yellow light</span>
+              <span class="lyric-line" data-time="182.08">That fell on grass — but they could not tell</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="187.46">Hvar er sól? Hvar er vár?</span>
+              <span class="lyric-line" data-time="190.56">Where is the sun? Where is the spring?</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="194.95">This is the winter that forgot its end!</span>
+              <span class="lyric-line" data-time="198.30">This is the year that did not turn!</span>
+              <span class="lyric-line" data-time="202.17">The gods have sheathed the summer sword!</span>
+              <span class="lyric-line" data-time="205.82">The fires we lit shall no more burn!</span>
+              <span class="lyric-line" data-time="209.91">Fimbulvetr! Án vár! Án sól!</span>
+              <span class="lyric-line" data-time="213.69">The wolves walk bold upon the road!</span>
+              <span class="lyric-line" data-time="217.45">The white doth eat the world entire</span>
+              <span class="lyric-line" data-time="221.01">And the world hath nothing left it owed!</span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="229.26">We called upon the forest-mother</span>
+              <span class="lyric-line" data-time="236.87">We called as we had called before</span>
+              <span class="lyric-line" data-time="244.74">But the wood was buried under snow</span>
+              <span class="lyric-line" data-time="252.17">And the wood did answer us no more</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="260.78">Heyr oss, Skogarmóðir</span>
+              <span class="lyric-line" data-time="264.46">Heyr oss... heyr oss...</span>
+              <span class="lyric-line" data-time="268.41">She doth not heareth</span>
+              <span class="lyric-line" data-time="271.90">She doth not heareth us now</span>
+              <span class="lyric-line lyric-line--section">[Breakdown]</span>
+              <span class="lyric-line" data-time="284.44">The hearth! Is cold!</span>
+              <span class="lyric-line" data-time="287.54">The horn! Is dry!</span>
+              <span class="lyric-line" data-time="291.39">The crow! Hath frozen! In the sky!</span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="311.46">This is the winter that forgot its end!</span>
+              <span class="lyric-line" data-time="315.13">This is the year that did not turn!</span>
+              <span class="lyric-line" data-time="319.09">The gods have sheathed the summer sword!</span>
+              <span class="lyric-line" data-time="322.53">The fires we lit shall no more burn!</span>
+              <span class="lyric-line" data-time="326.73">Fimbulvetr! Án vár! Án sól!</span>
+              <span class="lyric-line" data-time="330.31">The wolves walk bold upon the road!</span>
+              <span class="lyric-line" data-time="334.20">The white doth eat the world entire</span>
+              <span class="lyric-line" data-time="337.85">And the world hath nothing left it owed!</span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="348.96">Hvar er vár...?</span>
+            </div>
           </details>
         </li>
         <li class="tracklist__item"
@@ -2264,90 +2289,82 @@ Hvar er vár...?</pre>
                 <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
               </svg>
             </summary>
-<pre class="tracklist__lyrics-text">
-[Intro]
-
-[Verse 1]
-She came from no village we knew of
-She came on no path we had walked
-Her staff was of ash, and her cloak was of crow
-And the snow did not bear her a track
-
-She asked for no bread and no bench at the fire
-She asked for no name we could give
-She asked but for nine of our oldest stones
-And the last of the salt we did keep
-
-[Pre-Chorus]
-Seiðr, seiðr, seiðr
-Galdr, galdr, galdr
-
-[Chorus]
-She set the nine stones in a ring on the ice!
-She drew the salt round in a stave!
-She bound her own hair to the head of her staff
-And she sang what the sun-mother gave!
-Galdr! Galdr Vǫlvunnar!
-She singeth what none dareth sing!
-She traded the breath in her body away
-For the sun and the green and the spring!
-
-[Verse 2]
-She spake of the white wolf that swalloweth dawn
-She spake of the worm 'neath the world
-She spake of the door that the gods had shut fast
-And the key that the deep wood had hurled
-
-She named what the priests could not name in their books
-She named what the smiths could not forge
-She sang in a tongue that was older than tongues
-And the ice on the river did groan
-
-[Pre-Chorus]
-Seiðr, seiðr, seiðr
-Galdr, galdr, galdr
-
-[Chorus]
-She set the nine stones in a ring on the ice!
-She drew the salt round in a stave!
-She bound her own hair to the head of her staff
-And she sang what the sun-mother gave!
-Galdr! Galdr Vǫlvunnar!
-She singeth what none dareth sing!
-She traded the breath in her body away
-For the sun and the green and the spring!
-
-[Bridge]
-And the wood did hear, where it had not heard
-And the moss beneath the snow did stir
-And a green thing wakened in the root of the ash
-And the white wolf's jaw did unclench, and unclench
-
-Heyr oss, Skogarmóðir
-Heyr oss now
-She is paying with her marrow
-She is paying with her brow
-
-[Breakdown]
-Nine the stones!
-Nine the names!
-Nine the strides she did not return!
-Nine the songs!
-Nine the wounds!
-Nine the candles we did burn!
-
-[Final Chorus]
-She set the nine stones in a ring on the ice!
-She drew the salt round in a stave!
-She bound her own hair to the head of her staff
-And she sang what the sun-mother gave!
-Galdr! Galdr Vǫlvunnar!
-She singeth what none dareth sing!
-She traded the breath in her body away
-For the sun and the green and the spring!
-
-[Outro]
-Vár... vár... vár kemr...</pre>
+<div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="33.26">She came from no village we knew of</span>
+              <span class="lyric-line" data-time="36.18">She came on no path we had walked</span>
+              <span class="lyric-line" data-time="39.09">Her staff was of ash, and her cloak was of crow</span>
+              <span class="lyric-line" data-time="42.69">And the snow did not bear her a track</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="44.95">She asked for no bread and no bench at the fire</span>
+              <span class="lyric-line" data-time="48.02">She asked for no name we could give</span>
+              <span class="lyric-line" data-time="50.83">She asked but for nine of our oldest stones</span>
+              <span class="lyric-line" data-time="54.03">And the last of the salt we did keep</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="56.99">Seiðr, seiðr, seiðr</span>
+              <span class="lyric-line" data-time="59.97">Galdr, galdr, galdr</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="62.81">She set the nine stones in a ring on the ice!</span>
+              <span class="lyric-line" data-time="65.47">She drew the salt round in a stave!</span>
+              <span class="lyric-line" data-time="68.25">She bound her own hair to the head of her staff</span>
+              <span class="lyric-line" data-time="71.47">And she sang what the sun-mother gave!</span>
+              <span class="lyric-line" data-time="74.55">Galdr! Galdr Vǫlvunnar!</span>
+              <span class="lyric-line" data-time="77.41">She singeth what none dareth sing!</span>
+              <span class="lyric-line" data-time="80.13">She traded the breath in her body away</span>
+              <span class="lyric-line" data-time="83.20">For the sun and the green and the spring!</span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="97.76">She spake of the white wolf that swalloweth dawn</span>
+              <span class="lyric-line" data-time="100.65">She spake of the worm 'neath the world</span>
+              <span class="lyric-line" data-time="103.53">She spake of the door that the gods had shut fast</span>
+              <span class="lyric-line" data-time="106.52">And the key that the deep wood had hurled</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="109.36">She named what the priests could not name in their books</span>
+              <span class="lyric-line" data-time="112.21">She named what the smiths could not forge</span>
+              <span class="lyric-line" data-time="115.25">She sang in a tongue that was older than tongues</span>
+              <span class="lyric-line" data-time="118.28">And the ice on the river did groan</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="121.33">Seiðr, seiðr, seiðr</span>
+              <span class="lyric-line" data-time="124.34">Galdr, galdr, galdr</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="127.11">She set the nine stones in a ring on the ice!</span>
+              <span class="lyric-line" data-time="129.81">She drew the salt round in a stave!</span>
+              <span class="lyric-line" data-time="132.66">She bound her own hair to the head of her staff</span>
+              <span class="lyric-line" data-time="135.32">And she sang what the sun-mother gave!</span>
+              <span class="lyric-line" data-time="138.91">Galdr! Galdr Vǫlvunnar!</span>
+              <span class="lyric-line" data-time="141.59">She singeth what none dareth sing!</span>
+              <span class="lyric-line" data-time="144.39">She traded the breath in her body away</span>
+              <span class="lyric-line" data-time="147.36">For the sun and the green and the spring!</span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="150.55">And the wood did hear, where it had not heard</span>
+              <span class="lyric-line" data-time="153.32">And the moss beneath the snow did stir</span>
+              <span class="lyric-line" data-time="156.29">And a green thing wakened in the root of the ash</span>
+              <span class="lyric-line" data-time="159.09">And the white wolf's jaw did unclench, and unclench</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="162.01">Heyr oss, Skogarmóðir</span>
+              <span class="lyric-line" data-time="168.42">Heyr oss now</span>
+              <span class="lyric-line" data-time="170.97">She is paying with her marrow</span>
+              <span class="lyric-line" data-time="173.85">She is paying with her brow</span>
+              <span class="lyric-line lyric-line--section">[Breakdown]</span>
+              <span class="lyric-line" data-time="177.03">Nine the stones!</span>
+              <span class="lyric-line" data-time="178.46">Nine the names!</span>
+              <span class="lyric-line" data-time="179.90">Nine the strides she did not return!</span>
+              <span class="lyric-line" data-time="182.82">Nine the songs!</span>
+              <span class="lyric-line" data-time="184.11">Nine the wounds!</span>
+              <span class="lyric-line" data-time="185.73">Nine the candles we did burn!</span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="223.55">She set the nine stones in a ring on the ice!</span>
+              <span class="lyric-line" data-time="226.67">She drew the salt round in a stave!</span>
+              <span class="lyric-line" data-time="229.41">She bound her own hair to the head of her staff</span>
+              <span class="lyric-line" data-time="232.38">And she sang what the sun-mother gave!</span>
+              <span class="lyric-line" data-time="235.49">Galdr! Galdr Vǫlvunnar!</span>
+              <span class="lyric-line" data-time="238.22">She singeth what none dareth sing!</span>
+              <span class="lyric-line" data-time="241.07">She traded the breath in her body away</span>
+              <span class="lyric-line" data-time="244.03">For the sun and the green and the spring!</span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="247.39">Vár... vár... vár kemr...</span>
+            </div>
           </details>
         </li>
         <li class="tracklist__item"
@@ -2373,82 +2390,75 @@ Vár... vár... vár kemr...</pre>
                 <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
               </svg>
             </summary>
-<pre class="tracklist__lyrics-text">
-[Intro]
-
-[Verse 1]
-We found her in the morning by the nine grey stones
-Her staff had taken root where it did stand
-The salt was gone, the cloak of crow had melted into earth
-And the moss came soft and green about her hand
-
-We did not lift her, we did not weep aloud
-We did not name her, for her name was paid
-We knelt about the ring as one might kneel before a hearth
-And we listened to the sound the river made
-
-[Pre-Chorus]
-Sól aftr komin
-Vár, vár, vár
-
-[Chorus]
-Heyr oss, Skogarmóðir
-Thou hast heard us in the end
-Thou hast taken what was offered
-Thou hast given back the wind
-Várkoma, várkoma
-Where the green doth rise again
-Where the long white hush is broken
-By a small and patient rain
-
-[Verse 2]
-The children came who had not seen a summer in their lives
-We took them to the river by the hand
-We showed them how the ice doth speak before it letteth go
-We showed them how the buds do understand
-
-The old ones lit no fire, for the air was warming on its own
-The smith laid down the hammer he could lift
-The priest of the new god, he wept and would not say for what
-And the wood received his tears as it received the gift
-
-[Pre-Chorus]
-Sól aftr komin
-Vár, vár, vár
-
-[Chorus]
-Heyr oss, Skogarmóðir
-Thou hast heard us in the end
-Thou hast taken what was offered
-Thou hast given back the wind
-Várkoma, várkoma
-Where the green doth rise again
-Where the long white hush is broken
-By a small and patient rain
-
-[Bridge]
-We buildeth no cairn where she lay
-We buildeth no stone, we buildeth no name
-The moss is her marker, the moss is her song
-And the moss shall remember when we shall be gone
-
-She is the green now
-She is the breath
-She is the spring that was bought with a death
-
-[Final Chorus]
-Heyr oss, Skogarmóðir
-Thou hast heard us in the end
-Thou hast taken what was offered
-Thou hast given back the wind
-Várkoma, várkoma
-Where the green doth rise again
-Where the long white hush is broken
-By a small and patient rain
-
-[Outro]
-Vér erum heim komin
-Vér erum heim komin</pre>
+<div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="31.33">We found her in the morning by the nine grey stones</span>
+              <span class="lyric-line" data-time="35.51">Her staff had taken root where it did stand</span>
+              <span class="lyric-line" data-time="39.92">The salt was gone, the cloak of crow had melted into earth</span>
+              <span class="lyric-line" data-time="44.01">And the moss came soft and green about her hand</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="48.47">We did not lift her, we did not weep aloud</span>
+              <span class="lyric-line" data-time="52.74">We did not name her, for her name was paid</span>
+              <span class="lyric-line" data-time="57.04">We knelt about the ring as one might kneel before a hearth</span>
+              <span class="lyric-line" data-time="61.41">And we listened to the sound the river made</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="65.82">Sól aftr komin</span>
+              <span class="lyric-line" data-time="70.12">Vár, vár, vár</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="74.61">Heyr oss, Skogarmóðir</span>
+              <span class="lyric-line" data-time="78.19">Thou hast heard us in the end</span>
+              <span class="lyric-line" data-time="82.56">Thou hast taken what was offered</span>
+              <span class="lyric-line" data-time="86.54">Thou hast given back the wind</span>
+              <span class="lyric-line" data-time="91.56">Várkoma, várkoma</span>
+              <span class="lyric-line" data-time="95.28">Where the green doth rise again</span>
+              <span class="lyric-line" data-time="99.55">Where the long white hush is broken</span>
+              <span class="lyric-line" data-time="103.73">By a small and patient rain</span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="108.97">The children came who had not seen a summer in their lives</span>
+              <span class="lyric-line" data-time="112.79">We took them to the river by the hand</span>
+              <span class="lyric-line" data-time="116.86">We showed them how the ice doth speak before it letteth go</span>
+              <span class="lyric-line" data-time="121.31">We showed them how the buds do understand</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="125.48">The old ones lit no fire, for the air was warming on its own</span>
+              <span class="lyric-line" data-time="129.89">The smith laid down the hammer he could lift</span>
+              <span class="lyric-line" data-time="134.10">The priest of the new god, he wept and would not say for what</span>
+              <span class="lyric-line" data-time="138.15">And the wood received his tears as it received the gift</span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="142.94">Sól aftr komin</span>
+              <span class="lyric-line" data-time="147.12">Vár, vár, vár</span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="151.60">Heyr oss, Skogarmóðir</span>
+              <span class="lyric-line" data-time="155.21">Thou hast heard us in the end</span>
+              <span class="lyric-line" data-time="159.77">Thou hast taken what was offered</span>
+              <span class="lyric-line" data-time="163.75">Thou hast given back the wind</span>
+              <span class="lyric-line" data-time="168.78">Várkoma, várkoma</span>
+              <span class="lyric-line" data-time="172.67">Where the green doth rise again</span>
+              <span class="lyric-line" data-time="176.63">Where the long white hush is broken</span>
+              <span class="lyric-line" data-time="180.92">By a small and patient rain</span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="185.80">We buildeth no cairn where she lay</span>
+              <span class="lyric-line" data-time="189.94">We buildeth no stone, we buildeth no name</span>
+              <span class="lyric-line" data-time="194.15">The moss is her marker, the moss is her song</span>
+              <span class="lyric-line" data-time="198.22">And the moss shall remember when we shall be gone</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="202.91">She is the green now</span>
+              <span class="lyric-line" data-time="204.94">She is the breath</span>
+              <span class="lyric-line" data-time="207.03">She is the spring that was bought with a death</span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="211.57">Heyr oss, Skogarmóðir</span>
+              <span class="lyric-line" data-time="215.26">Thou hast heard us in the end</span>
+              <span class="lyric-line" data-time="219.71">Thou hast taken what was offered</span>
+              <span class="lyric-line" data-time="223.69">Thou hast given back the wind</span>
+              <span class="lyric-line" data-time="228.51">Várkoma, várkoma</span>
+              <span class="lyric-line" data-time="232.36">Where the green doth rise again</span>
+              <span class="lyric-line" data-time="236.76">Where the long white hush is broken</span>
+              <span class="lyric-line" data-time="240.82">By a small and patient rain</span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="246.19">Vér erum heim komin</span>
+              <span class="lyric-line" data-time="254.45">Vér erum heim komin</span>
+            </div>
           </details>
         </li>
       </ol>
@@ -2737,8 +2747,69 @@ Vér erum heim komin</pre>
     return Array.prototype.slice.call(item.parentNode.querySelectorAll('.tracklist__item'));
   }
 
+  // ─── Synced lyrics ("candlelit") ─────────────────────────────
+  var currentLines   = [];   // [{ el, time }] for the loaded track, sorted by time
+  var currentLineIdx = -1;
+  var currentPane    = null;
+
+  function setupSyncedLines(item) {
+    currentLines = [];
+    currentLineIdx = -1;
+    currentPane = null;
+    var pane = item.querySelector('.tracklist__lyrics .lyric-pane');
+    if (!pane) return;
+    var lineEls = pane.querySelectorAll('.lyric-line[data-time]');
+    for (var i = 0; i < lineEls.length; i++) {
+      var t = parseFloat(lineEls[i].getAttribute('data-time'));
+      if (!isFinite(t)) continue;
+      currentLines.push({ el: lineEls[i], time: t });
+    }
+    if (!currentLines.length) return;
+    currentPane = pane;
+    currentLines.sort(function (a, b) { return a.time - b.time; });
+    for (var j = 0; j < currentLines.length; j++) {
+      currentLines[j].el.classList.remove('is-past', 'is-current');
+      currentLines[j].el.classList.add('is-future');
+    }
+  }
+
+  function clearSyncedLines() {
+    for (var k = 0; k < currentLines.length; k++) {
+      currentLines[k].el.classList.remove('is-past', 'is-current', 'is-future');
+    }
+    currentLines = [];
+    currentLineIdx = -1;
+    currentPane = null;
+  }
+
+  function updateActiveLine(t) {
+    if (!currentLines.length) return;
+    var idx = -1;
+    for (var i = 0; i < currentLines.length; i++) {
+      if (currentLines[i].time <= t) idx = i; else break;
+    }
+    if (idx === currentLineIdx) return;
+    currentLineIdx = idx;
+    for (var j = 0; j < currentLines.length; j++) {
+      var el = currentLines[j].el;
+      el.classList.remove('is-past', 'is-current', 'is-future');
+      if (j < idx)      el.classList.add('is-past');
+      else if (j === idx) el.classList.add('is-current');
+      else                el.classList.add('is-future');
+    }
+    if (idx >= 0 && currentPane) {
+      var line   = currentLines[idx].el;
+      var target = line.offsetTop - (currentPane.clientHeight / 2) + (line.offsetHeight / 2);
+      try { currentPane.scrollTo({ top: target, behavior: 'smooth' }); }
+      catch (e) { currentPane.scrollTop = target; }
+    }
+  }
+
   function load(item, autoplay) {
-    if (current && current !== item) current.classList.remove('is-playing');
+    if (current && current !== item) {
+      current.classList.remove('is-playing');
+      clearSyncedLines();
+    }
     current = item;
     player.removeAttribute('data-empty');
     playBtn.disabled = false;
@@ -2747,6 +2818,12 @@ Vér erum heim komin</pre>
     subEl.textContent    = item.getAttribute('data-sub')   || '';
     audio.src = encodeURI(item.getAttribute('data-src'));
     item.classList.add('is-playing');
+    setupSyncedLines(item);
+    // First press-play on a synced track: open the details once.
+    if (currentLines.length) {
+      var details = item.querySelector('.tracklist__lyrics');
+      if (details && !details.open) details.open = true;
+    }
     if (autoplay) audio.play().catch(function () {});
   }
 
@@ -2786,6 +2863,7 @@ Vér erum heim komin</pre>
       scrub.style.left  = pct + '%';
       bar.setAttribute('aria-valuenow', String(Math.round(pct)));
     }
+    updateActiveLine(t);
   });
 
   audio.addEventListener('ended', function () {
@@ -2804,6 +2882,7 @@ Vér erum heim komin</pre>
       scrub.style.left = '0%';
       elapsedEl.textContent = '0:00';
       bar.setAttribute('aria-valuenow', '0');
+      clearSyncedLines();
     }
   });
 
