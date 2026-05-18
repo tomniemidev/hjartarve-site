@@ -980,9 +980,15 @@ h2.section-title {
 .lyric-line {
   display: block;
   position: relative;
-  padding: 0.1rem 0 0.1rem 0.8rem;
+  padding: 0.18rem 0.6rem 0.18rem 0.9rem;
   color: var(--bone-soft);
-  transition: color 0.6s ease, opacity 0.6s ease, text-shadow 0.6s ease;
+  background-color: transparent;
+  transition:
+    color 0.6s ease,
+    opacity 0.6s ease,
+    text-shadow 0.6s ease,
+    background 0.6s ease,
+    letter-spacing 0.6s ease;
 }
 .lyric-line::before {
   content: '';
@@ -991,19 +997,148 @@ h2.section-title {
   width: 2px;
   background: var(--ember);
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.6s ease, width 0.6s ease, box-shadow 0.6s ease, background 0.6s ease;
 }
 
 .lyric-line.is-future  { color: var(--bone-soft); opacity: 0.78; }
+
 .lyric-line.is-current {
   color: var(--bone);
   opacity: 1;
-  text-shadow: 0 0 22px rgba(217, 165, 102, 0.22);
+  letter-spacing: 0.012em;
+  text-shadow:
+    0 0 1px  rgba(255, 232, 196, 0.55),
+    0 0 8px  rgba(217, 165, 102, 0.55),
+    0 0 22px rgba(217, 165, 102, 0.45),
+    0 0 42px rgba(184, 134, 74,  0.35);
+  background:
+    linear-gradient(90deg,
+      rgba(217, 165, 102, 0.18) 0%,
+      rgba(217, 165, 102, 0.10) 28%,
+      rgba(184, 134, 74,  0.04) 60%,
+      transparent 90%),
+    radial-gradient(ellipse 65% 140% at 4% 50%,
+      rgba(255, 200, 130, 0.16) 0%,
+      rgba(217, 165, 102, 0.05) 45%,
+      transparent 75%);
+  box-shadow:
+    inset 0 0 22px rgba(184, 134, 74, 0.10),
+    inset 0 0 60px rgba(184, 134, 74, 0.05),
+    0 0 14px  rgba(217, 165, 102, 0.20),
+    0 0 36px  rgba(184, 134, 74,  0.14),
+    0 0 72px  rgba(184, 134, 74,  0.08);
+  animation:
+    ember-flicker 2.6s ease-in-out infinite,
+    halo-pulse    3.4s ease-in-out infinite;
 }
-.lyric-line.is-current::before { opacity: 1; }
-.lyric-line.is-past    {
+.lyric-line.is-current::before {
+  opacity: 1;
+  width: 3px;
+  background: linear-gradient(180deg, var(--ember-glow) 0%, var(--ember) 45%, var(--ember-glow) 100%);
+  box-shadow:
+    0 0 4px  rgba(255, 220, 170, 0.85),
+    0 0 12px rgba(217, 165, 102, 0.65),
+    0 0 24px rgba(184, 134, 74,  0.35);
+  animation: bar-flicker 2.6s ease-in-out infinite;
+}
+
+.lyric-line.is-past {
   color: var(--ash-deep);
   opacity: 0.45;
+}
+
+@keyframes ember-flicker {
+  0%, 100% {
+    text-shadow:
+      0 0 1px  rgba(255, 232, 196, 0.55),
+      0 0 8px  rgba(217, 165, 102, 0.55),
+      0 0 22px rgba(217, 165, 102, 0.45),
+      0 0 42px rgba(184, 134, 74,  0.35);
+  }
+  18% {
+    text-shadow:
+      0 0 1px  rgba(255, 232, 196, 0.7),
+      0 0 10px rgba(217, 165, 102, 0.7),
+      0 0 28px rgba(217, 165, 102, 0.55),
+      0 0 50px rgba(184, 134, 74,  0.45);
+  }
+  34% {
+    text-shadow:
+      0 0 1px  rgba(255, 232, 196, 0.5),
+      0 0 7px  rgba(217, 165, 102, 0.45),
+      0 0 18px rgba(217, 165, 102, 0.35),
+      0 0 36px rgba(184, 134, 74,  0.28);
+  }
+  47% {
+    text-shadow:
+      0 0 1px  rgba(255, 232, 196, 0.8),
+      0 0 12px rgba(217, 165, 102, 0.8),
+      0 0 32px rgba(217, 165, 102, 0.6),
+      0 0 56px rgba(184, 134, 74,  0.5);
+  }
+  62% {
+    text-shadow:
+      0 0 1px  rgba(255, 232, 196, 0.5),
+      0 0 8px  rgba(217, 165, 102, 0.5),
+      0 0 20px rgba(217, 165, 102, 0.4),
+      0 0 38px rgba(184, 134, 74,  0.3);
+  }
+  78% {
+    text-shadow:
+      0 0 1px  rgba(255, 232, 196, 0.65),
+      0 0 11px rgba(217, 165, 102, 0.65),
+      0 0 26px rgba(217, 165, 102, 0.5),
+      0 0 46px rgba(184, 134, 74,  0.4);
+  }
+}
+
+@keyframes bar-flicker {
+  0%, 100% {
+    box-shadow:
+      0 0 4px  rgba(255, 220, 170, 0.85),
+      0 0 12px rgba(217, 165, 102, 0.65),
+      0 0 24px rgba(184, 134, 74,  0.35);
+  }
+  22% {
+    box-shadow:
+      0 0 5px  rgba(255, 230, 180, 1),
+      0 0 16px rgba(217, 165, 102, 0.85),
+      0 0 32px rgba(184, 134, 74,  0.5);
+  }
+  46% {
+    box-shadow:
+      0 0 3px  rgba(255, 220, 170, 0.7),
+      0 0 9px  rgba(217, 165, 102, 0.5),
+      0 0 20px rgba(184, 134, 74,  0.28);
+  }
+  70% {
+    box-shadow:
+      0 0 5px  rgba(255, 232, 196, 0.95),
+      0 0 14px rgba(217, 165, 102, 0.75),
+      0 0 28px rgba(184, 134, 74,  0.45);
+  }
+}
+
+/* The outer halo — a slow, off-rhythm breath that swells the warmth
+   around the whole row. 3.4s vs the flicker's 2.6s so they drift in and
+   out of phase like real combustion. */
+@keyframes halo-pulse {
+  0%, 100% {
+    box-shadow:
+      inset 0 0 22px rgba(184, 134, 74, 0.10),
+      inset 0 0 60px rgba(184, 134, 74, 0.05),
+      0 0 10px  rgba(217, 165, 102, 0.14),
+      0 0 28px  rgba(184, 134, 74,  0.10),
+      0 0 56px  rgba(184, 134, 74,  0.06);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 32px rgba(184, 134, 74, 0.20),
+      inset 0 0 88px rgba(184, 134, 74, 0.12),
+      0 0 24px  rgba(255, 200, 130, 0.42),
+      0 0 60px  rgba(217, 165, 102, 0.30),
+      0 0 110px rgba(184, 134, 74,  0.18);
+  }
 }
 
 .lyric-line--section {
