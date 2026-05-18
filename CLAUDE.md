@@ -24,7 +24,7 @@ When making changes, keep the in-file `<head>` comment block in sync with what's
 
 ## Page architecture
 
-`index.html` is structured as one top-level `<header>` (sticky topbar nav), one `<main>` containing five `<section>`s, and one `<footer>`. The sections, in order, are: **hero** → **about** → **album** → **reviews** → **listen**. The topbar nav anchors (`#about`, `#album`, `#reviews`, `#listen`) must stay in sync with the section IDs.
+`index.html` is structured as one top-level `<header>` (sticky topbar nav), one `<main>` containing four `<section>`s, and one `<footer>`. The sections, in order, are: **hero** → **about** → **album** → **reviews**. The topbar nav anchors (`#about`, `#album`, `#album-player`, `#reviews`) must stay in sync with the section IDs — note that `#album-player` is an in-section anchor that targets the player block inside the album section, not a separate section.
 
 ## Design system
 
