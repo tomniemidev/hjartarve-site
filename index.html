@@ -1225,6 +1225,110 @@ h2.section-title {
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
+   BAND
+   ════════════════════════════════════════════════════════════════════════════ */
+.band { position: relative; padding-block: clamp(3rem, 6vh, 5rem) var(--pad-y); }
+.band__fog-1 { top: 8%;  left: -12%; width: 55%; height: 55%; }
+.band__fog-2 { bottom: 0; right: -10%; width: 45%; height: 50%; }
+
+.band__head { text-align: center; margin-bottom: clamp(3rem, 6vw, 5rem); }
+.band__head .eyebrow { margin-bottom: 1.2rem; }
+.band__head .lede    { margin: 0 auto; max-width: 42rem; }
+
+.band__roll {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.4rem, 4vw, 4rem);
+  counter-reset: member;
+}
+
+.member {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.6rem, 3vw, 2.6rem);
+  padding: clamp(1.8rem, 2.5vw, 2.6rem);
+  background: linear-gradient(160deg, rgba(31,46,35,0.45), rgba(20,24,26,0.7));
+  border: var(--border-faint);
+  align-items: center;
+}
+.member::before,
+.member::after {
+  content: '';
+  position: absolute;
+  width: 18px; height: 18px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+.member::before { top: 0;    left: 0;    border-top: 1px solid var(--ember);    border-left: 1px solid var(--ember); }
+.member::after  { bottom: 0; right: 0;   border-bottom: 1px solid var(--ember); border-right: 1px solid var(--ember); }
+
+@media (min-width: 760px) {
+  .member { grid-template-columns: minmax(0, 18rem) 1fr; }
+  .member--reverse { grid-template-columns: 1fr minmax(0, 18rem); }
+  .member--reverse .member__portrait { order: 2; }
+  .member--reverse .member__body     { order: 1; }
+}
+
+.member__portrait {
+  margin: 0;
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border: var(--border-faint);
+  overflow: hidden;
+  background: var(--ink);
+}
+.member__portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(28%) contrast(1.04) brightness(0.94) sepia(0.06);
+}
+
+.member__body { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.member__role {
+  margin-bottom: 0.4rem;
+}
+
+.member__saga {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 3.6vw, 2.8rem);
+  line-height: 1.05;
+  color: var(--ember);
+  margin: 0.2rem 0 0;
+  letter-spacing: 0.01em;
+}
+.member__given {
+  font-family: var(--f-head);
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bone);
+  margin: 0;
+}
+.member__age   { color: var(--ash); letter-spacing: 0.12em; }
+.member__place {
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--ash);
+  margin: 0 0 0.6rem;
+}
+.member__bio {
+  font-family: var(--f-body);
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--bone-soft);
+  margin: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
    REVIEWS
    ════════════════════════════════════════════════════════════════════════════ */
 .reviews { padding-block: var(--pad-y); }
@@ -1602,6 +1706,7 @@ footer {
     <a href="#about">Of the band</a>
     <a href="#album">The new rite</a>
     <a href="#album-player">Hearken</a>
+    <a href="#band">The kindred</a>
     <a href="#reviews">Voices</a>
   </nav>
 </header>
@@ -2645,6 +2750,114 @@ footer {
         Spotify · Apple Music · YouTube Music
       </p>
 
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════ DIVIDER ══════════════════════════════════════ -->
+  <div class="wrap divider" aria-hidden="true">
+    <span class="divider__line"></span>
+    <svg class="divider__runes" viewBox="0 0 90 24" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <path d="M10 2 L10 22"/>
+        <path d="M10 6 L18 12 L10 18"/>
+        <path d="M45 4 L41 10 L45 14 L49 10 Z"/>
+        <path d="M41 10 L37 22"/>
+        <path d="M49 10 L53 22"/>
+        <path d="M80 2 L80 22"/>
+        <path d="M80 6 L72 12 L80 18"/>
+      </g>
+    </svg>
+    <span class="divider__line"></span>
+  </div>
+
+
+  <!-- ══════════════════════════════════════ BAND ══════════════════════════════════════ -->
+  <section class="band" id="band" aria-labelledby="band-title">
+    <div class="fog fog--moss  fog--a band__fog-1" aria-hidden="true"></div>
+    <div class="fog fog--ember fog--c band__fog-2" aria-hidden="true"></div>
+
+    <div class="wrap">
+
+      <header class="band__head">
+        <span class="eyebrow">Five names by the fire</span>
+        <h2 id="band-title" class="section-title">The kindred</h2>
+        <p class="lede">Those who keep the rite. The drawing of the bowstring, the striking of the drum, the holding of the long note when the hall has gone quiet.</p>
+      </header>
+
+      <ol class="band__roll" role="list">
+
+        <li class="member">
+          <figure class="member__portrait">
+            <img src="images/Tom.png" alt="Portrait of Tom Niemi — Arcturus Ironheart"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="member__body">
+            <span class="eyebrow member__role">Lead vocals · lyrics · concept</span>
+            <h3 class="member__saga">Arcturus Ironheart</h3>
+            <p class="member__given">Tom Niemi <span class="member__age">· 56</span></p>
+            <p class="member__place">Lohtaja / Helsinki</p>
+            <p class="member__bio">Frontman and architect of the band's vision. Responsible for the lyrics, the Old Norse, and the conceptual arc of the record. Gruff shouted vocals on the warband tracks, deep clean baritone on the funeral hymns. The oldest member, and the one who keeps the whole ship pointed at the storm.</p>
+          </div>
+        </li>
+
+        <li class="member member--reverse">
+          <figure class="member__portrait">
+            <img src="images/Mikael.png" alt="Portrait of Mikael Lindqvist — Hróarr Frostbeard"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="member__body">
+            <span class="eyebrow member__role">Nyckelharpa · hardanger fiddle · bone flute · backing vocals</span>
+            <h3 class="member__saga">Hróarr Frostbeard</h3>
+            <p class="member__given">Mikael Lindqvist <span class="member__age">· 52</span></p>
+            <p class="member__place">Turku</p>
+            <p class="member__bio">The musical heart of the band. Spent decades in the Finnish folk scene before going north to Sweden in the late 90s to study nyckelharpa properly. He's the one playing the lines that make people cry into their mead horns. Red beard, serious eyes, speaks rarely but always to the point.</p>
+          </div>
+        </li>
+
+        <li class="member">
+          <figure class="member__portrait">
+            <img src="images/Janne.png" alt="Portrait of Janne Mäkinen — Ulfgeirr Stormhand"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="member__body">
+            <span class="eyebrow member__role">Rhythm &amp; lead guitars · songwriting</span>
+            <h3 class="member__saga">Ulfgeirr Stormhand</h3>
+            <p class="member__given">Janne Mäkinen <span class="member__age">· 44</span></p>
+            <p class="member__place">Tampere</p>
+            <p class="member__bio">Came up through the Tampere death metal underground in the 90s — played on a handful of demos with bands that never quite made it past the rehearsal-room walls. He's the reason the heavy tracks on the album are genuinely heavy and not just folk songs with distortion. Tattooed, quiet, drinks his coffee black.</p>
+          </div>
+        </li>
+
+        <li class="member member--reverse">
+          <figure class="member__portrait">
+            <img src="images/Petri.png" alt="Portrait of Petri Salmi — Vargr Eldsmiðr"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="member__body">
+            <span class="eyebrow member__role">Drums · percussion · war horns · ritual frame drums</span>
+            <h3 class="member__saga">Vargr Eldsmiðr</h3>
+            <p class="member__given">Petri Salmi <span class="member__age">· 49</span></p>
+            <p class="member__place">Kuopio</p>
+            <p class="member__bio">Hits hard and hits broad — equally at home with blast beats and slow ceremonial frame drums. Came out of the pagan/black metal scene and brought the entire ritual percussion palette with him. Shaved head, broad shoulders, laughs louder than anyone in the room.</p>
+          </div>
+        </li>
+
+        <li class="member">
+          <figure class="member__portrait">
+            <img src="images/Antti.png" alt="Portrait of Antti Hänninen — Snorri Wolfsmoor"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="member__body">
+            <span class="eyebrow member__role">Bass · kantele · jaw harp · gang vocal coordination</span>
+            <h3 class="member__saga">Snorri Wolfsmoor</h3>
+            <p class="member__given">Antti Hänninen <span class="member__age">· 41</span></p>
+            <p class="member__place">Joensuu</p>
+            <p class="member__bio">The North Karelian heart of the band — he brought the kantele to the record and is also the one who actually drills those massive warband choirs into shape at rehearsals. Studied Karelian rune-singing tradition, which you can hear in the rhythmic phrasing. Long hair, glasses, smiles often.</p>
+          </div>
+        </li>
+
+      </ol>
     </div>
   </section>
 
