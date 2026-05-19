@@ -1329,6 +1329,103 @@ h2.section-title {
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
+   INSTRUMENTS
+   ════════════════════════════════════════════════════════════════════════════ */
+.instruments { position: relative; padding-block: clamp(3rem, 6vh, 5rem) var(--pad-y); }
+.instruments__fog-1 { top: 6%;   right: -14%; width: 55%; height: 55%; }
+.instruments__fog-2 { bottom: 0; left:  -10%; width: 50%; height: 55%; }
+
+.instruments__head { text-align: center; margin-bottom: clamp(3rem, 6vw, 5rem); }
+.instruments__head .eyebrow { margin-bottom: 1.2rem; }
+.instruments__head .lede    { margin: 0 auto; max-width: 44rem; }
+
+.instruments__roll {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.4rem, 4vw, 4rem);
+}
+
+.instrument {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.6rem, 3vw, 2.6rem);
+  padding: clamp(1.8rem, 2.5vw, 2.6rem);
+  background: linear-gradient(160deg, rgba(31,46,35,0.45), rgba(20,24,26,0.7));
+  border: var(--border-faint);
+  align-items: center;
+}
+.instrument::before,
+.instrument::after {
+  content: '';
+  position: absolute;
+  width: 18px; height: 18px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+.instrument::before { top: 0;    left: 0;    border-top: 1px solid var(--ember);    border-left: 1px solid var(--ember); }
+.instrument::after  { bottom: 0; right: 0;   border-bottom: 1px solid var(--ember); border-right: 1px solid var(--ember); }
+
+@media (min-width: 760px) {
+  .instrument { grid-template-columns: minmax(0, 20rem) 1fr; }
+  .instrument--reverse { grid-template-columns: 1fr minmax(0, 20rem); }
+  .instrument--reverse .instrument__portrait { order: 2; }
+  .instrument--reverse .instrument__body     { order: 1; }
+}
+
+.instrument__portrait {
+  margin: 0;
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border: var(--border-ember);
+  overflow: hidden;
+  background: var(--ink);
+}
+.instrument__portrait::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 60px rgba(0,0,0,0.55);
+  pointer-events: none;
+}
+.instrument__portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(28%) contrast(1.04) brightness(0.94) sepia(0.06);
+}
+
+.instrument__body { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.instrument__origin {
+  margin-bottom: 0.4rem;
+  color: var(--ember-glow);
+}
+
+.instrument__name {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  line-height: 1.05;
+  color: var(--ember);
+  margin: 0.2rem 0 0.9rem;
+  letter-spacing: 0.01em;
+}
+
+.instrument__bio {
+  font-family: var(--f-body);
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: var(--bone-soft);
+  margin: 0;
+  max-width: 38rem;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
    REVIEWS
    ════════════════════════════════════════════════════════════════════════════ */
 .reviews { padding-block: var(--pad-y); }
@@ -1707,6 +1804,7 @@ footer {
     <a href="#album">The new rite</a>
     <a href="#album-player">Hearken</a>
     <a href="#band">The kindred</a>
+    <a href="#instruments">The instruments</a>
     <a href="#reviews">Voices</a>
   </nav>
 </header>
@@ -2854,6 +2952,164 @@ footer {
             <p class="member__given">Antti Hänninen <span class="member__age">· 41</span></p>
             <p class="member__place">Joensuu</p>
             <p class="member__bio">The North Karelian heart of the band — he brought the kantele to the record and is also the one who actually drills those massive warband choirs into shape at rehearsals. Studied Karelian rune-singing tradition, which you can hear in the rhythmic phrasing. Long hair, glasses, smiles often.</p>
+          </div>
+        </li>
+
+      </ol>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════ DIVIDER ══════════════════════════════════════ -->
+  <div class="wrap divider" aria-hidden="true">
+    <span class="divider__line"></span>
+    <svg class="divider__runes" viewBox="0 0 90 24" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <path d="M10 2 L10 22"/>
+        <path d="M10 6 L18 12 L10 18"/>
+        <path d="M45 4 L41 10 L45 14 L49 10 Z"/>
+        <path d="M41 10 L37 22"/>
+        <path d="M49 10 L53 22"/>
+        <path d="M80 2 L80 22"/>
+        <path d="M80 6 L72 12 L80 18"/>
+      </g>
+    </svg>
+    <span class="divider__line"></span>
+  </div>
+
+
+  <!-- ══════════════════════════════════════ INSTRUMENTS ══════════════════════════════════════ -->
+  <section class="instruments" id="instruments" aria-labelledby="instruments-title">
+    <div class="fog fog--ember fog--a instruments__fog-1" aria-hidden="true"></div>
+    <div class="fog fog--moss  fog--c instruments__fog-2" aria-hidden="true"></div>
+
+    <div class="wrap">
+
+      <header class="instruments__head">
+        <span class="eyebrow">Voices older than the band</span>
+        <h2 id="instruments-title" class="section-title">The instruments of Hjartarvé</h2>
+        <p class="lede">Ten voices in the choir — bronze, bone, willow, iron, wood and string. The oldest among them is older than writing; the youngest is younger than the gramophone. Together they make our weather.</p>
+      </header>
+
+      <ol class="instruments__roll" role="list">
+
+        <li class="instrument">
+          <figure class="instrument__portrait">
+            <img src="images/NYCKELHARPA.png" alt="The nyckelharpa — a Swedish keyed fiddle"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="instrument__body">
+            <span class="eyebrow instrument__origin">Sweden · keyed fiddle</span>
+            <h3 class="instrument__name">Nyckelharpa</h3>
+            <p class="instrument__bio">A keyed fiddle from Sweden, played for over 600 years. The musician bows the strings while pressing wooden keys that slide tangents against them — like a violin married to a typewriter. Its haunting, resonant sound comes from the rows of sympathetic strings that ring beneath the melody, making the instrument seem to sing back to itself. It is the melodic heart of our record.</p>
+          </div>
+        </li>
+
+        <li class="instrument instrument--reverse">
+          <figure class="instrument__portrait">
+            <img src="images/HARDANGER FIDDLE.png" alt="The hardanger fiddle — Norway's sympathetic-string folk fiddle"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="instrument__body">
+            <span class="eyebrow instrument__origin">Norway · sympathetic-string fiddle</span>
+            <h3 class="instrument__name">Hardanger Fiddle</h3>
+            <p class="instrument__bio">Norway's national folk instrument, recognized by the four or five sympathetic strings that lie beneath its playing strings and ring on their own as the fiddler bows above. The result is a sound thick with ghostly undertones, halfway between a fiddle and a small choir. Used traditionally for wedding music, funeral laments, and the old dances called slåtter.</p>
+          </div>
+        </li>
+
+        <li class="instrument">
+          <figure class="instrument__portrait">
+            <img src="images/KANTELE.png" alt="The kantele — the Finnish national plucked zither"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="instrument__body">
+            <span class="eyebrow instrument__origin">Finland · plucked board zither</span>
+            <h3 class="instrument__name">Kantele</h3>
+            <p class="instrument__bio">The Finnish national instrument, sacred in the old runic tradition. According to the Kalevala, the first kantele was carved by Väinämöinen from the jawbone of a giant pike, strung with the hair of a maiden. Plucked with the fingers, its bell-clear ringing tone is the sound of quiet northern lakes, of birch forests, of stories told by firelight.</p>
+          </div>
+        </li>
+
+        <li class="instrument instrument--reverse">
+          <figure class="instrument__portrait">
+            <img src="images/BONEFLUTE.png" alt="The bone flute — a Stone Age flute carved from animal bone"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="instrument__body">
+            <span class="eyebrow instrument__origin">Stone-age Scandinavia · carved bone</span>
+            <h3 class="instrument__name">Bone Flute</h3>
+            <p class="instrument__bio">One of the oldest instruments known to humankind — examples have been unearthed from Stone Age sites across Scandinavia. Traditionally carved from the long bones of birds, deer, or sheep. Breathy, raw, and slightly out of tune in the way the wind is out of tune, the bone flute carries the voice of a much older world.</p>
+          </div>
+        </li>
+
+        <li class="instrument">
+          <figure class="instrument__portrait">
+            <img src="images/SELJEFLØYTE.png" alt="The seljefløyte — a Norwegian overtone willow flute"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="instrument__body">
+            <span class="eyebrow instrument__origin">Norway · willow overtone flute</span>
+            <h3 class="instrument__name">Seljefløyte</h3>
+            <p class="instrument__bio">The Norwegian overtone willow flute, traditionally cut fresh from a willow branch in spring while the bark still slips easily from the wood. It has no finger holes — the player produces notes by changing breath pressure alone, drawing out the natural overtone series. Each instrument lasts only a season before drying out and being remade.</p>
+          </div>
+        </li>
+
+        <li class="instrument instrument--reverse">
+          <figure class="instrument__portrait">
+            <img src="images/JAWHARP.png" alt="The jaw harp — a small iron-tongued mouth harp"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="instrument__body">
+            <span class="eyebrow instrument__origin">Pan-Nordic · iron tongue</span>
+            <h3 class="instrument__name">Jaw Harp</h3>
+            <p class="instrument__bio">Known across the North by many names — munniharppu in Finnish, mungiga in Swedish. A small frame of iron or brass with a flexible tongue, played against the teeth while the mouth shapes the resonance. Capable of producing both the deep rhythmic pulse you hear under our verses and the strange harmonic whistles that flicker above them.</p>
+          </div>
+        </li>
+
+        <li class="instrument">
+          <figure class="instrument__portrait">
+            <img src="images/FRAMEDRUM.png" alt="The frame drum — a hide-headed ritual hand drum"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="instrument__body">
+            <span class="eyebrow instrument__origin">Sápmi · ritual hide drum</span>
+            <h3 class="instrument__name">Frame Drum</h3>
+            <p class="instrument__bio">A round wooden hoop with a hide stretched across it, the oldest and most universal drum in human history. In the Nordic tradition it is the ritual drum of the Sámi noaidi — the shaman — used to call the spirits and to journey between worlds. Played with the hand or with a softly wrapped beater, it is the slow heartbeat at the floor of our sound.</p>
+          </div>
+        </li>
+
+        <li class="instrument instrument--reverse">
+          <figure class="instrument__portrait">
+            <img src="images/WARHORNLUR.png" alt="The war horn lur — a bronze and cattle-horn signalling horn"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="instrument__body">
+            <span class="eyebrow instrument__origin">Bronze Age North · bronze &amp; cattle horn</span>
+            <h3 class="instrument__name">War Horn (Lur)</h3>
+            <p class="instrument__bio">The bronze lur of Scandinavia dates to the Nordic Bronze Age, around 1500 BCE — magnificent S-curved horns of beaten metal, found in pairs in peat bogs across Denmark and southern Sweden. The cattle horn lur is its humbler cousin, used to call livestock and to summon warriors. Both speak with the same voice: distant, weighty, ancient.</p>
+          </div>
+        </li>
+
+        <li class="instrument">
+          <figure class="instrument__portrait">
+            <img src="images/ACCORDION.png" alt="The accordion — a bellows-driven free-reed instrument"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="instrument__body">
+            <span class="eyebrow instrument__origin">Finland · bellows &amp; buttons</span>
+            <h3 class="instrument__name">Accordion</h3>
+            <p class="instrument__bio">A relative newcomer to the Nordic palette — only two hundred years old — but it has thoroughly conquered the dance halls and tavern floors of Finland, where it powers the breakneck Finnish humppa rhythm. On our record it provides the swagger of the drinking songs and the swing of the warband choruses. The newest instrument here, and the rowdiest.</p>
+          </div>
+        </li>
+
+        <li class="instrument instrument--reverse">
+          <figure class="instrument__portrait">
+            <img src="images/GUITARBASSDRUMS.png" alt="The modern engine room — distorted guitars, bass, and drum kit"
+                 width="600" height="600" decoding="async" loading="lazy">
+          </figure>
+          <div class="instrument__body">
+            <span class="eyebrow instrument__origin">Modern · the storm beneath</span>
+            <h3 class="instrument__name">Guitar &amp; Bass, Drums</h3>
+            <p class="instrument__bio">The modern engine room of the band. Distorted six-string guitars, low thundering bass, and a full drum kit — the language of metal, woven through every track but never allowed to drown the older voices. We build from the ancient up: the kantele and the nyckelharpa carry the melody, and the guitars and drums carry the storm beneath.</p>
           </div>
         </li>
 
