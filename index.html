@@ -12,13 +12,22 @@
   [1] Social / contact links in the footer.
       Search the markup for:   TODO: social links
 
+  Per-release upkeep (do this for every new album / single):
+  ──────────────────────────────────────────────────────────
+  [2] Point the page at the newest release. Update, in order:
+        • the hero news ribbon        — search:  TODO: news ribbon
+        • the nav "The rites" target  — search:  TODO: newest-release nav
+        • this <meta description>'s "Latest rite" mention (below)
+      Full copy-paste recipe lives beside the release sections —
+      search the markup for:   ADDING A RELEASE
+
   All Google Fonts are loaded from fonts.googleapis.com. If your deployment
   is air-gapped, swap the <link> for a local @font-face block.
 ================================================================================
 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Hjartarvé — Nordic folk metal from the deep forests of the North. New album Heyr Oss, Skogarmóðir out now.">
+<meta name="description" content="Hjartarvé — Nordic folk metal from the deep forests of the North. Albums and singles with full synced lyrics. Latest rite: Heyr Oss, Skogarmóðir.">
 <meta name="theme-color" content="#13181a">
 <title>Hjartarvé — Nordic Folk Metal</title>
 
@@ -65,6 +74,15 @@ html {
   text-rendering: optimizeLegibility;
   touch-action: pan-y;
 }
+
+/* Clip horizontal overflow at the viewport (the <html> scroll container).
+   The decorative .fog blobs are absolutely positioned and intentionally bleed
+   past the section edges; on a narrow screen that bleed widens the mobile
+   layout viewport, which would push the fixed player dock partly off-screen.
+   overflow-x on <body> does NOT clip the viewport — it has to be on <html>.
+   Using `clip` (not `hidden`) avoids creating a scroll container, so the
+   sticky topbar and anchor scrolling are unaffected. */
+html { overflow-x: clip; }
 
 body {
   font-family: var(--f-body);
@@ -379,6 +397,59 @@ h2.section-title {
   flex: 0 0 auto;
   color: var(--ember);
 }
+
+/* ────────── News ribbon (latest drop, under the hero) ────────── */
+.newsbar {
+  position: relative;
+  z-index: 2;
+  border-top: var(--border-faint);
+  border-bottom: var(--border-ember);
+  background: linear-gradient(180deg, rgba(31, 46, 35, 0.30), rgba(8, 9, 10, 0));
+}
+.newsbar__inner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(0.6rem, 2vw, 1.3rem);
+  padding-block: clamp(0.7rem, 1.6vw, 1.05rem);
+}
+.newsbar__tag {
+  flex: 0 0 auto;
+  font-family: var(--f-head);
+  font-size: 0.6rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--ember);
+  padding: 0.32rem 0.72rem;
+  white-space: nowrap;
+}
+.newsbar__text {
+  flex: 1 1 12rem;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: clamp(0.92rem, 0.4vw + 0.85rem, 1.05rem);
+  color: var(--bone-soft);
+}
+.newsbar__link {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--f-head);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ember-glow);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.4s ease, gap 0.4s ease;
+}
+.newsbar__link:hover,
+.newsbar__link:focus-visible { color: var(--bone); gap: 0.8rem; }
+.newsbar__arrow { font-style: normal; }
 
 /* ════════════════════════════════════════════════════════════════════════════
    ABOUT
@@ -800,6 +871,58 @@ h2.section-title {
   .player__playpause { grid-area: btn; }
   .player__meta      { grid-area: meta; }
   .player__progress  { grid-area: prg; }
+}
+
+/* ────────── Shared docked player ("now playing" bar) ────────── */
+/* The single .player lives near </body>, fixed to the foot of the viewport.
+   Hidden until a track loads — the IIFE toggles body.has-nowplaying. */
+.nowplaying {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  padding: clamp(0.55rem, 1.4vw, 1rem) var(--gut);
+  transform: translateY(130%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.nowplaying::before {
+  /* soft scrim so page content reads cleanly behind the floating bar */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(0deg, var(--ink), rgba(8, 9, 10, 0));
+  pointer-events: none;
+}
+body.has-nowplaying .nowplaying {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.nowplaying .player {
+  max-width: var(--maxw);
+  margin-inline: auto;
+}
+/* Reserve room so the floating bar never hides the footer while it's up. */
+body.has-nowplaying { padding-bottom: clamp(6rem, 8vw, 7.5rem); }
+
+/* Release label in the docked bar (small ember eyebrow above the track title) */
+.player__release {
+  font-family: var(--f-head);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ember);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  body.has-nowplaying { padding-bottom: 9.5rem; }
 }
 
 /* Tracklist */
@@ -1801,8 +1924,8 @@ footer {
   <span class="topbar__mark" aria-hidden="true">Hjartarvé · Est. by oath</span>
   <nav class="topbar__nav" aria-label="Primary">
     <a href="#about">Of the band</a>
-    <a href="#album">The new rite</a>
-    <a href="#album-player">Hearken</a>
+    <!-- TODO: newest-release nav — repoint at the newest release section id -->
+    <a href="#heyr-oss-skogarmodir">The rites</a>
     <a href="#band">The kindred</a>
     <a href="#instruments">The instruments</a>
     <a href="#reviews">Voices</a>
@@ -1857,6 +1980,20 @@ footer {
 
     <div class="hero__cue" aria-hidden="true">Descend</div>
   </section>
+
+
+  <!-- ══════════════════════════════════════ NEWS RIBBON ══════════════════════════════════════ -->
+  <!-- TODO: news ribbon — on each new release, update the text and the href below to the newest release. -->
+  <aside class="newsbar" aria-label="Latest word">
+    <div class="wrap newsbar__inner">
+      <span class="newsbar__tag">New rite</span>
+      <p class="newsbar__text">&ldquo;Heyr Oss, Skogarmóðir&rdquo; — eight movements, out now.</p>
+      <a class="newsbar__link" href="#heyr-oss-skogarmodir">
+        Hear it
+        <span class="newsbar__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </aside>
 
 
   <!-- ══════════════════════════════════════ DIVIDER ══════════════════════════════════════ -->
@@ -1946,8 +2083,22 @@ footer {
   </div>
 
 
+  <!-- ════════════════════════════════════ RELEASES (newest first) ════════════════════════════════════ -->
+  <!--
+    ADDING A RELEASE — the page is built so a new album/single is MARKUP ONLY (no JS changes):
+      1. Put audio in  mp3/<Release-Name>/  and generate per-line data-time values with tools/lrc.html.
+         Add the cover image (album-2.png, …).
+      2. COPY one whole  <section class="album release"> … </section>  block below, then set:
+           • a new  id="<slug>"  and matching aria-labelledby / album__title id
+           • cover <img> src + alt, the album__eyebrow (type + ordinal), title, translation, pitch, <dl>
+           • the album__cue href to the new section's  #<slug>-tracks  wrapper
+      3. Give its  <ol class="tracklist">  a unique  data-tracklist="<slug>"  and  data-release="<Name>".
+      4. Place the NEW section at the TOP of this run (newest first); put a .divider between releases.
+      5. Repoint the nav "The rites" link, the hero news ribbon, and the <meta description> at it.
+    The shared player (docked near </body>) auto-discovers every .tracklist__item — no JS edits needed.
+  -->
   <!-- ══════════════════════════════════════ ALBUM SPOTLIGHT ══════════════════════════════════════ -->
-  <section class="album" id="album" aria-labelledby="album-title">
+  <section class="album release" id="heyr-oss-skogarmodir" aria-labelledby="album-title">
     <div class="fog fog--moss  fog--a album__fog-1" aria-hidden="true"></div>
     <div class="fog fog--ember fog--c album__fog-2" aria-hidden="true"></div>
 
@@ -1976,7 +2127,7 @@ footer {
           </g>
         </svg>
 
-        <span class="eyebrow album__eyebrow">New incantation · I.</span>
+        <span class="eyebrow album__eyebrow">Album · I · New incantation</span>
 
         <h2 id="album-title" class="album__title">Heyr Oss,<br>Skogarmóðir</h2>
         <p class="album__translation">Hear us, mother of the forest</p>
@@ -2003,7 +2154,7 @@ footer {
           </div>
         </dl>
 
-        <a class="album__cue" href="#album-player">
+        <a class="album__cue" href="#heyr-oss-tracks">
           <span class="album__cue-text">Listen below</span>
           <span class="album__cue-arrow" aria-hidden="true">
             <svg viewBox="0 0 24 32" focusable="false">
@@ -2015,36 +2166,10 @@ footer {
 
     </div>
 
-    <!-- ────────── In-page player + tracklist ────────── -->
-    <div class="wrap album__player" id="album-player" aria-label="Album player">
+    <!-- ────────── Tracklist (full synced lyrics). Playback runs through the shared dock near </body>. ────────── -->
+    <div class="wrap album__player" id="heyr-oss-tracks" aria-label="Tracklist">
 
-      <div class="player" data-empty="true">
-        <button class="player__playpause" type="button" aria-label="Play" disabled>
-          <svg class="player__icon player__icon--play"  viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M7 5 L19 12 L7 19 Z" fill="currentColor"/>
-          </svg>
-          <svg class="player__icon player__icon--pause" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M7 5 L10 5 L10 19 L7 19 Z M14 5 L17 5 L17 19 L14 19 Z" fill="currentColor"/>
-          </svg>
-        </button>
-        <div class="player__meta">
-          <span class="player__roman" aria-hidden="true">—</span>
-          <div class="player__names">
-            <span class="player__title">Choose a movement</span>
-            <span class="player__sub">Heyr Oss, Skogarmóðir</span>
-          </div>
-        </div>
-        <div class="player__progress">
-          <div class="player__bar" role="progressbar" aria-label="Track progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
-            <div class="player__fill"></div>
-            <div class="player__scrub" aria-hidden="true"></div>
-          </div>
-          <span class="player__time"><span class="player__elapsed">0:00</span> / <span class="player__total">0:00</span></span>
-        </div>
-        <audio class="player__audio" preload="metadata"></audio>
-      </div>
-
-      <ol class="tracklist" role="list" data-tracklist="main">
+      <ol class="tracklist" role="list" data-tracklist="main" data-release="Heyr Oss, Skogarmóðir">
         <li class="tracklist__item"
             data-roman="I."
             data-src="mp3/Heyr-Oss-Skogarmóðir/Hjǫrtr í Eldi (Where the Hollow Oak Openeth).mp3"
@@ -2802,7 +2927,7 @@ footer {
       </ol>
 
       <h3 class="tracklist__alt-label"><span>Alternate takes</span></h3>
-      <ol class="tracklist tracklist--alt" role="list" data-tracklist="alt">
+      <ol class="tracklist tracklist--alt" role="list" data-tracklist="alt" data-release="Heyr Oss, Skogarmóðir">
         <li class="tracklist__item"
             data-roman="α"
             data-src="mp3/Heyr-Oss-Skogarmóðir/Where the Hollow Oak Openeth (Alternate Take Three).mp3"
@@ -3307,6 +3432,37 @@ footer {
   </p>
 </footer>
 
+<!-- ══════════════════════════════════════ SHARED PLAYER (docked) ══════════════════════════════════════ -->
+<!-- One persistent "now playing" bar for every release. Hidden until a track loads (body.has-nowplaying). -->
+<div class="nowplaying" aria-label="Now playing">
+  <div class="player" data-empty="true">
+    <button class="player__playpause" type="button" aria-label="Play" disabled>
+      <svg class="player__icon player__icon--play"  viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7 5 L19 12 L7 19 Z" fill="currentColor"/>
+      </svg>
+      <svg class="player__icon player__icon--pause" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7 5 L10 5 L10 19 L7 19 Z M14 5 L17 5 L17 19 L14 19 Z" fill="currentColor"/>
+      </svg>
+    </button>
+    <div class="player__meta">
+      <span class="player__roman" aria-hidden="true">—</span>
+      <div class="player__names">
+        <span class="player__title">Choose a movement</span>
+        <span class="player__sub">Pick a track to begin</span>
+        <span class="player__release">Heyr Oss, Skogarmóðir</span>
+      </div>
+    </div>
+    <div class="player__progress">
+      <div class="player__bar" role="progressbar" aria-label="Track progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+        <div class="player__fill"></div>
+        <div class="player__scrub" aria-hidden="true"></div>
+      </div>
+      <span class="player__time"><span class="player__elapsed">0:00</span> / <span class="player__total">0:00</span></span>
+    </div>
+    <audio class="player__audio" preload="metadata"></audio>
+  </div>
+</div>
+
 <script>
 (function () {
   var player    = document.querySelector('.player');
@@ -3316,6 +3472,7 @@ footer {
   var romanEl   = player.querySelector('.player__roman');
   var titleEl   = player.querySelector('.player__title');
   var subEl     = player.querySelector('.player__sub');
+  var releaseEl = player.querySelector('.player__release');
   var elapsedEl = player.querySelector('.player__elapsed');
   var totalEl   = player.querySelector('.player__total');
   var bar       = player.querySelector('.player__bar');
@@ -3420,6 +3577,10 @@ footer {
     romanEl.textContent  = item.getAttribute('data-roman') || '—';
     titleEl.textContent  = item.getAttribute('data-title') || '';
     subEl.textContent    = item.getAttribute('data-sub')   || '';
+    // Show which release this track belongs to, and raise the docked bar.
+    var list = item.closest('[data-release]');
+    if (releaseEl) releaseEl.textContent = list ? list.getAttribute('data-release') : '';
+    document.body.classList.add('has-nowplaying');
     audio.src = encodeURI(item.getAttribute('data-src'));
     item.classList.add('is-playing');
     setupSyncedLines(item);
@@ -3487,6 +3648,7 @@ footer {
       elapsedEl.textContent = '0:00';
       bar.setAttribute('aria-valuenow', '0');
       clearSyncedLines();
+      document.body.classList.remove('has-nowplaying');
     }
   });
 
