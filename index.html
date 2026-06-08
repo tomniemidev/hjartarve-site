@@ -15,7 +15,7 @@
   Per-release upkeep (do this for every new album / single):
   ──────────────────────────────────────────────────────────
   [2] Point the page at the newest release. Update, in order:
-        • the hero news ribbon        — search:  TODO: news ribbon
+        • add an item to the news list — search:  TODO: news list
         • the nav "The rites" target  — search:  TODO: newest-release nav
         • this <meta description>'s "Latest rite" mention (below)
       Full copy-paste recipe lives beside the release sections —
@@ -27,7 +27,7 @@
 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Hjartarvé — Nordic folk metal from the deep forests of the North. Albums and singles with full synced lyrics. Latest rite: Heyr Oss, Skogarmóðir.">
+<meta name="description" content="Hjartarvé — Nordic folk metal from the deep forests of the North. Albums and singles with full synced lyrics. Latest rite: Sumarmál! (Drink the Long Sun Down).">
 <meta name="theme-color" content="#13181a">
 <title>Hjartarvé — Nordic Folk Metal</title>
 
@@ -398,23 +398,53 @@ h2.section-title {
   color: var(--ember);
 }
 
-/* ────────── News ribbon (latest drop, under the hero) ────────── */
-.newsbar {
+/* ────────── News (latest words, under the hero) ────────── */
+.news {
   position: relative;
   z-index: 2;
   border-top: var(--border-faint);
   border-bottom: var(--border-ember);
   background: linear-gradient(180deg, rgba(31, 46, 35, 0.30), rgba(8, 9, 10, 0));
+  padding-block: clamp(1.4rem, 3vw, 2.4rem);
 }
-.newsbar__inner {
+.news__heading {
+  margin: 0 0 clamp(0.8rem, 1.8vw, 1.3rem);
+  font-family: var(--f-head);
+  font-size: 0.7rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--bone-soft);
+}
+.news__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.news__item {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: clamp(0.6rem, 2vw, 1.3rem);
-  padding-block: clamp(0.7rem, 1.6vw, 1.05rem);
+  padding-block: clamp(0.85rem, 1.8vw, 1.2rem);
+  border-top: var(--border-faint);
 }
-.newsbar__tag {
+.news__item:first-child { border-top: 0; padding-top: 0; }
+.news__head {
   flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+.news__date {
+  font-family: var(--f-head);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bone-soft);
+  opacity: 0.72;
+  white-space: nowrap;
+}
+.news__tag {
   font-family: var(--f-head);
   font-size: 0.6rem;
   letter-spacing: 0.34em;
@@ -424,7 +454,7 @@ h2.section-title {
   padding: 0.32rem 0.72rem;
   white-space: nowrap;
 }
-.newsbar__text {
+.news__text {
   flex: 1 1 12rem;
   min-width: 0;
   margin: 0;
@@ -433,7 +463,7 @@ h2.section-title {
   font-size: clamp(0.92rem, 0.4vw + 0.85rem, 1.05rem);
   color: var(--bone-soft);
 }
-.newsbar__link {
+.news__link {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
@@ -447,9 +477,9 @@ h2.section-title {
   white-space: nowrap;
   transition: color 0.4s ease, gap 0.4s ease;
 }
-.newsbar__link:hover,
-.newsbar__link:focus-visible { color: var(--bone); gap: 0.8rem; }
-.newsbar__arrow { font-style: normal; }
+.news__link:hover,
+.news__link:focus-visible { color: var(--bone); gap: 0.8rem; }
+.news__arrow { font-style: normal; }
 
 /* ════════════════════════════════════════════════════════════════════════════
    ABOUT
@@ -1925,7 +1955,7 @@ footer {
   <nav class="topbar__nav" aria-label="Primary">
     <a href="#about">Of the band</a>
     <!-- TODO: newest-release nav — repoint at the newest release section id -->
-    <a href="#heyr-oss-skogarmodir">The rites</a>
+    <a href="#sumarmal">The rites</a>
     <a href="#band">The kindred</a>
     <a href="#instruments">The instruments</a>
     <a href="#reviews">Voices</a>
@@ -1982,16 +2012,38 @@ footer {
   </section>
 
 
-  <!-- ══════════════════════════════════════ NEWS RIBBON ══════════════════════════════════════ -->
-  <!-- TODO: news ribbon — on each new release, update the text and the href below to the newest release. -->
-  <aside class="newsbar" aria-label="Latest word">
-    <div class="wrap newsbar__inner">
-      <span class="newsbar__tag">New rite</span>
-      <p class="newsbar__text">&ldquo;Heyr Oss, Skogarmóðir&rdquo; — eight movements, out now.</p>
-      <a class="newsbar__link" href="#heyr-oss-skogarmodir">
-        Hear it
-        <span class="newsbar__arrow" aria-hidden="true">→</span>
-      </a>
+  <!-- ══════════════════════════════════════ NEWS ══════════════════════════════════════ -->
+  <!-- TODO: news list — on each new release, add a new <li class="news__item"> at the TOP of this list. -->
+  <aside class="news" aria-labelledby="news-heading">
+    <div class="wrap">
+      <h2 id="news-heading" class="news__heading">Latest word</h2>
+      <ol class="news__list" role="list">
+
+        <li class="news__item">
+          <div class="news__head">
+            <time class="news__date" datetime="2026-06-08">8 June 2026</time>
+            <span class="news__tag">New rite</span>
+          </div>
+          <p class="news__text">&ldquo;Sumarmál! (Drink the Long Sun Down)&rdquo; — a summer rite, poured out now.</p>
+          <a class="news__link" href="#sumarmal">
+            Hear it
+            <span class="news__arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+
+        <li class="news__item">
+          <div class="news__head">
+            <time class="news__date" datetime="2026-05-14">14 May 2026</time>
+            <span class="news__tag">New rite</span>
+          </div>
+          <p class="news__text">&ldquo;Heyr Oss, Skogarmóðir&rdquo; — eight movements, out now.</p>
+          <a class="news__link" href="#heyr-oss-skogarmodir">
+            Hear it
+            <span class="news__arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+
+      </ol>
     </div>
   </aside>
 
@@ -2094,9 +2146,224 @@ footer {
            • the album__cue href to the new section's  #<slug>-tracks  wrapper
       3. Give its  <ol class="tracklist">  a unique  data-tracklist="<slug>"  and  data-release="<Name>".
       4. Place the NEW section at the TOP of this run (newest first); put a .divider between releases.
-      5. Repoint the nav "The rites" link, the hero news ribbon, and the <meta description> at it.
+      5. Add a news-list item (TODO: news list), and repoint the nav "The rites" link and the <meta description> at it.
     The shared player (docked near </body>) auto-discovers every .tracklist__item — no JS edits needed.
   -->
+  <!-- ══════════════════════════════════════ SINGLE — SUMARMÁL ══════════════════════════════════════ -->
+  <section class="album release" id="sumarmal" aria-labelledby="sumarmal-title">
+    <div class="fog fog--moss  fog--a album__fog-1" aria-hidden="true"></div>
+    <div class="fog fog--ember fog--c album__fog-2" aria-hidden="true"></div>
+
+    <div class="wrap album__grid">
+
+      <figure class="album__art" aria-label="Single cover for Sumarmál! (Drink the Long Sun Down)">
+        <img src="Sumarmál.png"
+             alt="Sumarmál! (Drink the Long Sun Down) — Hjartarvé. A flower-crowned summer priestess stands with arms open in a sunlit forest clearing, ringed by rune-carved standing stones and watching ravens, golden light breaking over the northern trees."
+             width="600" height="600"
+             decoding="async" loading="lazy">
+      </figure>
+
+      <div class="album__content">
+        <svg class="album__branch" viewBox="0 0 24 400" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g stroke-linecap="round" stroke-width="0.9">
+            <path d="M12 4 L12 396"/>
+            <path d="M12 40 L4 28"/>
+            <path d="M12 70 L22 60"/>
+            <path d="M12 120 L2 108"/>
+            <path d="M12 160 L20 152"/>
+            <path d="M12 210 L4 198"/>
+            <path d="M12 250 L22 240"/>
+            <path d="M12 300 L2 288"/>
+            <path d="M12 340 L20 330"/>
+            <path d="M12 380 L4 368"/>
+          </g>
+        </svg>
+
+        <span class="eyebrow album__eyebrow">Single · A summer rite</span>
+
+        <h2 id="sumarmal-title" class="album__title">Sumarmál!</h2>
+        <p class="album__translation">Drink the long sun down</p>
+
+        <p class="album__pitch">
+          A single rite for the <em>long days</em> — when the sun forgets to set and the
+          fires are left to burn till morning. One song poured like mead from horn to
+          throat: a toast to the turning year, to kin gathered close, and to the slow
+          gold drowning of the sun. Raised in the same cabin, sung in the same two tongues.
+        </p>
+
+        <dl class="album__meta">
+          <div class="album__meta-item">
+            <dt>Release</dt>
+            <dd>Sólmánuðr · 8 June 2026</dd>
+          </div>
+          <div class="album__meta-item">
+            <dt>Movements</dt>
+            <dd>One</dd>
+          </div>
+          <div class="album__meta-item">
+            <dt>Tongue</dt>
+            <dd>Old Norse, English</dd>
+          </div>
+        </dl>
+
+        <a class="album__cue" href="#sumarmal-tracks">
+          <span class="album__cue-text">Listen below</span>
+          <span class="album__cue-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 32" focusable="false">
+              <path d="M12 2 L12 28 M4 20 L12 28 L20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- ────────── Tracklist. Playback runs through the shared dock near </body>. ────────── -->
+    <div class="wrap album__player" id="sumarmal-tracks" aria-label="Tracklist">
+
+      <ol class="tracklist" role="list" data-tracklist="sumarmal" data-release="Sumarmál!">
+        <li class="tracklist__item"
+            data-roman="I."
+            data-src="mp3/Sumarmál/Sumarmál! (Drink the Long Sun Down).mp3"
+            data-title="Sumarmál!"
+            data-sub="Drink the Long Sun Down">
+          <button class="tracklist__btn" type="button">
+            <span class="tracklist__mark" aria-hidden="true">
+              <span class="tracklist__num">I.</span>
+              <svg class="tracklist__playing" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"/></svg>
+            </span>
+            <span class="tracklist__name">
+              <span class="tracklist__title">Sumarmál!</span>
+              <span class="tracklist__sub">Drink the Long Sun Down</span>
+            </span>
+            <span class="tracklist__time" aria-hidden="true">—</span>
+          </button>
+          <details class="tracklist__lyrics">
+            <summary class="tracklist__words">
+              <span class="tracklist__words-label">Words</span>
+              <svg class="tracklist__words-chev" viewBox="0 0 10 6" aria-hidden="true">
+                <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="27.14">The snow is gone where the snow had stayed</span>
+              <span class="lyric-line" data-time="29.74">The wolves have walked back to the trees</span>
+              <span class="lyric-line" data-time="32.36">The river that was iron and stone</span>
+              <span class="lyric-line" data-time="34.63">Doth singeth now and runneth free</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="37.51">The vǫlva paid, the gods did wake</span>
+              <span class="lyric-line" data-time="39.73">The fields are green, the bees are loud</span>
+              <span class="lyric-line" data-time="42.50">We owe a debt we cannot name</span>
+              <span class="lyric-line" data-time="44.75">So we shall pay it well, and proud!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="50.13">Sól! Sumar! Mjǫðr!</span>
+              <span class="lyric-line" data-time="52.66">Sól! Sumar! Mjǫðr!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="55.22">Skál! Til Sumarmál!</span>
+              <span class="lyric-line" data-time="57.80">Skál! Til Skogarmóðir!</span>
+              <span class="lyric-line" data-time="60.32">Drink the long sun down to the dregs of the night</span>
+              <span class="lyric-line" data-time="65.01">The night that doth never come!</span>
+              <span class="lyric-line" data-time="67.89">Bjórr ok bál! Bjórr ok bál!</span>
+              <span class="lyric-line" data-time="70.39">Beer and bonfire till dawn!</span>
+              <span class="lyric-line" data-time="74.93">The year we buried the snow alive</span>
+              <span class="lyric-line" data-time="79.72">And we danceth upon its barrow!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="93.16">Old Bjarki, he weepeth no more in his ale</span>
+              <span class="lyric-line" data-time="95.78">For a woman hath sat on his knee</span>
+              <span class="lyric-line" data-time="98.13">She is not the one he weepeth about</span>
+              <span class="lyric-line" data-time="100.76">But the summer doth careth not, see!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="103.26">Young Hrafn on the table is dancing again</span>
+              <span class="lyric-line" data-time="105.75">With a wreath on his head and his boots in his hand</span>
+              <span class="lyric-line" data-time="108.54">The priest at the door is the priest no more</span>
+              <span class="lyric-line" data-time="110.80">He is one of us now, he doth understand!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="116.20">Sól! Sumar! Mjǫðr!</span>
+              <span class="lyric-line" data-time="118.80">Sól! Sumar! Mjǫðr!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="121.32">Skál! Til Sumarmál!</span>
+              <span class="lyric-line" data-time="123.85">Skál! Til Skogarmóðir!</span>
+              <span class="lyric-line" data-time="126.44">Drink the long sun down to the dregs of the night</span>
+              <span class="lyric-line" data-time="131.14">The night that doth never come!</span>
+              <span class="lyric-line" data-time="134.00">Bjórr ok bál! Bjórr ok bál!</span>
+              <span class="lyric-line" data-time="136.56">Beer and bonfire till dawn!</span>
+              <span class="lyric-line" data-time="140.87">The year we buried the snow alive</span>
+              <span class="lyric-line" data-time="146.17">And we danceth upon its barrow!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="154.18">Hej!</span>
+              <span class="lyric-line" data-time="159.24">To the woman who out-drinketh the smith!</span>
+              <span class="lyric-line" data-time="161.81">Hej!</span>
+              <span class="lyric-line" data-time="162.67">To the smith who out-drinketh the bear!</span>
+              <span class="lyric-line" data-time="164.20">Hej!</span>
+              <span class="lyric-line" data-time="164.81">To the bear who hath wandered into the feast!</span>
+              <span class="lyric-line" data-time="169.71">Hej!</span>
+              <span class="lyric-line" data-time="170.06">And to him we shall offer a chair!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Breakdown]</span>
+              <span class="lyric-line" data-time="174.54">Who payeth?</span>
+              <span class="lyric-line" data-time="175.65">Not I!</span>
+              <span class="lyric-line" data-time="176.87">Who payeth?</span>
+              <span class="lyric-line" data-time="178.10">Not I!</span>
+              <span class="lyric-line" data-time="179.48">Who payeth?</span>
+              <span class="lyric-line" data-time="180.22">The vǫlva paid! And the vǫlva drinks free!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="197.45">Skál! Til Sumarmál!</span>
+              <span class="lyric-line" data-time="200.05">Skál! Til Skogarmóðir!</span>
+              <span class="lyric-line" data-time="202.55">Drink the long sun down to the dregs of the night</span>
+              <span class="lyric-line" data-time="207.48">The night that doth never come!</span>
+              <span class="lyric-line" data-time="210.00">Bjórr ok bál! Bjórr ok bál!</span>
+              <span class="lyric-line" data-time="212.72">Beer and bonfire till dawn!</span>
+              <span class="lyric-line" data-time="217.02">The year we buried the snow alive</span>
+              <span class="lyric-line" data-time="222.44">And we danceth upon its barrow!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="230.70">SKÁL!</span>
+            </div>
+          </details>
+        </li>
+      </ol>
+
+      <noscript>
+        <p class="player__noscript">JavaScript is required to play the single in-page. Coming soon to Spotify, Apple Music, and YouTube Music.</p>
+      </noscript>
+
+      <p class="album__streaming">
+        <span class="album__streaming-label">Forthcoming</span>
+        Spotify · Apple Music · YouTube Music
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════ DIVIDER ══════════════════════════════════════ -->
+  <div class="wrap divider" aria-hidden="true">
+    <span class="divider__line"></span>
+    <svg class="divider__runes" viewBox="0 0 90 24" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <path d="M10 2 L10 22"/>
+        <path d="M10 6 L18 12 L10 18"/>
+        <path d="M45 4 L41 10 L45 14 L49 10 Z"/>
+        <path d="M41 10 L37 22"/>
+        <path d="M49 10 L53 22"/>
+        <path d="M80 2 L80 22"/>
+        <path d="M80 6 L72 12 L80 18"/>
+      </g>
+    </svg>
+    <span class="divider__line"></span>
+  </div>
+
+
   <!-- ══════════════════════════════════════ ALBUM SPOTLIGHT ══════════════════════════════════════ -->
   <section class="album release" id="heyr-oss-skogarmodir" aria-labelledby="album-title">
     <div class="fog fog--moss  fog--a album__fog-1" aria-hidden="true"></div>
