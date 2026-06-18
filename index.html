@@ -27,7 +27,7 @@
 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Hjartarvé — Nordic folk metal from the deep forests of the North. Albums and singles with full synced lyrics. Latest rite: Sumarmál! (Drink the Long Sun Down).">
+<meta name="description" content="Hjartarvé — Nordic folk metal from the deep forests of the North. Albums and singles with full synced lyrics. Latest rite: Sól Eigi Sefr (Where the Sun Doth Walk the Night).">
 <meta name="theme-color" content="#13181a">
 <title>Hjartarvé — Nordic Folk Metal</title>
 
@@ -575,6 +575,36 @@ h2.section-title {
   height: 100%;
   display: block;
   object-fit: cover;
+}
+
+/* Stack a release's covers (main + a smaller, captioned bonus variant) in the art column. */
+.album__covers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.6rem, 3vw, 2.4rem);
+}
+.album__bonus {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+}
+.album__art--bonus {
+  max-width: 18rem;
+  box-shadow:
+    0 16px 44px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(184, 134, 74, 0.1) inset;
+}
+.album__art-tag {
+  margin: 0;
+  text-align: center;
+  font-family: var(--f-head);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ember);
 }
 
 .album__content { position: relative; padding-left: clamp(1rem, 3vw, 2.5rem); }
@@ -1955,7 +1985,7 @@ footer {
   <nav class="topbar__nav" aria-label="Primary">
     <a href="#about">Of the band</a>
     <!-- TODO: newest-release nav — repoint at the newest release section id -->
-    <a href="#sumarmal">The rites</a>
+    <a href="#sol-eigi-sefr">The rites</a>
     <a href="#band">The kindred</a>
     <a href="#instruments">The instruments</a>
     <a href="#reviews">Voices</a>
@@ -2018,6 +2048,18 @@ footer {
     <div class="wrap">
       <h2 id="news-heading" class="news__heading">Latest word</h2>
       <ol class="news__list" role="list">
+
+        <li class="news__item">
+          <div class="news__head">
+            <time class="news__date" datetime="2026-06-18">18 June 2026</time>
+            <span class="news__tag">New rite</span>
+          </div>
+          <p class="news__text">&ldquo;Sól Eigi Sefr (Where the Sun Doth Walk the Night)&rdquo; — a midnight-sun rite in three movements, with a disco mix to dance the bright night down.</p>
+          <a class="news__link" href="#sol-eigi-sefr">
+            Hear it
+            <span class="news__arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
 
         <li class="news__item">
           <div class="news__head">
@@ -2149,6 +2191,368 @@ footer {
       5. Add a news-list item (TODO: news list), and repoint the nav "The rites" link and the <meta description> at it.
     The shared player (docked near </body>) auto-discovers every .tracklist__item — no JS edits needed.
   -->
+  <!-- ══════════════════════════════════════ SINGLE — SÓL EIGI SEFR ══════════════════════════════════════ -->
+  <section class="album release" id="sol-eigi-sefr" aria-labelledby="sol-eigi-sefr-title">
+    <div class="fog fog--moss  fog--a album__fog-1" aria-hidden="true"></div>
+    <div class="fog fog--ember fog--c album__fog-2" aria-hidden="true"></div>
+
+    <div class="wrap album__grid">
+
+      <div class="album__covers">
+        <figure class="album__art" aria-label="Single cover for Sól Eigi Sefr (Where the Sun Doth Walk the Night)">
+          <img src="Sól Eigi Sefr.png"
+               alt="Sól Eigi Sefr (Where the Sun Doth Walk the Night) — Hjartarvé. A branch- and lichen-crowned sun-priestess gazes skyward in the deep northern night, a blazing golden sun breaking beside her, flanked by rune-carved standing stones and circling ravens above a moonlit valley of pines."
+               width="600" height="600"
+               decoding="async" loading="lazy">
+        </figure>
+        <div class="album__bonus">
+          <figure class="album__art album__art--bonus" aria-label="Bonus disco-mix cover for Sól Eigi Sefr — Diskóútgáfa (Where the Sun Doth Walk the Night Disco Mix)">
+            <img src="Sól Eigi Sefr — Diskóútgáfa.png"
+                 alt="Sól Eigi Sefr — Diskóútgáfa (Where the Sun Doth Walk the Night Disco Mix) — Hjartarvé. The same sun-priestess beneath a violet aurora, the golden sun now a radiant mirror-ball spilling light across glowing rune-stones and pines, ravens wheeling through a star-strewn, sparkling sky."
+                 width="600" height="600"
+                 decoding="async" loading="lazy">
+          </figure>
+          <p class="album__art-tag">Diskóútgáfa · Disco Mix</p>
+        </div>
+      </div>
+
+      <div class="album__content">
+        <svg class="album__branch" viewBox="0 0 24 400" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g stroke-linecap="round" stroke-width="0.9">
+            <path d="M12 4 L12 396"/>
+            <path d="M12 40 L4 28"/>
+            <path d="M12 70 L22 60"/>
+            <path d="M12 120 L2 108"/>
+            <path d="M12 160 L20 152"/>
+            <path d="M12 210 L4 198"/>
+            <path d="M12 250 L22 240"/>
+            <path d="M12 300 L2 288"/>
+            <path d="M12 340 L20 330"/>
+            <path d="M12 380 L4 368"/>
+          </g>
+        </svg>
+
+        <span class="eyebrow album__eyebrow">Single · A midnight-sun rite</span>
+
+        <h2 id="sol-eigi-sefr-title" class="album__title">Sól Eigi Sefr</h2>
+        <p class="album__translation">Where the sun doth walk the night</p>
+
+        <p class="album__pitch">
+          A rite for the <em>nightless night</em> — the high-summer sun that walketh the sky
+          and will not lie down to sleep. We ride beyond the last of the pines, onto the elder
+          ground of older folk than ours, and share horn and fire beneath a heaven that never
+          closeth its eye. We celebrate the nightless night together, as one kindred of
+          humankind — and we bow in special reverence to all indigenous peoples, in whose
+          long-bright lands we walk as guests, taking nothing we cannot give. Three movements,
+          closed with a disco mix to dance the bright night down.
+        </p>
+
+        <dl class="album__meta">
+          <div class="album__meta-item">
+            <dt>Release</dt>
+            <dd>Sólmánuðr · 18 June 2026</dd>
+          </div>
+          <div class="album__meta-item">
+            <dt>Movements</dt>
+            <dd>Three</dd>
+          </div>
+          <div class="album__meta-item">
+            <dt>Tongue</dt>
+            <dd>Old Norse, English, Sámi</dd>
+          </div>
+        </dl>
+
+        <a class="album__cue" href="#sol-eigi-sefr-tracks">
+          <span class="album__cue-text">Listen below</span>
+          <span class="album__cue-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 32" focusable="false">
+              <path d="M12 2 L12 28 M4 20 L12 28 L20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- ────────── Tracklist. Playback runs through the shared dock near </body>. ────────── -->
+    <div class="wrap album__player" id="sol-eigi-sefr-tracks" aria-label="Tracklist">
+
+      <ol class="tracklist" role="list" data-tracklist="sol-eigi-sefr" data-release="Sól Eigi Sefr">
+
+        <li class="tracklist__item"
+            data-roman="I."
+            data-src="mp3/Sól Eigi Sefr/Beaivvi Idjas (Sun-Walk at Midnight).mp3"
+            data-title="Beaivvi Idjas"
+            data-sub="Sun-Walk at Midnight">
+          <button class="tracklist__btn" type="button">
+            <span class="tracklist__mark" aria-hidden="true">
+              <span class="tracklist__num">I.</span>
+              <svg class="tracklist__playing" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"/></svg>
+            </span>
+            <span class="tracklist__name">
+              <span class="tracklist__title">Beaivvi Idjas</span>
+              <span class="tracklist__sub">Sun-Walk at Midnight</span>
+            </span>
+            <span class="tracklist__time" aria-hidden="true">—</span>
+          </button>
+        </li>
+
+        <li class="tracklist__item"
+            data-roman="II."
+            data-src="mp3/Sól Eigi Sefr/Sól Eigi Sefr (Where the Sun Doth Walk the Night).mp3"
+            data-title="Sól Eigi Sefr"
+            data-sub="Where the Sun Doth Walk the Night">
+          <button class="tracklist__btn" type="button">
+            <span class="tracklist__mark" aria-hidden="true">
+              <span class="tracklist__num">II.</span>
+              <svg class="tracklist__playing" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"/></svg>
+            </span>
+            <span class="tracklist__name">
+              <span class="tracklist__title">Sól Eigi Sefr</span>
+              <span class="tracklist__sub">Where the Sun Doth Walk the Night</span>
+            </span>
+            <span class="tracklist__time" aria-hidden="true">—</span>
+          </button>
+          <details class="tracklist__lyrics">
+            <summary class="tracklist__words">
+              <span class="tracklist__words-label">Words</span>
+              <svg class="tracklist__words-chev" viewBox="0 0 10 6" aria-hidden="true">
+                <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="39.65">We rode beyond the line of pines</span>
+              <span class="lyric-line" data-time="43.92">Where the birch doth shrink and bow</span>
+              <span class="lyric-line" data-time="48.40">Where the moss is the height of the reindeer's knee</span>
+              <span class="lyric-line" data-time="53.21">And the river runneth from the snow</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="57.63">There be no night here, only light</span>
+              <span class="lyric-line" data-time="60.08">A sky that doth not close its eye</span>
+              <span class="lyric-line" data-time="62.71">The sun is a wolf upon the world</span>
+              <span class="lyric-line" data-time="64.83">And the wolf shall never lie</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="70.05">Beaivi, beaivi</span>
+              <span class="lyric-line" data-time="71.40">Sól eigi sefr</span>
+              <span class="lyric-line" data-time="72.26">Beaivi, beaivi</span>
+              <span class="lyric-line" data-time="73.42">The sun that doth not sleep</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="78.91">Where the sun doth walk the whole night through!</span>
+              <span class="lyric-line" data-time="81.27">Where the day doth never end!</span>
+              <span class="lyric-line" data-time="83.88">Geassi! Geassi! Náttlaus sól!</span>
+              <span class="lyric-line" data-time="86.09">We are wild and we are free!</span>
+              <span class="lyric-line" data-time="88.23">The road doth runneth without an end</span>
+              <span class="lyric-line" data-time="90.53">The light doth runneth in our veins</span>
+              <span class="lyric-line" data-time="93.25">Beaivi! Beaivi! Skál til day!</span>
+              <span class="lyric-line" data-time="95.52">Skål to the year that knoweth no night!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="108.95">Older folk than ours did walk this ground</span>
+              <span class="lyric-line" data-time="111.92">Older songs than ours did rise</span>
+              <span class="lyric-line" data-time="113.75">They drum a drum we did not bring</span>
+              <span class="lyric-line" data-time="116.04">They sing what the wind doth know</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="118.49">We walk with quiet upon their land</span>
+              <span class="lyric-line" data-time="120.85">We bow before the elder fire</span>
+              <span class="lyric-line" data-time="123.11">We share the bread, we share the horn</span>
+              <span class="lyric-line" data-time="125.44">And the long light maketh us as one</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="127.99">Beaivi, beaivi</span>
+              <span class="lyric-line" data-time="129.00">Sól eigi sefr</span>
+              <span class="lyric-line" data-time="130.24">Beaivi, beaivi</span>
+              <span class="lyric-line" data-time="132.15">The sun that doth not sleep</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="137.06">Where the sun doth walk the whole night through!</span>
+              <span class="lyric-line" data-time="139.02">Where the day doth never end!</span>
+              <span class="lyric-line" data-time="141.66">Geassi! Geassi! Náttlaus sól!</span>
+              <span class="lyric-line" data-time="143.56">We are wild and we are free!</span>
+              <span class="lyric-line" data-time="146.14">The road doth runneth without an end</span>
+              <span class="lyric-line" data-time="148.34">The light doth runneth in our veins</span>
+              <span class="lyric-line" data-time="150.84">Beaivi! Beaivi! Skál til day!</span>
+              <span class="lyric-line" data-time="153.14">Skål to the year that knoweth no night!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="184.91">And the joik that is older than our songs</span>
+              <span class="lyric-line" data-time="189.12">Doth sing the sun where the sun doth go</span>
+              <span class="lyric-line" data-time="194.02">And the drum that is older than our drums</span>
+              <span class="lyric-line" data-time="198.25">Doth speaketh of what we did not know</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="203.16">We are guests upon the long bright land</span>
+              <span class="lyric-line" data-time="207.61">We taketh nothing we cannot give</span>
+              <span class="lyric-line" data-time="212.20">Heyr oss, Skogarmóðir of the north</span>
+              <span class="lyric-line" data-time="216.95">Where thy daughters teach us how to live</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="224.55">Beaivi! Beaivi! Beaivi! Beaivi!</span>
+              <span class="lyric-line" data-time="229.24">Náttlaus! Náttlaus! Sól eigi sefr!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="239.90">Where the sun doth walk the whole night through!</span>
+              <span class="lyric-line" data-time="241.95">Where the day doth never end!</span>
+              <span class="lyric-line" data-time="244.49">Geassi! Geassi! Náttlaus sól!</span>
+              <span class="lyric-line" data-time="246.96">We are wild and we are free!</span>
+              <span class="lyric-line" data-time="248.99">The road doth runneth without an end</span>
+              <span class="lyric-line" data-time="251.38">The light doth runneth in our veins</span>
+              <span class="lyric-line" data-time="253.94">Beaivi! Beaivi! Skál til day!</span>
+              <span class="lyric-line" data-time="256.55">Skål to the year that knoweth no night!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+            </div>
+          </details>
+        </li>
+
+        <li class="tracklist__item"
+            data-roman="III."
+            data-src="mp3/Sól Eigi Sefr/Sól Eigi Sefr — Diskóútgáfa (Where the Sun Doth Walk the Night Disco Mix).mp3"
+            data-title="Sól Eigi Sefr — Diskóútgáfa"
+            data-sub="Where the Sun Doth Walk the Night Disco Mix">
+          <button class="tracklist__btn" type="button">
+            <span class="tracklist__mark" aria-hidden="true">
+              <span class="tracklist__num">III.</span>
+              <svg class="tracklist__playing" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"/></svg>
+            </span>
+            <span class="tracklist__name">
+              <span class="tracklist__title">Sól Eigi Sefr — Diskóútgáfa</span>
+              <span class="tracklist__sub">Where the Sun Doth Walk the Night Disco Mix · Bonus</span>
+            </span>
+            <span class="tracklist__time" aria-hidden="true">—</span>
+          </button>
+          <details class="tracklist__lyrics">
+            <summary class="tracklist__words">
+              <span class="tracklist__words-label">Words</span>
+              <svg class="tracklist__words-chev" viewBox="0 0 10 6" aria-hidden="true">
+                <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="33.77">We rode beyond the line of pines</span>
+              <span class="lyric-line" data-time="37.05">Where the birch doth shrink and bow</span>
+              <span class="lyric-line" data-time="40.65">Where the moss is the height of the reindeer's knee</span>
+              <span class="lyric-line" data-time="44.34">And the bassline runneth from the snow!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="47.92">There be no night here, only light</span>
+              <span class="lyric-line" data-time="51.57">A sky that doth not close its eye</span>
+              <span class="lyric-line" data-time="55.65">The sun is a wolf upon the world</span>
+              <span class="lyric-line" data-time="58.88">And the wolf, the wolf doth boogie down!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="63.18">Beaivi, beaivi</span>
+              <span class="lyric-line" data-time="64.63">Sól eigi sefr</span>
+              <span class="lyric-line" data-time="66.49">Beaivi, beaivi</span>
+              <span class="lyric-line" data-time="68.09">Disco, disco, dance till dawn!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="73.40">Where the sun doth walk the whole night through!</span>
+              <span class="lyric-line" data-time="76.88">Where the day doth never end!</span>
+              <span class="lyric-line" data-time="80.91">Geassi! Geassi! Náttlaus sól!</span>
+              <span class="lyric-line" data-time="84.26">Get thee on the floor with me!</span>
+              <span class="lyric-line" data-time="87.54">The dance floor runneth without an end</span>
+              <span class="lyric-line" data-time="90.76">The light doth runneth in our veins</span>
+              <span class="lyric-line" data-time="95.15">Beaivi! Beaivi! Skál til day!</span>
+              <span class="lyric-line" data-time="98.53">Skål to Saturday night fever, friend!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="107.98">Old Bjarki he hath shed his cloak of fur</span>
+              <span class="lyric-line" data-time="111.18">He hath buckled on a polyester shirt</span>
+              <span class="lyric-line" data-time="114.70">Young Hrafn on the table is dancing still</span>
+              <span class="lyric-line" data-time="118.20">But the table is a lit-up disco floor!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="122.42">The vǫlva who did save the spring last year</span>
+              <span class="lyric-line" data-time="125.30">Hath returneth with a sequined gown</span>
+              <span class="lyric-line" data-time="128.79">She singeth not of seiðr now but groove</span>
+              <span class="lyric-line" data-time="132.43">And the groove doth taketh the longhouse down!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="136.64">Beaivi, beaivi</span>
+              <span class="lyric-line" data-time="138.09">Sól eigi sefr</span>
+              <span class="lyric-line" data-time="140.00">Beaivi, beaivi</span>
+              <span class="lyric-line" data-time="141.66">Disco, disco, dance till dawn!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="146.83">Where the sun doth walk the whole night through!</span>
+              <span class="lyric-line" data-time="150.18">Where the day doth never end!</span>
+              <span class="lyric-line" data-time="153.97">Geassi! Geassi! Náttlaus sól!</span>
+              <span class="lyric-line" data-time="157.39">Get thee on the floor with me!</span>
+              <span class="lyric-line" data-time="160.46">The dance floor runneth without an end</span>
+              <span class="lyric-line" data-time="164.07">The light doth runneth in our veins</span>
+              <span class="lyric-line" data-time="168.37">Beaivi! Beaivi! Skál til day!</span>
+              <span class="lyric-line" data-time="171.56">Skål to Saturday night fever, friend!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="202.21">We who knew the way of the doom</span>
+              <span class="lyric-line" data-time="205.04">We learned the way to shake the hip</span>
+              <span class="lyric-line" data-time="208.50">We who burned the longhouse to the ground</span>
+              <span class="lyric-line" data-time="212.22">Now buildeth a discotheque on top!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Breakdown]</span>
+              <span class="lyric-line" data-time="219.26">Get up!</span>
+              <span class="lyric-line" data-time="219.85">Beaivi!</span>
+              <span class="lyric-line" data-time="226.80">Get up!</span>
+              <span class="lyric-line" data-time="227.66">Beaivi!</span>
+              <span class="lyric-line" data-time="228.67">Everybody on the floor of the longhouse — get up!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="249.08">Where the sun doth walk the whole night through!</span>
+              <span class="lyric-line" data-time="252.38">Where the day doth never end!</span>
+              <span class="lyric-line" data-time="256.23">Geassi! Geassi! Náttlaus sól!</span>
+              <span class="lyric-line" data-time="259.68">Get thee on the floor with me!</span>
+              <span class="lyric-line" data-time="262.37">The dance floor runneth without an end</span>
+              <span class="lyric-line" data-time="265.55">The light doth runneth in our veins</span>
+              <span class="lyric-line" data-time="270.02">Beaivi! Beaivi! Skál til day!</span>
+              <span class="lyric-line" data-time="273.15">Skål to Saturday night fever, friend!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="278.60">Vér erum dansa</span>
+              <span class="lyric-line" data-time="281.10">Vér erum dansa</span>
+              <span class="lyric-line" data-time="284.60">Vér erum DANSA!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="288.72">🔥</span>
+              <span class="lyric-line" data-time="291.51">😍</span>
+            </div>
+          </details>
+        </li>
+
+      </ol>
+
+      <noscript>
+        <p class="player__noscript">JavaScript is required to play the single in-page. Coming soon to Spotify, Apple Music, and YouTube Music.</p>
+      </noscript>
+
+      <p class="album__streaming">
+        <span class="album__streaming-label">Forthcoming</span>
+        Spotify · Apple Music · YouTube Music
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════ DIVIDER ══════════════════════════════════════ -->
+  <div class="wrap divider" aria-hidden="true">
+    <span class="divider__line"></span>
+    <svg class="divider__runes" viewBox="0 0 90 24" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <path d="M10 2 L10 22"/>
+        <path d="M10 6 L18 12 L10 18"/>
+        <path d="M45 4 L41 10 L45 14 L49 10 Z"/>
+        <path d="M41 10 L37 22"/>
+        <path d="M49 10 L53 22"/>
+        <path d="M80 2 L80 22"/>
+        <path d="M80 6 L72 12 L80 18"/>
+      </g>
+    </svg>
+    <span class="divider__line"></span>
+  </div>
+
+
   <!-- ══════════════════════════════════════ SINGLE — SUMARMÁL ══════════════════════════════════════ -->
   <section class="album release" id="sumarmal" aria-labelledby="sumarmal-title">
     <div class="fog fog--moss  fog--a album__fog-1" aria-hidden="true"></div>
