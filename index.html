@@ -27,7 +27,7 @@
 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Hjartarvé — Nordic folk metal from the deep forests of the North. Albums and singles with full synced lyrics. Latest rite: Sól Eigi Sefr (Where the Sun Doth Walk the Night).">
+<meta name="description" content="Hjartarvé — Nordic folk metal from the deep forests of the North. Albums and singles with full synced lyrics. Latest rite: Eldr á Vatni (Songs for the Last Night of Summer).">
 <meta name="theme-color" content="#13181a">
 <title>Hjartarvé — Nordic Folk Metal</title>
 
@@ -1036,6 +1036,8 @@ body.has-nowplaying { padding-bottom: clamp(6rem, 8vw, 7.5rem); }
   line-height: 1;
   transition: color 0.4s ease, opacity 0.4s ease;
 }
+/* Word marks (e.g. "Bonus") sit in the same 3.4rem column as the roman numerals — shrink to fit. */
+.tracklist__num--word { font-size: clamp(0.85rem, 1.1vw, 1rem); }
 .tracklist__playing {
   position: absolute;
   inset: 0;
@@ -1985,7 +1987,7 @@ footer {
   <nav class="topbar__nav" aria-label="Primary">
     <a href="#about">Of the band</a>
     <!-- TODO: newest-release nav — repoint at the newest release section id -->
-    <a href="#sol-eigi-sefr">The rites</a>
+    <a href="#eldr-a-vatni">The rites</a>
     <a href="#band">The kindred</a>
     <a href="#instruments">The instruments</a>
     <a href="#reviews">Voices</a>
@@ -2048,6 +2050,18 @@ footer {
     <div class="wrap">
       <h2 id="news-heading" class="news__heading">Latest word</h2>
       <ol class="news__list" role="list">
+
+        <li class="news__item">
+          <div class="news__head">
+            <time class="news__date" datetime="2026-08-27">27 August 2026</time>
+            <span class="news__tag">New rite</span>
+          </div>
+          <p class="news__text">&ldquo;Eldr á Vatni (Songs for the Last Night of Summer)&rdquo; — a Venetsialaiset rite in six movements, from the gathering dusk to the dying flame, with a bonus song for throwing thy friend into the sea.</p>
+          <a class="news__link" href="#eldr-a-vatni">
+            Hear it
+            <span class="news__arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
 
         <li class="news__item">
           <div class="news__head">
@@ -2191,6 +2205,735 @@ footer {
       5. Add a news-list item (TODO: news list), and repoint the nav "The rites" link and the <meta description> at it.
     The shared player (docked near </body>) auto-discovers every .tracklist__item — no JS edits needed.
   -->
+  <!-- ══════════════════════════════════════ ALBUM — ELDR Á VATNI ══════════════════════════════════════ -->
+  <section class="album release" id="eldr-a-vatni" aria-labelledby="eldr-a-vatni-title">
+    <div class="fog fog--moss  fog--a album__fog-1" aria-hidden="true"></div>
+    <div class="fog fog--ember fog--c album__fog-2" aria-hidden="true"></div>
+
+    <div class="wrap album__grid">
+
+      <figure class="album__art" aria-label="Album cover for Eldr á Vatni (Songs for the Last Night of Summer)">
+        <img src="Eldr á Vatni.png"
+             alt="Eldr á Vatni (Songs for the Last Night of Summer) — Hjartarvé. A vast forest-mother of root and ember rises from a twilight lake, eyes closed, a bonfire blazing at her breast while floating fires drift across the water between rune-carved standing stones, ravens circling over pine-dark shores beneath a crescent moon."
+             width="600" height="600"
+             decoding="async" loading="lazy">
+      </figure>
+
+      <div class="album__content">
+        <svg class="album__branch" viewBox="0 0 24 400" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g stroke-linecap="round" stroke-width="0.9">
+            <path d="M12 4 L12 396"/>
+            <path d="M12 40 L4 28"/>
+            <path d="M12 70 L22 60"/>
+            <path d="M12 120 L2 108"/>
+            <path d="M12 160 L20 152"/>
+            <path d="M12 210 L4 198"/>
+            <path d="M12 250 L22 240"/>
+            <path d="M12 300 L2 288"/>
+            <path d="M12 340 L20 330"/>
+            <path d="M12 380 L4 368"/>
+          </g>
+        </svg>
+
+        <span class="eyebrow album__eyebrow">Album · II · A rite for the last night of summer</span>
+
+        <h2 id="eldr-a-vatni-title" class="album__title">Eldr á Vatni</h2>
+        <p class="album__translation">Fire upon the water</p>
+
+        <p class="album__pitch">
+          A rite for <em>Venetsialaiset</em> — the Venetian night of the northern coast, called
+          also the feast of water, of fire and of light, which closeth the season of summer. On the
+          last Saturday of August the whole coast cometh down to the stones: lanterns at the prows,
+          bonfires on every skerry, rockets over the bay, until the sea itself lieth ringed in flame.
+          Six movements follow that one night from the gathering dusk to the last grey coal — and
+          the single ember carried home against the winter — closed with a bonus rite for the
+          throwing of thy friend into the sea.
+        </p>
+
+        <dl class="album__meta">
+          <div class="album__meta-item">
+            <dt>Release</dt>
+            <dd>Tvímánuðr · 27 August 2026</dd>
+          </div>
+          <div class="album__meta-item">
+            <dt>Movements</dt>
+            <dd>Six, and a bonus</dd>
+          </div>
+          <div class="album__meta-item">
+            <dt>Tongue</dt>
+            <dd>Old Norse, English</dd>
+          </div>
+        </dl>
+
+        <a class="album__cue" href="#eldr-a-vatni-tracks">
+          <span class="album__cue-text">Listen below</span>
+          <span class="album__cue-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 32" focusable="false">
+              <path d="M12 2 L12 28 M4 20 L12 28 L20 20" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- ────────── Tracklist (full synced lyrics). Playback runs through the shared dock near </body>. ────────── -->
+    <div class="wrap album__player" id="eldr-a-vatni-tracks" aria-label="Tracklist">
+
+      <ol class="tracklist" role="list" data-tracklist="eldr-a-vatni" data-release="Eldr á Vatni">
+
+        <li class="tracklist__item"
+            data-roman="I."
+            data-src="mp3/Eldr á Vatni/I_ Kveldrøkkr (The Gathering Dusk).mp3"
+            data-title="Kveldrøkkr"
+            data-sub="The Gathering Dusk">
+          <button class="tracklist__btn" type="button">
+            <span class="tracklist__mark" aria-hidden="true">
+              <span class="tracklist__num">I.</span>
+              <svg class="tracklist__playing" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"/></svg>
+            </span>
+            <span class="tracklist__name">
+              <span class="tracklist__title">Kveldrøkkr</span>
+              <span class="tracklist__sub">The Gathering Dusk</span>
+            </span>
+            <span class="tracklist__time" aria-hidden="true">—</span>
+          </button>
+          <details class="tracklist__lyrics">
+            <summary class="tracklist__words">
+              <span class="tracklist__words-label">Words</span>
+              <svg class="tracklist__words-chev" viewBox="0 0 10 6" aria-hidden="true">
+                <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="29.75">The long day loosens at the water's edge</span>
+              <span class="lyric-line" data-time="37.03">The birch doth cast a longer shadow now</span>
+              <span class="lyric-line" data-time="44.48">We gather on the stones where we were born</span>
+              <span class="lyric-line" data-time="50.96">Beneath the greying northern evening sky</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="59.33">Sumar snýr — the summer turneth slow</span>
+              <span class="lyric-line" data-time="65.59">The light that would not sleep begins to close its eye</span>
+              <span class="lyric-line" data-time="73.28">One last evening the whole coast doth hold its breath</span>
+              <span class="lyric-line" data-time="80.30">Before the fires, before the long goodbye</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="88.61">Vér kveikjum eldana — we shall light the fires</span>
+              <span class="lyric-line" data-time="96.05">Ljós á vatni — light upon the sea!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="103.03">Come down! Come down to the water and the stones!</span>
+              <span class="lyric-line" data-time="110.09">Come down where the whole of the coast doth gather in!</span>
+              <span class="lyric-line" data-time="116.50">For the dark is patient — but so are we!</span>
+              <span class="lyric-line" data-time="123.93">One more night! One more night of light — begin!</span>
+              <span class="lyric-line" data-time="131.81">Heyr oss, Skogarmóðir!</span>
+              <span class="lyric-line" data-time="135.45">The summer thou didst give!</span>
+              <span class="lyric-line" data-time="138.89">One last evening we shall hold it!</span>
+              <span class="lyric-line" data-time="141.97">One last evening we shall live!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="153.74">The nets are drawn, the boats are turned to shore</span>
+              <span class="lyric-line" data-time="159.70">The children carry driftwood down the sand</span>
+              <span class="lyric-line" data-time="166.72">The old ones bring the lanterns from the sheds</span>
+              <span class="lyric-line" data-time="173.72">And no word passeth — all doth understand</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="181.99">Vér kveikjum eldana — we shall light the fires</span>
+              <span class="lyric-line" data-time="189.25">Ljós á vatni — light upon the sea!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="196.48">Come down! Come down to the water and the stones!</span>
+              <span class="lyric-line" data-time="203.19">Come down where the whole of the coast doth gather in!</span>
+              <span class="lyric-line" data-time="209.59">For the dark is patient — but so are we!</span>
+              <span class="lyric-line" data-time="216.88">One more night! One more night of light — begin!</span>
+              <span class="lyric-line" data-time="224.92">Heyr oss, Skogarmóðir!</span>
+              <span class="lyric-line" data-time="228.40">The summer thou didst give!</span>
+              <span class="lyric-line" data-time="231.68">One last evening we shall hold it!</span>
+              <span class="lyric-line" data-time="235.03">One last evening we shall live!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="268.22">Kveldrøkkr...</span>
+              <span class="lyric-line" data-time="271.81">The gathering dusk...</span>
+              <span class="lyric-line" data-time="275.60">Ljós á vatni...</span>
+            </div>
+          </details>
+        </li>
+
+        <li class="tracklist__item"
+            data-roman="II."
+            data-src="mp3/Eldr á Vatni/II_ Eldakveiking (The Lighting of the Fires).mp3"
+            data-title="Eldakveiking"
+            data-sub="The Lighting of the Fires">
+          <button class="tracklist__btn" type="button">
+            <span class="tracklist__mark" aria-hidden="true">
+              <span class="tracklist__num">II.</span>
+              <svg class="tracklist__playing" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"/></svg>
+            </span>
+            <span class="tracklist__name">
+              <span class="tracklist__title">Eldakveiking</span>
+              <span class="tracklist__sub">The Lighting of the Fires</span>
+            </span>
+            <span class="tracklist__time" aria-hidden="true">—</span>
+          </button>
+          <details class="tracklist__lyrics">
+            <summary class="tracklist__words">
+              <span class="tracklist__words-label">Words</span>
+              <svg class="tracklist__words-chev" viewBox="0 0 10 6" aria-hidden="true">
+                <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="29.71">From northern skerries down the long grey coast</span>
+              <span class="lyric-line" data-time="34.19">From every pier and every jut of stone</span>
+              <span class="lyric-line" data-time="38.77">A hundred hands do strike a hundred flames</span>
+              <span class="lyric-line" data-time="43.29">And the dark doth learneth it shall not reign alone</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="47.84">The boats go out with lanterns at their prows</span>
+              <span class="lyric-line" data-time="52.22">The children run with sparklers on the sand</span>
+              <span class="lyric-line" data-time="56.84">And bonfire after bonfire crowns the shore</span>
+              <span class="lyric-line" data-time="61.20">Till the whole of the northland burning stand</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="66.06">Bálit brenna! — the bonfires burneth high!</span>
+              <span class="lyric-line" data-time="70.65">Eldr á vatni! — fire upon the sea!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="78.57">Light them! Light them! Every fire on the shore!</span>
+              <span class="lyric-line" data-time="83.00">Light them till the night doth turneth day!</span>
+              <span class="lyric-line" data-time="87.60">Kveikið! Kveikið! Bál við bál!</span>
+              <span class="lyric-line" data-time="91.74">Let the whole coast catch and blaze away!</span>
+              <span class="lyric-line" data-time="96.55">Eldr! Eldr! Ljós á vatni!</span>
+              <span class="lyric-line" data-time="98.95">Strike the spark and let it climb!</span>
+              <span class="lyric-line" data-time="101.11">For the summer's end deserveth fire</span>
+              <span class="lyric-line" data-time="104.47">And we light it one last time!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="123.68">The horn goes round from hand to weathered hand</span>
+              <span class="lyric-line" data-time="128.25">The first sparks climb and scatter on the wind</span>
+              <span class="lyric-line" data-time="132.80">The elders nod, the young ones cannot wait</span>
+              <span class="lyric-line" data-time="137.89">And every heart along the coast doth grin</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="141.86">Bálit brenna! — the bonfires burneth high!</span>
+              <span class="lyric-line" data-time="146.32">Eldr á vatni! — fire upon the sea!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="154.40">Light them! Light them! Every fire on the shore!</span>
+              <span class="lyric-line" data-time="158.86">Light them till the night doth turneth day!</span>
+              <span class="lyric-line" data-time="163.36">Kveikið! Kveikið! Bál við bál!</span>
+              <span class="lyric-line" data-time="167.65">Let the whole coast catch and blaze away!</span>
+              <span class="lyric-line" data-time="172.45">Eldr! Eldr! Ljós á vatni!</span>
+              <span class="lyric-line" data-time="174.76">Strike the spark and let it climb!</span>
+              <span class="lyric-line" data-time="176.77">For the summer's end deserveth fire</span>
+              <span class="lyric-line" data-time="180.04">And we light it one last time!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="190.62">Now the sea is ringed in fire!</span>
+              <span class="lyric-line" data-time="195.01">Now the night begins!</span>
+              <span class="lyric-line" data-time="197.55">Eldr á vatni! Eldr á vatni!</span>
+            </div>
+          </details>
+        </li>
+
+        <li class="tracklist__item"
+            data-roman="III."
+            data-src="mp3/Eldr á Vatni/III_ Sær í Báli (The Sea Aflame).mp3"
+            data-title="Sær í Báli"
+            data-sub="The Sea Aflame">
+          <button class="tracklist__btn" type="button">
+            <span class="tracklist__mark" aria-hidden="true">
+              <span class="tracklist__num">III.</span>
+              <svg class="tracklist__playing" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"/></svg>
+            </span>
+            <span class="tracklist__name">
+              <span class="tracklist__title">Sær í Báli</span>
+              <span class="tracklist__sub">The Sea Aflame</span>
+            </span>
+            <span class="tracklist__time" aria-hidden="true">—</span>
+          </button>
+          <details class="tracklist__lyrics">
+            <summary class="tracklist__words">
+              <span class="tracklist__words-label">Words</span>
+              <svg class="tracklist__words-chev" viewBox="0 0 10 6" aria-hidden="true">
+                <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="36.54">The sea is ringed in fire from shore to shore</span>
+              <span class="lyric-line" data-time="39.32">The night is bright as any summer noon</span>
+              <span class="lyric-line" data-time="42.34">The rockets tear the dark above the bay</span>
+              <span class="lyric-line" data-time="45.40">And the water throweth back a burning moon</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="54.85">The old ones dance who have not danced in years</span>
+              <span class="lyric-line" data-time="60.50">The young ones kiss beneath the burning sky</span>
+              <span class="lyric-line" data-time="66.78">The horn goes round, the accordion doth wail</span>
+              <span class="lyric-line" data-time="72.49">And no one on this coast tonight shall cry</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="78.72">This is ours! This fire! This shore!</span>
+              <span class="lyric-line" data-time="81.24">This is the birthright of the northern-born!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="85.97">We set the sea alight tonight!</span>
+              <span class="lyric-line" data-time="88.76">We crown the water all in flame!</span>
+              <span class="lyric-line" data-time="91.66">Sær í báli! Ljós á vatni!</span>
+              <span class="lyric-line" data-time="94.72">Let the dark come — it shall not come today!</span>
+              <span class="lyric-line" data-time="99.09">Skál til sumars! Skál til ljóss!</span>
+              <span class="lyric-line" data-time="102.17">Skål to the summer that we knew!</span>
+              <span class="lyric-line" data-time="105.00">The night is bright as any noon</span>
+              <span class="lyric-line" data-time="107.90">And the fire on the water burneth true!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="146.56">We who live where the winter cuts the deepest</span>
+              <span class="lyric-line" data-time="151.60">We who know the dark that swalloweth the year</span>
+              <span class="lyric-line" data-time="158.29">We burn the brightest ere the summer leaveth</span>
+              <span class="lyric-line" data-time="163.52">For we alone do hold the light so dear</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="170.14">This is ours! This fire! This shore!</span>
+              <span class="lyric-line" data-time="172.78">This is the birthright of the northern-born!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="177.43">We set the sea alight tonight!</span>
+              <span class="lyric-line" data-time="180.40">We crown the water all in flame!</span>
+              <span class="lyric-line" data-time="183.17">Sær í báli! Ljós á vatni!</span>
+              <span class="lyric-line" data-time="185.96">Let the dark come — it shall not come today!</span>
+              <span class="lyric-line" data-time="190.57">Skál til sumars! Skál til ljóss!</span>
+              <span class="lyric-line" data-time="193.58">Skål to the summer that we knew!</span>
+              <span class="lyric-line" data-time="196.52">The night is bright as any noon</span>
+              <span class="lyric-line" data-time="199.30">And the fire on the water burneth true!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Breakdown]</span>
+              <span class="lyric-line" data-time="202.52">Hej! Sær í báli!</span>
+              <span class="lyric-line" data-time="204.79">Hej! Eldr á vatni!</span>
+              <span class="lyric-line" data-time="207.99">Hej! Bál við bál!</span>
+              <span class="lyric-line" data-time="210.94">Hej! Ljós! Ljós! Ljós!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="225.47">We set the sea alight tonight!</span>
+              <span class="lyric-line" data-time="228.30">We crown the water all in flame!</span>
+              <span class="lyric-line" data-time="231.10">Sær í báli! Ljós á vatni!</span>
+              <span class="lyric-line" data-time="234.22">Let the dark come — it shall not come today!</span>
+              <span class="lyric-line" data-time="238.70">Skál til sumars! Skál til ljóss!</span>
+              <span class="lyric-line" data-time="241.47">Skål to the summer that we knew!</span>
+              <span class="lyric-line" data-time="244.17">The night is bright as any noon</span>
+              <span class="lyric-line" data-time="247.25">And the fire on the water burneth true!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="257.22">ELDR Á VATNI!</span>
+            </div>
+          </details>
+        </li>
+
+        <li class="tracklist__item"
+            data-roman="IV."
+            data-src="mp3/Eldr á Vatni/IV_ Hvarfit (The Turning).mp3"
+            data-title="Hvarfit"
+            data-sub="The Turning">
+          <button class="tracklist__btn" type="button">
+            <span class="tracklist__mark" aria-hidden="true">
+              <span class="tracklist__num">IV.</span>
+              <svg class="tracklist__playing" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"/></svg>
+            </span>
+            <span class="tracklist__name">
+              <span class="tracklist__title">Hvarfit</span>
+              <span class="tracklist__sub">The Turning</span>
+            </span>
+            <span class="tracklist__time" aria-hidden="true">—</span>
+          </button>
+          <details class="tracklist__lyrics">
+            <summary class="tracklist__words">
+              <span class="tracklist__words-label">Words</span>
+              <svg class="tracklist__words-chev" viewBox="0 0 10 6" aria-hidden="true">
+                <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="57.07">But hear me now, beneath the crack and roar</span>
+              <span class="lyric-line" data-time="64.21">Beneath the rockets bursting overhead</span>
+              <span class="lyric-line" data-time="71.66">There is a sorrow woven in this joy</span>
+              <span class="lyric-line" data-time="78.83">For every flame we light doth light the dead</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="86.84">Sumar deyr — the summer it is dying</span>
+              <span class="lyric-line" data-time="93.74">Each spark that climbs doth climbeth toward its fall</span>
+              <span class="lyric-line" data-time="101.31">The brightest fire is the fire that endeth</span>
+              <span class="lyric-line" data-time="108.86">And we who light it brightest know it all</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="116.81">Allt fýkr — all doth blow away</span>
+              <span class="lyric-line" data-time="123.49">Even this light... even this night... even we!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="131.84">The fire we raise against the coming dark</span>
+              <span class="lyric-line" data-time="138.54">Is the very thing that showeth us the dark!</span>
+              <span class="lyric-line" data-time="145.88">Heyr oss, Skogarmóðir!</span>
+              <span class="lyric-line" data-time="149.95">We knew this all along!</span>
+              <span class="lyric-line" data-time="153.30">That the sweetest songs of summer</span>
+              <span class="lyric-line" data-time="156.86">Are the summer's ending song!</span>
+              <span class="lyric-line" data-time="161.11">Allt fýkr! Allt fýkr!</span>
+              <span class="lyric-line" data-time="164.55">Even the brightest flame!</span>
+              <span class="lyric-line" data-time="167.68">And still we light it — still we light it!</span>
+              <span class="lyric-line" data-time="171.66">And we love it all the same!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="182.37">I watch my father's father by the fire</span>
+              <span class="lyric-line" data-time="189.76">His face lit gold, his eyes upon the sea</span>
+              <span class="lyric-line" data-time="196.91">He hath seen how many of these burning nights?</span>
+              <span class="lyric-line" data-time="204.13">And how many more remaineth unto he?</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="212.54">Allt fýkr — all doth blow away</span>
+              <span class="lyric-line" data-time="220.08">Even this light... even this night... even we!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="227.17">The fire we raise against the coming dark</span>
+              <span class="lyric-line" data-time="234.19">Is the very thing that showeth us the dark!</span>
+              <span class="lyric-line" data-time="241.62">Heyr oss, Skogarmóðir!</span>
+              <span class="lyric-line" data-time="245.26">We knew this all along!</span>
+              <span class="lyric-line" data-time="248.82">That the sweetest songs of summer</span>
+              <span class="lyric-line" data-time="252.30">Are the summer's ending song!</span>
+              <span class="lyric-line" data-time="256.30">Allt fýkr! Allt fýkr!</span>
+              <span class="lyric-line" data-time="259.97">Even the brightest flame!</span>
+              <span class="lyric-line" data-time="263.08">And still we light it — still we light it!</span>
+              <span class="lyric-line" data-time="266.84">And we love it all the same!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="288.75">Hvarfit...</span>
+              <span class="lyric-line" data-time="293.66">The turning of the year...</span>
+              <span class="lyric-line" data-time="298.70">Allt fýkr...</span>
+            </div>
+          </details>
+        </li>
+
+        <li class="tracklist__item"
+            data-roman="V."
+            data-src="mp3/Eldr á Vatni/V_ Deyjandi Loginn (The Dying Flame).mp3"
+            data-title="Deyjandi Loginn"
+            data-sub="The Dying Flame">
+          <button class="tracklist__btn" type="button">
+            <span class="tracklist__mark" aria-hidden="true">
+              <span class="tracklist__num">V.</span>
+              <svg class="tracklist__playing" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"/></svg>
+            </span>
+            <span class="tracklist__name">
+              <span class="tracklist__title">Deyjandi Loginn</span>
+              <span class="tracklist__sub">The Dying Flame</span>
+            </span>
+            <span class="tracklist__time" aria-hidden="true">—</span>
+          </button>
+          <details class="tracklist__lyrics">
+            <summary class="tracklist__words">
+              <span class="tracklist__words-label">Words</span>
+              <svg class="tracklist__words-chev" viewBox="0 0 10 6" aria-hidden="true">
+                <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="66.33">The bonfires burneth low along the coast</span>
+              <span class="lyric-line" data-time="74.00">The lanterns on the boats do gutter out</span>
+              <span class="lyric-line" data-time="81.05">The children sleep, the horn is set aside</span>
+              <span class="lyric-line" data-time="88.96">And the first cold wind of autumn moves about</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="97.90">Haust kemr — the autumn it is coming</span>
+              <span class="lyric-line" data-time="105.55">The dark that we defied doth take the field</span>
+              <span class="lyric-line" data-time="112.43">The embers redden, blacken, fall to ash</span>
+              <span class="lyric-line" data-time="120.89">And the summer that we held we now must yield</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="129.39">Deyjandi loginn! The dying flame!</span>
+              <span class="lyric-line" data-time="133.22">Goeth down, goeth down, along the shore!</span>
+              <span class="lyric-line" data-time="140.92">Heyr oss, Skogarmóðir — hear us, forest-mother!</span>
+              <span class="lyric-line" data-time="145.03">The summer that thou gavest is no more!</span>
+              <span class="lyric-line" data-time="152.71">Allt fýkr — all doth blow away!</span>
+              <span class="lyric-line" data-time="159.64">The light we raised, the night we made our own!</span>
+              <span class="lyric-line" data-time="167.54">We yield it back, we yield it to the dark</span>
+              <span class="lyric-line" data-time="175.95">And we standeth on the cold wet stone, alone!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="211.89">The last coal dieth grey upon the sand</span>
+              <span class="lyric-line" data-time="218.68">The sea goeth black beneath a starless sky</span>
+              <span class="lyric-line" data-time="226.65">And we who danced so bright but hours ago</span>
+              <span class="lyric-line" data-time="234.31">Do stand in silence — and we know not why we cry</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="243.47">We yield the light</span>
+              <span class="lyric-line" data-time="247.05">We yield the long bright days</span>
+              <span class="lyric-line" data-time="251.17">We yield the summer back into the dark</span>
+              <span class="lyric-line" data-time="258.78">But hear us — hear us —</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="263.28">Deyjandi loginn! The dying flame!</span>
+              <span class="lyric-line" data-time="266.65">Goeth down, goeth down, along the shore!</span>
+              <span class="lyric-line" data-time="274.63">Heyr oss, Skogarmóðir — hear us, forest-mother!</span>
+              <span class="lyric-line" data-time="278.71">The summer that thou gavest is no more!</span>
+              <span class="lyric-line" data-time="286.26">Allt fýkr — all doth blow away!</span>
+              <span class="lyric-line" data-time="293.49">The light we raised, the night we made our own!</span>
+              <span class="lyric-line" data-time="301.36">We yield it back, we yield it to the dark</span>
+              <span class="lyric-line" data-time="309.76">And we standeth on the cold wet stone, alone!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="320.04">But hear us —</span>
+            </div>
+          </details>
+        </li>
+
+        <li class="tracklist__item"
+            data-roman="VI."
+            data-src="mp3/Eldr á Vatni/VI_ Heitit (The Vow).mp3"
+            data-title="Heitit"
+            data-sub="The Vow">
+          <button class="tracklist__btn" type="button">
+            <span class="tracklist__mark" aria-hidden="true">
+              <span class="tracklist__num">VI.</span>
+              <svg class="tracklist__playing" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"/></svg>
+            </span>
+            <span class="tracklist__name">
+              <span class="tracklist__title">Heitit</span>
+              <span class="tracklist__sub">The Vow</span>
+            </span>
+            <span class="tracklist__time" aria-hidden="true">—</span>
+          </button>
+          <details class="tracklist__lyrics">
+            <summary class="tracklist__words">
+              <span class="tracklist__words-label">Words</span>
+              <svg class="tracklist__words-chev" viewBox="0 0 10 6" aria-hidden="true">
+                <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="31.20">We taketh one small ember from the fire</span>
+              <span class="lyric-line" data-time="34.67">Before the last of it doth fade to grey</span>
+              <span class="lyric-line" data-time="38.03">We wrap it warm and hold it to the chest</span>
+              <span class="lyric-line" data-time="41.53">And we carry it into the dark away</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="48.40">Through all the dark and all the biting winter</span>
+              <span class="lyric-line" data-time="51.86">Through every night the north shall ever know</span>
+              <span class="lyric-line" data-time="55.62">Through frost that cracketh stone and freezeth breath</span>
+              <span class="lyric-line" data-time="58.81">We keep the ember burning, soft and slow</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="65.19">Vér segjum eigi farvel — we say not farewell!</span>
+              <span class="lyric-line" data-time="72.16">Vér heitum — we do vow!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="78.78">For when the ice doth break and spring returneth!</span>
+              <span class="lyric-line" data-time="85.86">And when the sun climbeth back into the sky!</span>
+              <span class="lyric-line" data-time="92.56">We shall returneth to these self-same stones!</span>
+              <span class="lyric-line" data-time="99.77">And we shall light the sea again — and never say goodbye!</span>
+              <span class="lyric-line" data-time="108.65">Skál til sumars! Skál til ljóss!</span>
+              <span class="lyric-line" data-time="111.89">Skål to every summer yet to be!</span>
+              <span class="lyric-line" data-time="115.38">We keep the ember, we keep the flame!</span>
+              <span class="lyric-line" data-time="118.57">And the fire on the water shall burn free!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="136.59">Let the dark believe it hath us beaten</span>
+              <span class="lyric-line" data-time="140.28">Let the winter think the fire is done</span>
+              <span class="lyric-line" data-time="143.33">It knoweth not the ember in our keeping</span>
+              <span class="lyric-line" data-time="147.15">It knoweth not that we shall bring the sun</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="153.11">Vér segjum eigi farvel — we say not farewell!</span>
+              <span class="lyric-line" data-time="160.61">Vér heitum — we do vow!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="166.91">For when the ice doth break and spring returneth!</span>
+              <span class="lyric-line" data-time="174.06">And when the sun climbeth back into the sky!</span>
+              <span class="lyric-line" data-time="180.60">We shall returneth to these self-same stones!</span>
+              <span class="lyric-line" data-time="187.67">And we shall light the sea again — and never say goodbye!</span>
+              <span class="lyric-line" data-time="196.62">Skál til sumars! Skál til ljóss!</span>
+              <span class="lyric-line" data-time="199.76">Skål to every summer yet to be!</span>
+              <span class="lyric-line" data-time="203.29">We keep the ember, we keep the flame!</span>
+              <span class="lyric-line" data-time="206.71">And the fire on the water shall burn free!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="213.28">Heyr oss, Skogarmóðir</span>
+              <span class="lyric-line" data-time="215.89">We yield the summer, yea</span>
+              <span class="lyric-line" data-time="219.33">But we keep a single ember</span>
+              <span class="lyric-line" data-time="223.00">Against the coming grey</span>
+              <span class="lyric-line" data-time="226.35">And we shall — we shall — RETURN!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="243.15">For when the ice doth break and spring returneth!</span>
+              <span class="lyric-line" data-time="249.49">And when the sun climbeth back into the sky!</span>
+              <span class="lyric-line" data-time="256.50">We shall returneth to these self-same stones!</span>
+              <span class="lyric-line" data-time="263.68">And we shall light the sea again — and never say goodbye!</span>
+              <span class="lyric-line" data-time="272.76">Skál til sumars! Skál til ljóss!</span>
+              <span class="lyric-line" data-time="276.77">Skål to every summer yet to be!</span>
+              <span class="lyric-line" data-time="279.38">We keep the ember, we keep the flame!</span>
+              <span class="lyric-line" data-time="282.40">And the fire on the water shall burn free!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="286.22">Vér sjáumst aftr — we shall meet again</span>
+              <span class="lyric-line" data-time="291.24">Ljós á vatni — light upon the sea</span>
+              <span class="lyric-line" data-time="294.59">Sumar snýr aftr — the summer shall return</span>
+              <span class="lyric-line" data-time="299.90">Vér sjáumst aftr...</span>
+            </div>
+          </details>
+        </li>
+
+        <li class="tracklist__item"
+            data-roman="Bonus"
+            data-src="mp3/Eldr á Vatni/Bonus_ Kasta Vin Þinn í Sæinn! (Throw Your Friend Into the Sea!).mp3"
+            data-title="Kasta Vin Þinn í Sæinn!"
+            data-sub="Throw Your Friend Into the Sea!">
+          <button class="tracklist__btn" type="button">
+            <span class="tracklist__mark" aria-hidden="true">
+              <span class="tracklist__num tracklist__num--word">Bonus</span>
+              <svg class="tracklist__playing" viewBox="0 0 12 14" aria-hidden="true"><path d="M1 1 L11 7 L1 13 Z" fill="currentColor"/></svg>
+            </span>
+            <span class="tracklist__name">
+              <span class="tracklist__title">Kasta Vin Þinn í Sæinn!</span>
+              <span class="tracklist__sub">Throw Your Friend Into the Sea!</span>
+            </span>
+            <span class="tracklist__time" aria-hidden="true">—</span>
+          </button>
+          <details class="tracklist__lyrics">
+            <summary class="tracklist__words">
+              <span class="tracklist__words-label">Words</span>
+              <svg class="tracklist__words-chev" viewBox="0 0 10 6" aria-hidden="true">
+                <path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+              </svg>
+            </summary>
+            <div class="lyric-pane">
+              <span class="lyric-line lyric-line--section">[Intro]</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 1]</span>
+              <span class="lyric-line" data-time="28.87">The bonfire's tall, the horns are full</span>
+              <span class="lyric-line" data-time="31.73">The boats are lit from bow to stern</span>
+              <span class="lyric-line" data-time="34.50">Old Bjarki said he would not swim this year</span>
+              <span class="lyric-line" data-time="37.65">And Old Bjarki shall never learn!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="40.39">SPLASH! Hahaha!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="43.77">The sausages are burning on the coals</span>
+              <span class="lyric-line" data-time="46.33">The smith is dancing with the mayor's wife</span>
+              <span class="lyric-line" data-time="49.44">Someone's rowing backwards out the bay</span>
+              <span class="lyric-line" data-time="52.30">Having the greatest evening of his life!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="55.49">Who goeth in the water?</span>
+              <span class="lyric-line" data-time="57.55">NOT I! NOT I!</span>
+              <span class="lyric-line" data-time="61.41">Who goeth in the water?</span>
+              <span class="lyric-line" data-time="63.70">THY FRIEND! THY FRIEND!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="67.62">Kasta vin þinn í sæinn!</span>
+              <span class="lyric-line" data-time="70.16">Throw thy friend into the sea!</span>
+              <span class="lyric-line" data-time="73.18">He shall thank thee in the morning —</span>
+              <span class="lyric-line" data-time="75.76">Well... he shall not — but throw him! WHEE!</span>
+              <span class="lyric-line" data-time="79.55">Bál, bjórr ok brennivín!</span>
+              <span class="lyric-line" data-time="82.27">Bonfire, beer and burning-wine!</span>
+              <span class="lyric-line" data-time="85.51">The summer endeth either way</span>
+              <span class="lyric-line" data-time="87.98">So it endeth soaking wet tonight!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Verse 2]</span>
+              <span class="lyric-line" data-time="97.36">The priest declined the seventh horn</span>
+              <span class="lyric-line" data-time="100.04">The eighth one he declined no more</span>
+              <span class="lyric-line" data-time="103.08">By the ninth he was singing the old gods' songs</span>
+              <span class="lyric-line" data-time="105.82">And conducting the waves from the shore!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line" data-time="108.95">There goeth a rocket — sideways — WHOOSH!</span>
+              <span class="lyric-line" data-time="111.92">There goeth Bjarki's other shoe!</span>
+              <span class="lyric-line" data-time="114.56">The dog hath eaten fourteen sausages</span>
+              <span class="lyric-line" data-time="117.75">And the dog regretteth nothing — WOULD YOU?!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Pre-Chorus]</span>
+              <span class="lyric-line" data-time="121.01">Who goeth in the water?</span>
+              <span class="lyric-line" data-time="123.04">NOT I! NOT I!</span>
+              <span class="lyric-line" data-time="127.00">Who goeth in the water?</span>
+              <span class="lyric-line" data-time="129.22">THY FRIEND! THY FRIEND!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Chorus]</span>
+              <span class="lyric-line" data-time="133.14">Kasta vin þinn í sæinn!</span>
+              <span class="lyric-line" data-time="135.77">Throw thy friend into the sea!</span>
+              <span class="lyric-line" data-time="138.61">He shall thank thee in the morning —</span>
+              <span class="lyric-line" data-time="141.36">Well... he shall not — but throw him! WHEE!</span>
+              <span class="lyric-line" data-time="145.18">Bál, bjórr ok brennivín!</span>
+              <span class="lyric-line" data-time="147.82">Bonfire, beer and burning-wine!</span>
+              <span class="lyric-line" data-time="151.03">The summer endeth either way</span>
+              <span class="lyric-line" data-time="153.91">So it endeth soaking wet tonight!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Bridge]</span>
+              <span class="lyric-line" data-time="160.21">Hej! To the fire!</span>
+              <span class="lyric-line" data-time="161.45">Hej! To the sea!</span>
+              <span class="lyric-line" data-time="162.91">Hej! To the friend mid-air between!</span>
+              <span class="lyric-line" data-time="165.91">Hej! Hej! Hej! HEJ!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Breakdown]</span>
+              <span class="lyric-line" data-time="181.31">Is the water cold?</span>
+              <span class="lyric-line" data-time="182.24">YES IT IS!</span>
+              <span class="lyric-line" data-time="183.62">Do we care at all?</span>
+              <span class="lyric-line" data-time="185.19">NO WE DON'T!</span>
+              <span class="lyric-line" data-time="186.54">Shall we do it again?</span>
+              <span class="lyric-line" data-time="188.16">KASTA! KASTA! KASTA!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Final Chorus]</span>
+              <span class="lyric-line" data-time="204.89">Kasta vin þinn í sæinn!</span>
+              <span class="lyric-line" data-time="207.30">Throw thy friend into the sea!</span>
+              <span class="lyric-line" data-time="210.22">He shall thank thee in the morning —</span>
+              <span class="lyric-line" data-time="212.79">Well... he shall not — but throw him! WHEE!</span>
+              <span class="lyric-line" data-time="216.66">Bál, bjórr ok brennivín!</span>
+              <span class="lyric-line" data-time="219.23">Bonfire, beer and burning-wine!</span>
+              <span class="lyric-line" data-time="222.27">The summer endeth either way</span>
+              <span class="lyric-line" data-time="225.33">So it endeth soaking wet tonight!</span>
+              <span class="lyric-line--gap" aria-hidden="true"></span>
+              <span class="lyric-line lyric-line--section">[Outro]</span>
+              <span class="lyric-line" data-time="234.66">"...worth it!"</span>
+              <span class="lyric-line" data-time="235.88">SKÁL!</span>
+            </div>
+          </details>
+        </li>
+
+      </ol>
+
+      <noscript>
+        <p class="player__noscript">JavaScript is required to play the album in-page. Coming soon to Spotify, Apple Music, and YouTube Music.</p>
+      </noscript>
+
+      <p class="album__streaming">
+        <span class="album__streaming-label">Forthcoming</span>
+        Spotify · Apple Music · YouTube Music
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════ DIVIDER ══════════════════════════════════════ -->
+  <div class="wrap divider" aria-hidden="true">
+    <span class="divider__line"></span>
+    <svg class="divider__runes" viewBox="0 0 90 24" focusable="false">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <path d="M10 2 L10 22"/>
+        <path d="M10 6 L18 12 L10 18"/>
+        <path d="M45 4 L41 10 L45 14 L49 10 Z"/>
+        <path d="M41 10 L37 22"/>
+        <path d="M49 10 L53 22"/>
+        <path d="M80 2 L80 22"/>
+        <path d="M80 6 L72 12 L80 18"/>
+      </g>
+    </svg>
+    <span class="divider__line"></span>
+  </div>
+
+
   <!-- ══════════════════════════════════════ SINGLE — SÓL EIGI SEFR ══════════════════════════════════════ -->
   <section class="album release" id="sol-eigi-sefr" aria-labelledby="sol-eigi-sefr-title">
     <div class="fog fog--moss  fog--a album__fog-1" aria-hidden="true"></div>
